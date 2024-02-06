@@ -6,10 +6,12 @@ namespace PrinterQueue
 	public partial class MainForm : Form
 	{
 		private PrinterInfo _printerInfo;
+		private PrinterDrivers _printerDrivers;
 
 		public MainForm()
 		{
 			_printerInfo = new PrinterInfo();
+			_printerDrivers = new PrinterDrivers();
 
 			InitializeComponent();
 
@@ -42,39 +44,50 @@ namespace PrinterQueue
 		{
 			try
 			{
-				using (ManagementObjectSearcher searcher = new ManagementObjectSearcher("SELECT * FROM Win32_Printer"))
+				List<string> driverNames = _printerDrivers.DriversInfor();
+
+				foreach (string driverName in driverNames)
 				{
-					ManagementObjectCollection printerCollection = searcher.Get();
-
-					foreach (ManagementObject printer in printerCollection)
-					{
-						string? driverName = printer["DriverName"]?.ToString();
-
-						if (driverName != null)
-						{
-							comboDrivers.Items.Add(driverName);
-						}
-					}
+					string printerInfo = $"Driver: {driverName}";
+					comboDrivers.Items.Add(printerInfo);
 				}
 			}
-			catch (ManagementException ex)
+			catch (ApplicationException ex)
 			{
-				MessageBox.Show($"WMI query error: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-			}
-			catch (Exception ex)
-			{
-				MessageBox.Show($"An unexpected error occurred: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+				MessageBox.Show(ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
 			}
 		}
 
 		private void InstallPrinter_Click(object sender, EventArgs e)
 		{
-			_printerInfo.PortName = textPortname.Text;
-			_printerInfo.PortAddressIP = textPortAddress.Text;
-			_printerInfo.PrinterName = textPrintername.Text;
-			_printerInfo.Comment = textComment.Text;
-			_printerInfo.Location = textLocation.Text;
-			_printerInfo.Groups = textGroups.Text;
+			try
+			{
+				_printerInfo.PortName = textPortname.Text;
+				_printerInfo.PortAddressIP = textPortAddress.Text;
+				_printerInfo.PrinterName = textPrintername.Text;
+				_printerInfo.Comment = textComment.Text;
+				_printerInfo.Location = textLocation.Text;
+				_printerInfo.Groups = textGroups.Text;
+
+				string? selectedDriverInfo = comboDrivers.SelectedItem?.ToString();
+				if (selectedDriverInfo != null)
+				{
+					string driverName = selectedDriverInfo.Substring(selectedDriverInfo.IndexOf(":") + 2);
+					_printerInfo.DriverName = driverName;
+				}
+				else
+				{
+					MessageBox.Show("Please select a driver.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+				}
+
+				//Installation on going
+
+				MessageBox.Show("Printer installed successfully!", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
+			}
+			catch (ApplicationException ex)
+			{
+				MessageBox.Show(ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+			}
 		}
 	}
 }

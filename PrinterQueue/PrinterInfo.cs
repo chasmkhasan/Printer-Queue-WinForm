@@ -14,5 +14,6 @@ namespace PrinterQueue
 		public string? Comment { get; set; }
 		public string? Location { get; set; }
 		public string? Groups { get; set; }
+		public string? DriverName { get; set; }
 	}
 }

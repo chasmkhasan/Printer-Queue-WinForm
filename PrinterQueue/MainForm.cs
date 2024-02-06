@@ -1,3 +1,5 @@
+using System.IO;
+using System.IO.Ports;
 using System.Management;
 using System.Net;
 
@@ -22,6 +24,7 @@ namespace PrinterQueue
 		{
 			this.Text += " Printer Queue Installer ";
 
+			GetPortName();
 			DriversInfor();
 		}
 
@@ -43,12 +46,43 @@ namespace PrinterQueue
 			}
 		}
 
+		private void GetPortName()
+		{
+			string randomPortName = GenerateRandomPortName();
+
+			if (IsPrinterPortAvailable(randomPortName))
+			{
+				lblPortName.Text = $"Generated Port {randomPortName} is available";
+			}
+			else
+			{
+				lblPortName.Text = $"Generated Port {randomPortName} is in use or not accessible";
+			}
+		}
+
+		private string GenerateRandomPortName()
+		{
+			string[] possiblePortNames = { "LPT1", "LPT2", "LPT3" };
+
+			Random random = new Random();
+			int index = random.Next(possiblePortNames.Length);
+
+			return possiblePortNames[index];
+		}
+
+		private bool IsPrinterPortAvailable(string portName)
+		{
+			string[] portNames = System.IO.Ports.SerialPort.GetPortNames();
+
+			return portNames.Contains(portName);
+		}
+
 		private void InstallPrinter_Click(object sender, EventArgs e)
 		{
 			try
 			{
-				_printerInfo.PortName = textPortname.Text;
-				_printerInfo.PortAddressIP = textPortAddress.Text;
+				_printerInfo.PortName = lblPortName.Text;
+				_printerInfo.PrinterQueue = lblPrinterQueue.Text;
 				_printerInfo.PrinterName = textPrintername.Text;
 				_printerInfo.Comment = textComment.Text;
 				_printerInfo.Location = textLocation.Text;

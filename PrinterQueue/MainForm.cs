@@ -22,22 +22,7 @@ namespace PrinterQueue
 		{
 			this.Text += " Printer Queue Installer ";
 
-			PrinterServerFQDN();
-
 			DriversInfor();
-		}
-
-		private void PrinterServerFQDN()
-		{
-			try
-			{
-				string serverFQDN = Dns.GetHostEntry(Dns.GetHostName()).HostName;
-				textPrinterServer.Text = serverFQDN;
-			}
-			catch (Exception ex)
-			{
-				MessageBox.Show("Error getting FQDN: " + ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-			}
 		}
 
 		private void DriversInfor()

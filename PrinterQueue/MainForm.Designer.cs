@@ -30,11 +30,6 @@
 		{
 			tableLayoutPanel1 = new TableLayoutPanel();
 			label1 = new Label();
-			tableLayoutPanel2 = new TableLayoutPanel();
-			labPrinSer = new Label();
-			labPrinSerDrop = new Label();
-			textPrinterServer = new TextBox();
-			textPrinServerDrop = new TextBox();
 			tableLayoutPanel3 = new TableLayoutPanel();
 			labPortName = new Label();
 			labPortAddress = new Label();
@@ -53,7 +48,6 @@
 			tableLayoutPanel4 = new TableLayoutPanel();
 			InstallPrinter = new Button();
 			tableLayoutPanel1.SuspendLayout();
-			tableLayoutPanel2.SuspendLayout();
 			tableLayoutPanel3.SuspendLayout();
 			tableLayoutPanel4.SuspendLayout();
 			SuspendLayout();
@@ -65,7 +59,6 @@
 			tableLayoutPanel1.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 95.19573F));
 			tableLayoutPanel1.ColumnStyles.Add(new ColumnStyle(SizeType.Absolute, 27F));
 			tableLayoutPanel1.Controls.Add(label1, 1, 1);
-			tableLayoutPanel1.Controls.Add(tableLayoutPanel2, 1, 2);
 			tableLayoutPanel1.Controls.Add(tableLayoutPanel3, 1, 3);
 			tableLayoutPanel1.Controls.Add(tableLayoutPanel4, 1, 4);
 			tableLayoutPanel1.Dock = DockStyle.Fill;
@@ -74,11 +67,11 @@
 			tableLayoutPanel1.RowCount = 6;
 			tableLayoutPanel1.RowStyles.Add(new RowStyle(SizeType.Percent, 52.68817F));
 			tableLayoutPanel1.RowStyles.Add(new RowStyle(SizeType.Percent, 47.31183F));
-			tableLayoutPanel1.RowStyles.Add(new RowStyle(SizeType.Absolute, 80F));
+			tableLayoutPanel1.RowStyles.Add(new RowStyle(SizeType.Absolute, 8F));
 			tableLayoutPanel1.RowStyles.Add(new RowStyle(SizeType.Absolute, 213F));
 			tableLayoutPanel1.RowStyles.Add(new RowStyle(SizeType.Absolute, 41F));
 			tableLayoutPanel1.RowStyles.Add(new RowStyle(SizeType.Absolute, 23F));
-			tableLayoutPanel1.Size = new Size(583, 406);
+			tableLayoutPanel1.Size = new Size(589, 332);
 			tableLayoutPanel1.TabIndex = 0;
 			// 
 			// label1
@@ -86,64 +79,11 @@
 			label1.Anchor = AnchorStyles.None;
 			label1.AutoSize = true;
 			label1.Font = new Font("Times New Roman", 12F, FontStyle.Regular, GraphicsUnit.Point, 0);
-			label1.Location = new Point(210, 27);
+			label1.Location = new Point(214, 25);
 			label1.Name = "label1";
 			label1.Size = new Size(161, 19);
 			label1.TabIndex = 0;
 			label1.Text = "Printer Queue Installation";
-			// 
-			// tableLayoutPanel2
-			// 
-			tableLayoutPanel2.ColumnCount = 2;
-			tableLayoutPanel2.ColumnStyles.Add(new ColumnStyle());
-			tableLayoutPanel2.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 100F));
-			tableLayoutPanel2.Controls.Add(labPrinSer, 0, 0);
-			tableLayoutPanel2.Controls.Add(labPrinSerDrop, 0, 1);
-			tableLayoutPanel2.Controls.Add(textPrinterServer, 1, 0);
-			tableLayoutPanel2.Controls.Add(textPrinServerDrop, 1, 1);
-			tableLayoutPanel2.Location = new Point(29, 51);
-			tableLayoutPanel2.Name = "tableLayoutPanel2";
-			tableLayoutPanel2.RowCount = 2;
-			tableLayoutPanel2.RowStyles.Add(new RowStyle(SizeType.Percent, 50F));
-			tableLayoutPanel2.RowStyles.Add(new RowStyle(SizeType.Percent, 50F));
-			tableLayoutPanel2.Size = new Size(523, 73);
-			tableLayoutPanel2.TabIndex = 1;
-			// 
-			// labPrinSer
-			// 
-			labPrinSer.Anchor = AnchorStyles.Left;
-			labPrinSer.AutoSize = true;
-			labPrinSer.Location = new Point(3, 10);
-			labPrinSer.Name = "labPrinSer";
-			labPrinSer.Size = new Size(77, 15);
-			labPrinSer.TabIndex = 0;
-			labPrinSer.Text = "Printer Server";
-			// 
-			// labPrinSerDrop
-			// 
-			labPrinSerDrop.Anchor = AnchorStyles.Left;
-			labPrinSerDrop.AutoSize = true;
-			labPrinSerDrop.Location = new Point(3, 47);
-			labPrinSerDrop.Name = "labPrinSerDrop";
-			labPrinSerDrop.Size = new Size(88, 15);
-			labPrinSerDrop.TabIndex = 1;
-			labPrinSerDrop.Text = "Printer Server-1";
-			// 
-			// textPrinterServer
-			// 
-			textPrinterServer.Dock = DockStyle.Fill;
-			textPrinterServer.Location = new Point(97, 3);
-			textPrinterServer.Name = "textPrinterServer";
-			textPrinterServer.Size = new Size(423, 23);
-			textPrinterServer.TabIndex = 2;
-			// 
-			// textPrinServerDrop
-			// 
-			textPrinServerDrop.Dock = DockStyle.Fill;
-			textPrinServerDrop.Location = new Point(97, 39);
-			textPrinServerDrop.Name = "textPrinServerDrop";
-			textPrinServerDrop.Size = new Size(423, 23);
-			textPrinServerDrop.TabIndex = 3;
 			// 
 			// tableLayoutPanel3
 			// 
@@ -164,7 +104,7 @@
 			tableLayoutPanel3.Controls.Add(textGroups, 1, 5);
 			tableLayoutPanel3.Controls.Add(labDriverDrop, 0, 6);
 			tableLayoutPanel3.Controls.Add(comboDrivers, 1, 6);
-			tableLayoutPanel3.Location = new Point(29, 131);
+			tableLayoutPanel3.Location = new Point(30, 57);
 			tableLayoutPanel3.Name = "tableLayoutPanel3";
 			tableLayoutPanel3.RowCount = 7;
 			tableLayoutPanel3.RowStyles.Add(new RowStyle());
@@ -193,9 +133,9 @@
 			labPortAddress.AutoSize = true;
 			labPortAddress.Location = new Point(3, 35);
 			labPortAddress.Name = "labPortAddress";
-			labPortAddress.Size = new Size(84, 15);
+			labPortAddress.Size = new Size(80, 15);
 			labPortAddress.TabIndex = 1;
-			labPortAddress.Text = "PortAddress IP";
+			labPortAddress.Text = "Printer Queue";
 			// 
 			// labPrinterName
 			// 
@@ -240,49 +180,49 @@
 			// textPortname
 			// 
 			textPortname.Dock = DockStyle.Fill;
-			textPortname.Location = new Point(93, 3);
+			textPortname.Location = new Point(89, 3);
 			textPortname.Name = "textPortname";
-			textPortname.Size = new Size(427, 23);
+			textPortname.Size = new Size(431, 23);
 			textPortname.TabIndex = 8;
 			// 
 			// textPortAddress
 			// 
 			textPortAddress.Dock = DockStyle.Fill;
-			textPortAddress.Location = new Point(93, 32);
+			textPortAddress.Location = new Point(89, 32);
 			textPortAddress.Name = "textPortAddress";
-			textPortAddress.Size = new Size(427, 23);
+			textPortAddress.Size = new Size(431, 23);
 			textPortAddress.TabIndex = 9;
 			// 
 			// textPrintername
 			// 
 			textPrintername.Dock = DockStyle.Fill;
-			textPrintername.Location = new Point(93, 60);
+			textPrintername.Location = new Point(89, 60);
 			textPrintername.Name = "textPrintername";
-			textPrintername.Size = new Size(427, 23);
+			textPrintername.Size = new Size(431, 23);
 			textPrintername.TabIndex = 10;
 			// 
 			// textComment
 			// 
 			textComment.Dock = DockStyle.Fill;
-			textComment.Location = new Point(93, 87);
+			textComment.Location = new Point(89, 87);
 			textComment.Name = "textComment";
-			textComment.Size = new Size(427, 23);
+			textComment.Size = new Size(431, 23);
 			textComment.TabIndex = 11;
 			// 
 			// textLocation
 			// 
 			textLocation.Dock = DockStyle.Fill;
-			textLocation.Location = new Point(93, 117);
+			textLocation.Location = new Point(89, 117);
 			textLocation.Name = "textLocation";
-			textLocation.Size = new Size(427, 23);
+			textLocation.Size = new Size(431, 23);
 			textLocation.TabIndex = 12;
 			// 
 			// textGroups
 			// 
 			textGroups.Dock = DockStyle.Fill;
-			textGroups.Location = new Point(93, 146);
+			textGroups.Location = new Point(89, 146);
 			textGroups.Name = "textGroups";
-			textGroups.Size = new Size(427, 23);
+			textGroups.Size = new Size(431, 23);
 			textGroups.TabIndex = 13;
 			// 
 			// labDriverDrop
@@ -299,9 +239,9 @@
 			// 
 			comboDrivers.Dock = DockStyle.Fill;
 			comboDrivers.FormattingEnabled = true;
-			comboDrivers.Location = new Point(93, 176);
+			comboDrivers.Location = new Point(89, 176);
 			comboDrivers.Name = "comboDrivers";
-			comboDrivers.Size = new Size(427, 23);
+			comboDrivers.Size = new Size(431, 23);
 			comboDrivers.TabIndex = 14;
 			// 
 			// tableLayoutPanel4
@@ -312,17 +252,17 @@
 			tableLayoutPanel4.ColumnStyles.Add(new ColumnStyle(SizeType.Absolute, 127F));
 			tableLayoutPanel4.Controls.Add(InstallPrinter, 2, 0);
 			tableLayoutPanel4.Dock = DockStyle.Fill;
-			tableLayoutPanel4.Location = new Point(29, 344);
+			tableLayoutPanel4.Location = new Point(30, 270);
 			tableLayoutPanel4.Name = "tableLayoutPanel4";
 			tableLayoutPanel4.RowCount = 1;
 			tableLayoutPanel4.RowStyles.Add(new RowStyle(SizeType.Percent, 50F));
-			tableLayoutPanel4.Size = new Size(523, 35);
+			tableLayoutPanel4.Size = new Size(529, 35);
 			tableLayoutPanel4.TabIndex = 3;
 			// 
 			// InstallPrinter
 			// 
 			InstallPrinter.Dock = DockStyle.Fill;
-			InstallPrinter.Location = new Point(399, 3);
+			InstallPrinter.Location = new Point(405, 3);
 			InstallPrinter.Name = "InstallPrinter";
 			InstallPrinter.Size = new Size(121, 29);
 			InstallPrinter.TabIndex = 0;
@@ -334,14 +274,12 @@
 			// 
 			AutoScaleDimensions = new SizeF(7F, 15F);
 			AutoScaleMode = AutoScaleMode.Font;
-			ClientSize = new Size(583, 406);
+			ClientSize = new Size(589, 332);
 			Controls.Add(tableLayoutPanel1);
 			Name = "MainForm";
 			Text = "Printer Queue";
 			tableLayoutPanel1.ResumeLayout(false);
 			tableLayoutPanel1.PerformLayout();
-			tableLayoutPanel2.ResumeLayout(false);
-			tableLayoutPanel2.PerformLayout();
 			tableLayoutPanel3.ResumeLayout(false);
 			tableLayoutPanel3.PerformLayout();
 			tableLayoutPanel4.ResumeLayout(false);
@@ -352,9 +290,6 @@
 
 		private TableLayoutPanel tableLayoutPanel1;
 		private Label label1;
-		private TableLayoutPanel tableLayoutPanel2;
-		private Label labPrinSer;
-		private Label labPrinSerDrop;
 		private TableLayoutPanel tableLayoutPanel3;
 		private Label labPortName;
 		private Label labPortAddress;
@@ -369,8 +304,6 @@
 		private TextBox textComment;
 		private TextBox textLocation;
 		private TextBox textGroups;
-		private TextBox textPrinterServer;
-		private TextBox textPrinServerDrop;
 		private TableLayoutPanel tableLayoutPanel4;
 		private Button InstallPrinter;
 		private ComboBox comboDrivers;

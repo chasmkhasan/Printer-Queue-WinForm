@@ -9,11 +9,13 @@ namespace PrinterQueue
 	{
 		private PrinterInfo _printerInfo;
 		private PrinterDrivers _printerDrivers;
+		private GeneratePortName _generatePortName;
 
 		public MainForm()
 		{
 			_printerInfo = new PrinterInfo();
 			_printerDrivers = new PrinterDrivers();
+			_generatePortName = new GeneratePortName();
 
 			InitializeComponent();
 
@@ -48,9 +50,9 @@ namespace PrinterQueue
 
 		private void GetPortName()
 		{
-			string randomPortName = GenerateRandomPortName();
+			string randomPortName = _generatePortName.GenerateRandomPortName();
 
-			if (IsPrinterPortAvailable(randomPortName))
+			if (_generatePortName.IsPrinterPortAvailable(randomPortName))
 			{
 				lblPortName.Text = $"Generated Port {randomPortName} is available";
 			}
@@ -58,23 +60,6 @@ namespace PrinterQueue
 			{
 				lblPortName.Text = $"Generated Port {randomPortName} is in use or not accessible";
 			}
-		}
-
-		private string GenerateRandomPortName()
-		{
-			string[] possiblePortNames = { "LPT1", "LPT2", "LPT3" };
-
-			Random random = new Random();
-			int index = random.Next(possiblePortNames.Length);
-
-			return possiblePortNames[index];
-		}
-
-		private bool IsPrinterPortAvailable(string portName)
-		{
-			string[] portNames = System.IO.Ports.SerialPort.GetPortNames();
-
-			return portNames.Contains(portName);
 		}
 
 		private void InstallPrinter_Click(object sender, EventArgs e)

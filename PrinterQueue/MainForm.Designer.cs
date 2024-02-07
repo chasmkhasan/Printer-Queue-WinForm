@@ -33,9 +33,9 @@
 			tableLayoutPanel4 = new TableLayoutPanel();
 			InstallPrinter = new Button();
 			tableLayoutPanel2 = new TableLayoutPanel();
-			textGroups = new TextBox();
-			textLocation = new TextBox();
-			textComment = new TextBox();
+			txtGroups = new TextBox();
+			txtLocation = new TextBox();
+			txtComment = new TextBox();
 			label2 = new Label();
 			label3 = new Label();
 			label4 = new Label();
@@ -43,10 +43,10 @@
 			label6 = new Label();
 			label7 = new Label();
 			label8 = new Label();
-			lblPortName = new Label();
-			lblPrinterQueue = new Label();
-			textPrintername = new TextBox();
+			txtPrinterQueue = new TextBox();
 			comboDrivers = new ComboBox();
+			txtPortName = new TextBox();
+			txtPortAddress = new TextBox();
 			tableLayoutPanel1.SuspendLayout();
 			tableLayoutPanel4.SuspendLayout();
 			tableLayoutPanel2.SuspendLayout();
@@ -116,9 +116,9 @@
 			tableLayoutPanel2.ColumnCount = 2;
 			tableLayoutPanel2.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 21.1026611F));
 			tableLayoutPanel2.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 78.89734F));
-			tableLayoutPanel2.Controls.Add(textGroups, 1, 5);
-			tableLayoutPanel2.Controls.Add(textLocation, 1, 4);
-			tableLayoutPanel2.Controls.Add(textComment, 1, 3);
+			tableLayoutPanel2.Controls.Add(txtGroups, 1, 5);
+			tableLayoutPanel2.Controls.Add(txtLocation, 1, 4);
+			tableLayoutPanel2.Controls.Add(txtComment, 1, 3);
 			tableLayoutPanel2.Controls.Add(label2, 0, 0);
 			tableLayoutPanel2.Controls.Add(label3, 0, 1);
 			tableLayoutPanel2.Controls.Add(label4, 0, 2);
@@ -126,10 +126,10 @@
 			tableLayoutPanel2.Controls.Add(label6, 0, 4);
 			tableLayoutPanel2.Controls.Add(label7, 0, 5);
 			tableLayoutPanel2.Controls.Add(label8, 0, 6);
-			tableLayoutPanel2.Controls.Add(lblPortName, 1, 0);
-			tableLayoutPanel2.Controls.Add(lblPrinterQueue, 1, 1);
-			tableLayoutPanel2.Controls.Add(textPrintername, 1, 2);
+			tableLayoutPanel2.Controls.Add(txtPrinterQueue, 1, 2);
 			tableLayoutPanel2.Controls.Add(comboDrivers, 1, 6);
+			tableLayoutPanel2.Controls.Add(txtPortName, 1, 0);
+			tableLayoutPanel2.Controls.Add(txtPortAddress, 1, 1);
 			tableLayoutPanel2.Location = new Point(30, 81);
 			tableLayoutPanel2.Name = "tableLayoutPanel2";
 			tableLayoutPanel2.RowCount = 7;
@@ -143,29 +143,29 @@
 			tableLayoutPanel2.Size = new Size(526, 222);
 			tableLayoutPanel2.TabIndex = 4;
 			// 
-			// textGroups
+			// txtGroups
 			// 
-			textGroups.Dock = DockStyle.Fill;
-			textGroups.Location = new Point(114, 158);
-			textGroups.Name = "textGroups";
-			textGroups.Size = new Size(409, 23);
-			textGroups.TabIndex = 12;
+			txtGroups.Dock = DockStyle.Fill;
+			txtGroups.Location = new Point(114, 158);
+			txtGroups.Name = "txtGroups";
+			txtGroups.Size = new Size(409, 23);
+			txtGroups.TabIndex = 12;
 			// 
-			// textLocation
+			// txtLocation
 			// 
-			textLocation.Dock = DockStyle.Fill;
-			textLocation.Location = new Point(114, 127);
-			textLocation.Name = "textLocation";
-			textLocation.Size = new Size(409, 23);
-			textLocation.TabIndex = 11;
+			txtLocation.Dock = DockStyle.Fill;
+			txtLocation.Location = new Point(114, 127);
+			txtLocation.Name = "txtLocation";
+			txtLocation.Size = new Size(409, 23);
+			txtLocation.TabIndex = 11;
 			// 
-			// textComment
+			// txtComment
 			// 
-			textComment.Dock = DockStyle.Fill;
-			textComment.Location = new Point(114, 96);
-			textComment.Name = "textComment";
-			textComment.Size = new Size(409, 23);
-			textComment.TabIndex = 10;
+			txtComment.Dock = DockStyle.Fill;
+			txtComment.Location = new Point(114, 96);
+			txtComment.Name = "txtComment";
+			txtComment.Size = new Size(409, 23);
+			txtComment.TabIndex = 10;
 			// 
 			// label2
 			// 
@@ -183,9 +183,9 @@
 			label3.AutoSize = true;
 			label3.Location = new Point(3, 39);
 			label3.Name = "label3";
-			label3.Size = new Size(80, 15);
+			label3.Size = new Size(74, 15);
 			label3.TabIndex = 1;
-			label3.Text = "Printer Queue";
+			label3.Text = "Port Address";
 			// 
 			// label4
 			// 
@@ -193,9 +193,9 @@
 			label4.AutoSize = true;
 			label4.Location = new Point(3, 70);
 			label4.Name = "label4";
-			label4.Size = new Size(77, 15);
+			label4.Size = new Size(80, 15);
 			label4.TabIndex = 2;
-			label4.Text = "Printer Name";
+			label4.Text = "Printer Queue";
 			// 
 			// label5
 			// 
@@ -237,37 +237,13 @@
 			label8.TabIndex = 6;
 			label8.Text = "Driver Name";
 			// 
-			// lblPortName
+			// txtPrinterQueue
 			// 
-			lblPortName.AutoSize = true;
-			lblPortName.BackColor = SystemColors.ControlLightLight;
-			lblPortName.BorderStyle = BorderStyle.Fixed3D;
-			lblPortName.Dock = DockStyle.Fill;
-			lblPortName.Location = new Point(114, 0);
-			lblPortName.Name = "lblPortName";
-			lblPortName.Size = new Size(409, 31);
-			lblPortName.TabIndex = 7;
-			lblPortName.Text = "label9";
-			// 
-			// lblPrinterQueue
-			// 
-			lblPrinterQueue.AutoSize = true;
-			lblPrinterQueue.BackColor = SystemColors.ControlLightLight;
-			lblPrinterQueue.BorderStyle = BorderStyle.Fixed3D;
-			lblPrinterQueue.Dock = DockStyle.Fill;
-			lblPrinterQueue.Location = new Point(114, 31);
-			lblPrinterQueue.Name = "lblPrinterQueue";
-			lblPrinterQueue.Size = new Size(409, 31);
-			lblPrinterQueue.TabIndex = 8;
-			lblPrinterQueue.Text = "label9";
-			// 
-			// textPrintername
-			// 
-			textPrintername.Dock = DockStyle.Fill;
-			textPrintername.Location = new Point(114, 65);
-			textPrintername.Name = "textPrintername";
-			textPrintername.Size = new Size(409, 23);
-			textPrintername.TabIndex = 9;
+			txtPrinterQueue.Dock = DockStyle.Fill;
+			txtPrinterQueue.Location = new Point(114, 65);
+			txtPrinterQueue.Name = "txtPrinterQueue";
+			txtPrinterQueue.Size = new Size(409, 23);
+			txtPrinterQueue.TabIndex = 9;
 			// 
 			// comboDrivers
 			// 
@@ -277,6 +253,22 @@
 			comboDrivers.Name = "comboDrivers";
 			comboDrivers.Size = new Size(409, 23);
 			comboDrivers.TabIndex = 13;
+			// 
+			// txtPortName
+			// 
+			txtPortName.Dock = DockStyle.Fill;
+			txtPortName.Location = new Point(114, 3);
+			txtPortName.Name = "txtPortName";
+			txtPortName.Size = new Size(409, 23);
+			txtPortName.TabIndex = 14;
+			// 
+			// txtPortAddress
+			// 
+			txtPortAddress.Dock = DockStyle.Fill;
+			txtPortAddress.Location = new Point(114, 34);
+			txtPortAddress.Name = "txtPortAddress";
+			txtPortAddress.Size = new Size(409, 23);
+			txtPortAddress.TabIndex = 15;
 			// 
 			// MainForm
 			// 
@@ -308,12 +300,12 @@
 		private Label label6;
 		private Label label7;
 		private Label label8;
-		private Label lblPortName;
-		private Label lblPrinterQueue;
-		private TextBox textGroups;
-		private TextBox textLocation;
-		private TextBox textComment;
-		private TextBox textPrintername;
+		private TextBox txtGroups;
+		private TextBox txtLocation;
+		private TextBox txtComment;
+		private TextBox txtPrinterQueue;
 		private ComboBox comboDrivers;
+		private TextBox txtPortName;
+		private TextBox txtPortAddress;
 	}
 }

@@ -9,13 +9,13 @@ namespace PrinterQueue
 	{
 		private PrinterInfo _printerInfo;
 		private PrinterDrivers _printerDrivers;
-		private GeneratePortName _generatePortName;
+		private PortNames _portNames;
 
 		public MainForm()
 		{
 			_printerInfo = new PrinterInfo();
 			_printerDrivers = new PrinterDrivers();
-			_generatePortName = new GeneratePortName();
+			_portNames = new PortNames();
 
 			InitializeComponent();
 
@@ -26,8 +26,25 @@ namespace PrinterQueue
 		{
 			this.Text += " Printer Queue Installer ";
 
-			GetPortName();
+			
 			DriversInfor();
+		}
+
+		private void ReadPortName()
+		{
+			string enteredPortName = txtPortName.Text.Trim();
+
+			if (_portNames.IsPortNameAvailable(enteredPortName))
+			{
+				txtPortName.BackColor = Color.Green;
+			}
+			else
+			{
+				txtPortName.BackColor = Color.Red;
+				string newportname = _portNames.GenerateNewPortName();
+
+				txtPortName.Text = newportname;
+			}
 		}
 
 		private void DriversInfor()
@@ -38,7 +55,7 @@ namespace PrinterQueue
 
 				foreach (string driverName in driverNames)
 				{
-					string printerInfo = $"Driver: {driverName}";
+					string printerInfo = $"{driverName}";
 					comboDrivers.Items.Add(printerInfo);
 				}
 			}
@@ -48,30 +65,17 @@ namespace PrinterQueue
 			}
 		}
 
-		private void GetPortName()
-		{
-			string randomPortName = _generatePortName.GenerateRandomPortName();
-
-			if (_generatePortName.IsPrinterPortAvailable(randomPortName))
-			{
-				lblPortName.Text = $"Generated Port {randomPortName} is available";
-			}
-			else
-			{
-				lblPortName.Text = $"Generated Port {randomPortName} is in use or not accessible";
-			}
-		}
-
 		private void InstallPrinter_Click(object sender, EventArgs e)
 		{
 			try
 			{
-				_printerInfo.PortName = lblPortName.Text;
-				_printerInfo.PrinterQueue = lblPrinterQueue.Text;
-				_printerInfo.PrinterName = textPrintername.Text;
-				_printerInfo.Comment = textComment.Text;
-				_printerInfo.Location = textLocation.Text;
-				_printerInfo.Groups = textGroups.Text;
+				ReadPortName();
+				//_printerInfo.PortName = textPortName.Text;
+				_printerInfo.PortAddress = txtPortAddress.Text;
+				_printerInfo.PrinterQueue = txtPrinterQueue.Text;
+				_printerInfo.Comment = txtComment.Text;
+				_printerInfo.Location = txtLocation.Text;
+				_printerInfo.Groups = txtGroups.Text;
 
 				string? selectedDriverInfo = comboDrivers.SelectedItem?.ToString();
 				if (selectedDriverInfo != null)

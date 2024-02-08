@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace PrinterQueue
 {
-	internal class PortNames
+	internal class GeneratePortName
 	{
 		public bool IsPortNameAvailable(string portName)
 		{

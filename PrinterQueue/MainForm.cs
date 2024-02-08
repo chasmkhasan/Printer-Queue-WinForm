@@ -13,6 +13,7 @@ namespace PrinterQueue
 		private PrinterInfo _printerInfo;
 		private PrinterDrivers _printerDrivers;
 		private GeneratePortName _generatePort;
+		private QueueMgt _queueMgt;
 		private GroupPermission _groupPermission;
 		
 
@@ -21,6 +22,7 @@ namespace PrinterQueue
 			_printerInfo = new PrinterInfo();
 			_printerDrivers = new PrinterDrivers();
 			_generatePort = new GeneratePortName();
+			_queueMgt = new QueueMgt();
 			_groupPermission = new GroupPermission();
 
 			InitializeComponent();
@@ -35,18 +37,7 @@ namespace PrinterQueue
 			
 			DriversInfor();
 		}
-
-		public void GroupPermission()
-		{
-			if (_printerInfo != null)
-			{
-				string printerName = _printerInfo.PrinterName;
-				string printServerName = _printerInfo.SystemName;
-				string userNameOrGroup = txtGroups.Text;
-
-				_groupPermission.SetPrinterPermissions(printerName, printServerName, userNameOrGroup);
-			}
-		}
+		
 		
 		private void ReadPortName()
 		{
@@ -59,9 +50,36 @@ namespace PrinterQueue
 			else
 			{
 				txtPortName.BackColor = Color.Red;
-				string newportname = _generatePort.GenerateNewPortName();
+				string newPortName = _generatePort.GenerateNewPortName();
 
-				txtPortName.Text = newportname;
+				if (_generatePort.IsPortNameAvailableViaPowerShell(newPortName))
+				{
+					txtPortName.Text = newPortName;
+				}
+			}
+		}
+
+		private void PrinterQueue()
+		{
+			string printerQueueName = txtPrinterQueue.Text;
+
+			if (_queueMgt.PrinterQueueExists(printerQueueName))
+			{
+				_queueMgt.DeletePrinterQueueViaPowerShell(printerQueueName);
+			}
+
+			_queueMgt.CreatePrinterQueueViaPowerShell(printerQueueName);
+		}
+
+		public void GroupPermission()
+		{
+			if (_printerInfo != null)
+			{
+				string printerName = _printerInfo.PrinterName;
+				string printServerName = _printerInfo.SystemName;
+				string userNameOrGroup = txtGroups.Text;
+
+				_groupPermission.SetPrinterPermissions(printerName, printServerName, userNameOrGroup);
 			}
 		}
 
@@ -89,7 +107,8 @@ namespace PrinterQueue
 				ReadPortName();
 				//_printerInfo.PortName = textPortName.Text;
 				_printerInfo.PortAddress = txtPortAddress.Text;
-				_printerInfo.PrinterQueue = txtPrinterQueue.Text;
+				//_printerInfo.PrinterQueue = txtPrinterQueue.Text;
+				PrinterQueue();
 				_printerInfo.Comment = txtComment.Text;
 				_printerInfo.Location = txtLocation.Text;
 				//_printerInfo.Groups = txtGroups.Text;

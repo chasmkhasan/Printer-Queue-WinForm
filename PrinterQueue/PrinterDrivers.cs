@@ -9,23 +9,33 @@ namespace PrinterQueue
 {
 	internal class PrinterDrivers
 	{
-		public List<string> DriversInfor()
+		public List<PrinterInfo> DriversInfor()
 		{
-			List<string> driverNames = new List<string>();
+			List<PrinterInfo> driverNames = new List<PrinterInfo>();
 
 			try
 			{
-				using (ManagementObjectSearcher searcher = new ManagementObjectSearcher("SELECT DriverName FROM Win32_Printer"))
+				using (ManagementObjectSearcher searcher = new ManagementObjectSearcher("SELECT Name, SystemName, DriverName FROM Win32_Printer"))
 				{
 					ManagementObjectCollection printerCollection = searcher.Get();
 
 					foreach (ManagementObject printer in printerCollection)
 					{
-						string? driverName = printer["DriverName"]?.ToString();
+						string printerName = printer["Name"]?.ToString();
+						string systemName = printer["SystemName"]?.ToString();
+						string driverName = printer["DriverName"]?.ToString();
 
-						if (driverName != null)
+
+						if (printerName != null && systemName != null && driverName != null)
 						{
-							driverNames.Add(driverName);
+							PrinterInfo printerInfo = new PrinterInfo();
+							{
+								printerInfo.PrinterName = printerName;
+								printerInfo.SystemName = systemName;
+								printerInfo.DriverName = driverName;
+							}
+
+							driverNames.Add(printerInfo);
 						}
 					}
 				}

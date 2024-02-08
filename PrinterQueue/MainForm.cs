@@ -1,6 +1,9 @@
+using System.Collections.ObjectModel;
 using System.IO;
 using System.IO.Ports;
 using System.Management;
+using System.Management.Automation.Runspaces;
+using System.Management.Automation;
 using System.Net;
 
 namespace PrinterQueue
@@ -9,13 +12,16 @@ namespace PrinterQueue
 	{
 		private PrinterInfo _printerInfo;
 		private PrinterDrivers _printerDrivers;
-		private PortNames _portNames;
+		private GeneratePortName _generatePort;
+		private GroupPermission _groupPermission;
+		
 
 		public MainForm()
 		{
 			_printerInfo = new PrinterInfo();
 			_printerDrivers = new PrinterDrivers();
-			_portNames = new PortNames();
+			_generatePort = new GeneratePortName();
+			_groupPermission = new GroupPermission();
 
 			InitializeComponent();
 
@@ -30,18 +36,30 @@ namespace PrinterQueue
 			DriversInfor();
 		}
 
+		public void GroupPermission()
+		{
+			if (_printerInfo != null)
+			{
+				string printerName = _printerInfo.PrinterName;
+				string printServerName = _printerInfo.SystemName;
+				string userNameOrGroup = txtGroups.Text;
+
+				_groupPermission.SetPrinterPermissions(printerName, printServerName, userNameOrGroup);
+			}
+		}
+		
 		private void ReadPortName()
 		{
 			string enteredPortName = txtPortName.Text.Trim();
 
-			if (_portNames.IsPortNameAvailable(enteredPortName))
+			if (_generatePort.IsPortNameAvailable(enteredPortName))
 			{
 				txtPortName.BackColor = Color.Green;
 			}
 			else
 			{
 				txtPortName.BackColor = Color.Red;
-				string newportname = _portNames.GenerateNewPortName();
+				string newportname = _generatePort.GenerateNewPortName();
 
 				txtPortName.Text = newportname;
 			}
@@ -51,12 +69,11 @@ namespace PrinterQueue
 		{
 			try
 			{
-				List<string> driverNames = _printerDrivers.DriversInfor();
+				List<PrinterInfo> driverNames = _printerDrivers.DriversInfor();
 
-				foreach (string driverName in driverNames)
+				foreach (PrinterInfo printerInfo in driverNames)
 				{
-					string printerInfo = $"{driverName}";
-					comboDrivers.Items.Add(printerInfo);
+					comboDrivers.Items.Add(printerInfo.DriverName);
 				}
 			}
 			catch (ApplicationException ex)
@@ -75,22 +92,17 @@ namespace PrinterQueue
 				_printerInfo.PrinterQueue = txtPrinterQueue.Text;
 				_printerInfo.Comment = txtComment.Text;
 				_printerInfo.Location = txtLocation.Text;
-				_printerInfo.Groups = txtGroups.Text;
+				//_printerInfo.Groups = txtGroups.Text;
+				GroupPermission();
 
-				string? selectedDriverInfo = comboDrivers.SelectedItem?.ToString();
+				string selectedDriverInfo = comboDrivers.SelectedItem?.ToString();
 				if (selectedDriverInfo != null)
 				{
 					string driverName = selectedDriverInfo.Substring(selectedDriverInfo.IndexOf(":") + 2);
 					_printerInfo.DriverName = driverName;
 				}
-				else
-				{
-					MessageBox.Show("Please select a driver.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-				}
-
 				//Installation on going
 
-				MessageBox.Show("Printer installed successfully!", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
 			}
 			catch (ApplicationException ex)
 			{

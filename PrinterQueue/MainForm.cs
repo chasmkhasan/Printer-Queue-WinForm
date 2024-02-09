@@ -45,19 +45,20 @@ namespace PrinterQueue
 		{
 			string enteredPortName = txtPortName.Text.Trim();
 
-			if (_generatePort.IsPortNameAvailable(enteredPortName))
+			if (_generatePort.PrinterPortExists(enteredPortName))
 			{
-				txtPortName.BackColor = Color.Green;
-			}
-			else
-			{
-				txtPortName.BackColor = Color.Red;
-				string newPortName = _generatePort.GenerateNewPortName();
+				string randomAlphabet = Guid.NewGuid().ToString("N").Substring(0, 1);
 
-				if (_generatePort.IsPortNameAvailableNew(newPortName))
+				string modifiedPortName = enteredPortName + "_" + randomAlphabet;
+
+				if (_generatePort.PrinterPortExists(enteredPortName))
 				{
-					txtPortName.Text = newPortName;
+					bool portAdded = _generatePort.AddPrinterPort(modifiedPortName, "printerHostAddress", 9100, 1, "public");
 				}
+			}
+			else if (!_generatePort.PrinterPortExists(enteredPortName))
+			{
+				bool portAdded = _generatePort.AddPrinterPort(enteredPortName, "printerHostAddress", 9100, 1, "public");
 			}
 		}
 
@@ -107,14 +108,14 @@ namespace PrinterQueue
 			try
 			{
 				string userInputPortName = txtPortName.Text;
-				if (!_generatePort.IsPortNameAvailable(userInputPortName))
-				{
-					ReadPortName();
-				}
-				else
-				{
-					_dataModel.PortName = userInputPortName;
-				}
+				//if (!_generatePort.IsPortNameAvailable(userInputPortName))
+				//{
+				//	ReadPortName();
+				//}
+				//else
+				//{
+				//	_dataModel.PortName = userInputPortName;
+				//}
 
 				_dataModel.PortAddress = txtPortAddress.Text;
 

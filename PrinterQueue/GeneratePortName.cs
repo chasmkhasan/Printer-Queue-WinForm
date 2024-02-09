@@ -11,52 +11,41 @@ namespace PrinterQueue
 {
 	internal class GeneratePortName
 	{
-		public bool IsPortNameAvailable(string portName)
+		public bool AddPrinterPort(string portName, string printerHostAddress, int portNumber, int snmp, string snmpCommunity)
 		{
 			using (PowerShell PowerShellInstance = PowerShell.Create())
 			{
-				string script = $"Get-PrinterPort -Name '{portName}'";
+				string script = $"Add-PrinterPort -Name '{portName}' -PrinterHostAddress '{printerHostAddress}' -PortNumber {portNumber} -SNMP {snmp} -SNMPCommunity '{snmpCommunity}'";
 
 				PowerShellInstance.AddScript(script);
 
 				Collection<PSObject> PSOutput = PowerShellInstance.Invoke();
 
-				return PSOutput.Count == 0;
-			}
-		}
-
-		public string GenerateNewPortName()
-		{
-			using (PowerShell PowerShellInstance = PowerShell.Create())
-			{
-				string script = $"[System.Guid]::NewGuid().ToString()";
-
-				PowerShellInstance.AddScript(script);
-
-				Collection<PSObject> PSOutput = PowerShellInstance.Invoke();
-
-				if (PSOutput.Count > 0)
+				if (PSOutput.Count == 0)
 				{
-					return PSOutput[0].ToString();
+					MessageBox.Show($"New PortName is {portName}");
+					return true;
 				}
 				else
 				{
-					throw new InvalidOperationException("Failed to generate a new port name.");
+					return false;
 				}
 			}
 		}
 
-		public bool IsPortNameAvailableNew(string portName)
+		public bool PrinterPortExists(string portName)
 		{
 			using (PowerShell PowerShellInstance = PowerShell.Create())
 			{
-				string script = $"Get-WmiObject Win32_TCPIPPrinterPort | Where-Object {{ $_.Name -eq '{portName}' }}";
+				string script = $"Get-CimInstance -Query \"SELECT * FROM Win32_TCPIPPrinterPort WHERE Name = '{portName}'\"";
 
 				PowerShellInstance.AddScript(script);
 
 				Collection<PSObject> PSOutput = PowerShellInstance.Invoke();
 
-				return PSOutput.Count == 0;
+				bool portExists = PSOutput.Count > 0;
+
+				return portExists;
 			}
 		}
 	}

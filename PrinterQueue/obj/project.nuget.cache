@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "Nr1e2Pf8M1p1gC6qwY/LeLs/A9shP+7k3yy3OnfuC3HEQV9fHNNsoiXzjpxPCHTlIwdu33xU5f1NtxAEh+BfoQ==",
+  "dgSpecHash": "4mjPqkFxp4BUXJPMRlxWCoqDMWvuzR+JK0fwxPzYP9Nn/QpfoGmPeshUOBt/5uYq6xSTsCs9475Snm1Dn+7+aQ==",
   "success": true,
-  "projectFilePath": "D:\\Caironite\\LIA Start\\ProjectTwo\\MainFile\\PrinterQueue\\PrinterQueue\\PrinterQueue.csproj",
+  "projectFilePath": "D:\\Caironite\\LIA Start\\ProjectTwo\\MainFile\\Printer-Queue-WinForm\\PrinterQueue\\PrinterQueue.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\hasan\\.nuget\\packages\\jetbrains.annotations\\2021.2.0\\jetbrains.annotations.2021.2.0.nupkg.sha512",
     "C:\\Users\\hasan\\.nuget\\packages\\json.more.net\\1.9.3\\json.more.net.1.9.3.nupkg.sha512",

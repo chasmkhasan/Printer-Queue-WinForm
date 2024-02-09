@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace PrinterQueue
 {
-	internal class PrinterInfo
+	internal class DataModel
 	{
 		public string _portName;
 		public string _portAddress;

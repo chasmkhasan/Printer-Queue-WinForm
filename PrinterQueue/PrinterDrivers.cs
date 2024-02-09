@@ -9,9 +9,9 @@ namespace PrinterQueue
 {
 	internal class PrinterDrivers
 	{
-		public List<PrinterInfo> DriversInfor()
+		public List<DataModel> DriversInfor()
 		{
-			List<PrinterInfo> driverNames = new List<PrinterInfo>();
+			List<DataModel> driverNames = new List<DataModel>();
 
 			try
 			{
@@ -28,7 +28,7 @@ namespace PrinterQueue
 
 						if (printerName != null && systemName != null && driverName != null)
 						{
-							PrinterInfo printerInfo = new PrinterInfo();
+							DataModel printerInfo = new DataModel();
 							{
 								printerInfo.PrinterName = printerName;
 								printerInfo.SystemName = systemName;

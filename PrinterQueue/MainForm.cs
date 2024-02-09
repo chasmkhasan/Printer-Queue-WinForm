@@ -10,7 +10,7 @@ namespace PrinterQueue
 {
 	public partial class MainForm : Form
 	{
-		private PrinterInfo _printerInfo;
+		private DataModel _printerInfo;
 		private PrinterDrivers _printerDrivers;
 		private GeneratePortName _generatePort;
 		private QueueMgt _queueMgt;
@@ -19,7 +19,7 @@ namespace PrinterQueue
 
 		public MainForm()
 		{
-			_printerInfo = new PrinterInfo();
+			_printerInfo = new DataModel();
 			_printerDrivers = new PrinterDrivers();
 			_generatePort = new GeneratePortName();
 			_queueMgt = new QueueMgt();
@@ -87,9 +87,9 @@ namespace PrinterQueue
 		{
 			try
 			{
-				List<PrinterInfo> driverNames = _printerDrivers.DriversInfor();
+				List<DataModel> driverNames = _printerDrivers.DriversInfor();
 
-				foreach (PrinterInfo printerInfo in driverNames)
+				foreach (DataModel printerInfo in driverNames)
 				{
 					comboDrivers.Items.Add(printerInfo.DriverName);
 				}

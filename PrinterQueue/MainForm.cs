@@ -52,7 +52,7 @@ namespace PrinterQueue
 				txtPortName.BackColor = Color.Red;
 				string newPortName = _generatePort.GenerateNewPortName();
 
-				if (_generatePort.IsPortNameAvailableViaPowerShell(newPortName))
+				if (_generatePort.IsPortNameAvailableNew(newPortName))
 				{
 					txtPortName.Text = newPortName;
 				}

@@ -15,15 +15,12 @@ namespace PrinterQueue
 		{
 			using (PowerShell PowerShellInstance = PowerShell.Create())
 			{
-				// Specify the PowerShell script to check if the port name is available
 				string script = $"Get-PrinterPort -Name '{portName}'";
 
 				PowerShellInstance.AddScript(script);
 
-				// Invoke execution on the pipeline (collecting output)
 				Collection<PSObject> PSOutput = PowerShellInstance.Invoke();
 
-				// Check the output for the availability of the port name
 				return PSOutput.Count == 0;
 			}
 		}
@@ -49,7 +46,7 @@ namespace PrinterQueue
 			}
 		}
 
-		public bool IsPortNameAvailableViaPowerShell(string portName)
+		public bool IsPortNameAvailableNew(string portName)
 		{
 			using (PowerShell PowerShellInstance = PowerShell.Create())
 			{

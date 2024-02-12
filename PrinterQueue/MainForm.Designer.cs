@@ -193,9 +193,9 @@
 			label4.AutoSize = true;
 			label4.Location = new Point(3, 70);
 			label4.Name = "label4";
-			label4.Size = new Size(80, 15);
+			label4.Size = new Size(77, 15);
 			label4.TabIndex = 2;
-			label4.Text = "Printer Queue";
+			label4.Text = "Printer Name";
 			// 
 			// label5
 			// 

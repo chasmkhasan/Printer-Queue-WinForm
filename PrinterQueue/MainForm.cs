@@ -62,24 +62,26 @@ namespace PrinterQueue
 			}
 		}
 
-		private void PrinterQueue()
+		private void PrinterName() // consider printer as a Printer Queue.
 		{
 			string printerQueueName = txtPrinterQueue.Text;
 
 			if (_queueMgt.PrinterQueueExists(printerQueueName))
 			{
-				_queueMgt.DeletePrinterQueueViaPowerShell(printerQueueName);
+				_queueMgt.DeletePrinterQueue(printerQueueName);
 			}
 
-			_queueMgt.CreatePrinterQueueViaPowerShell(printerQueueName);
+			string selectedDriverName = comboDrivers.SelectedItem.ToString();
+
+			_queueMgt.CreatePrinterQueue(printerQueueName, selectedDriverName);
 		}
 
 		public void GroupPermission()
 		{
 			try
 			{
-				//string printerName = "Kyocera Mita KM-1530 KX"; // Replace with your printer name
-				string printerName = _dataModel.PrinterName;
+				string printerName = "Kyocera Mita KM-1530 KX"; // Replace with your printer name
+				//string printerName = _dataModel.PrinterName;
 				string groups = txtGroups.Text;
 
 				_groupPermission.RemoveEveryonePermission(printerName);
@@ -130,7 +132,7 @@ namespace PrinterQueue
 				string userInputPrinterQueue = txtPrinterQueue.Text;
 				if (!_queueMgt.PrinterQueueExists(userInputPrinterQueue))
 				{
-					PrinterQueue();
+					PrinterName();
 				}
 				else
 				{

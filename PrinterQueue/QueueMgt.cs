@@ -23,7 +23,7 @@ namespace PrinterQueue
 			}
 		}
 
-		public void DeletePrinterQueueViaPowerShell(string queueName)
+		public void DeletePrinterQueue(string queueName)
 		{
 			using (PowerShell PowerShellInstance = PowerShell.Create())
 			{
@@ -34,11 +34,11 @@ namespace PrinterQueue
 			}
 		}
 
-		public void CreatePrinterQueueViaPowerShell(string queueName)
+		public void CreatePrinterQueue(string queueName, string driverName)
 		{
 			using (PowerShell PowerShellInstance = PowerShell.Create())
 			{
-				string script = $"Add-Printer -Name '{queueName}' -DriverName 'XPS Writer'";
+				string script = $"Add-Printer -Name '{queueName}' -DriverName '{driverName}'";
 
 				PowerShellInstance.AddScript(script);
 				PowerShellInstance.Invoke();

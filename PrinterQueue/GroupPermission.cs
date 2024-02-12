@@ -6,37 +6,43 @@ using System.Management.Automation.Runspaces;
 using System.Management.Automation;
 using System.Text;
 using System.Threading.Tasks;
+using System.Diagnostics;
 
 namespace PrinterQueue
 {
 	internal class GroupPermission
 	{
-		public void SetPrinterPermissions(string printerName, string printServerName, string userNameOrGroup)
+		public void RemoveEveryonePermission(string printerName)
 		{
-			try
+			string removeEveryoneCommand = $"Get-Printer -Name {printerName} | Remove-PrintACL -Account 'Everyone'";
+
+			ExecutePowerShellCommand(removeEveryoneCommand);
+		}
+
+		public void AddGroupsToPrinter(string printerName, string groups)
+		{
+			string addGroupsCommand = $"Set-Printer -Name {printerName} -PermissionSDDL {groups}";
+
+			ExecutePowerShellCommand(addGroupsCommand);
+		}
+
+		private void ExecutePowerShellCommand(string command)
+		{
+			using (PowerShell PowerShellInstance = PowerShell.Create())
 			{
-				using (var runspace = RunspaceFactory.CreateRunspace())
+				PowerShellInstance.AddScript(command);
+
+				Collection<PSObject> PSOutput = PowerShellInstance.Invoke();
+
+				
+				if (PowerShellInstance.Streams.Error.Count > 0)
 				{
-					runspace.Open();
-
-					using (var pipeline = runspace.CreatePipeline())
+					foreach (ErrorRecord errorRecord in PowerShellInstance.Streams.Error)
 					{
-						string command = $"set-printer {printerName} -computer {printServerName} -PermissionSDDL {userNameOrGroup}";
-
-						pipeline.Commands.AddScript(command);
-
-						Collection<PSObject> results = pipeline.Invoke();
-
-						foreach (var result in results)
-						{
-							// Process the result as needed
-						}
+						//Debug.WriteLine($"PowerShell Error: {errorRecord.Exception.Message}");
+						MessageBox.Show($"PowerShell Error: {errorRecord.Exception.Message}");
 					}
 				}
-			}
-			catch (Exception ex)
-			{
-				MessageBox.Show($"Error: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
 			}
 		}
 	}

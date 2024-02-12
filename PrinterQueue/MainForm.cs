@@ -76,13 +76,21 @@ namespace PrinterQueue
 
 		public void GroupPermission()
 		{
-			if (_dataModel != null)
+			try
 			{
+				//string printerName = "Kyocera Mita KM-1530 KX"; // Replace with your printer name
 				string printerName = _dataModel.PrinterName;
-				string printServerName = _dataModel.SystemName;
-				string userNameOrGroup = txtGroups.Text;
+				string groups = txtGroups.Text;
 
-				_groupPermission.SetPrinterPermissions(printerName, printServerName, userNameOrGroup);
+				_groupPermission.RemoveEveryonePermission(printerName);
+
+				_groupPermission.AddGroupsToPrinter(printerName, groups);
+
+				//MessageBox.Show("Printer permissions updated successfully.", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
+			}
+			catch (Exception ex)
+			{
+				MessageBox.Show($"An error occurred: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
 			}
 		}
 
@@ -108,14 +116,14 @@ namespace PrinterQueue
 			try
 			{
 				string userInputPortName = txtPortName.Text;
-				//if (!_generatePort.IsPortNameAvailable(userInputPortName))
-				//{
-				//	ReadPortName();
-				//}
-				//else
-				//{
-				//	_dataModel.PortName = userInputPortName;
-				//}
+				if (!_generatePort.PrinterPortExists(userInputPortName))
+				{
+					ReadPortName();
+				}
+				else
+				{
+					_dataModel.PortName = userInputPortName;
+				}
 
 				_dataModel.PortAddress = txtPortAddress.Text;
 
@@ -131,6 +139,17 @@ namespace PrinterQueue
 
 				_dataModel.Comment = txtComment.Text;
 				_dataModel.Location = txtLocation.Text;
+
+				string userInputGroup = txtGroups.Text;
+				if (!string.IsNullOrEmpty(userInputGroup))
+				{
+					bool conditionMet = true;
+
+					if (conditionMet)
+					{
+						GroupPermission();
+					}
+				}
 
 				string selectedDriverInfo = comboDrivers.SelectedItem?.ToString();
 				if (selectedDriverInfo != null)

@@ -42,6 +42,8 @@ namespace PrinterQueue
 
 		public void ReadPortName(string enteredPortName)
 		{
+			txtPortName.BackColor = System.Drawing.Color.Yellow;
+
 			_dataModel.PortName = enteredPortName.Trim();
 
 			if (_generatePort.PrinterPortExists(enteredPortName))
@@ -54,16 +56,24 @@ namespace PrinterQueue
 				{
 					bool portAdded = _generatePort.AddPrinterPort(modifiedPortName, _dataModel.PortAddress, 9100, 1, "public");
 				}
+
+				txtPortName.BackColor = System.Drawing.Color.Red;
+
+				return;
 			}
 			else if (!_generatePort.PrinterPortExists(enteredPortName))
 			{
 				bool portAdded = _generatePort.AddPrinterPort(enteredPortName, _dataModel.PortAddress, 9100, 1, "public");
 			}
+
+			txtPortName.BackColor = System.Drawing.Color.Aquamarine;
 		}
 
 
 		private void RaedPrinterName(string printerQueueName) // consider printer as a Printer Queue.
 		{
+			//txtPortName.BackColor = System.Drawing.Color.Yellow;
+
 			_dataModel.PrinterName = printerQueueName.Trim();
 
 			if (_queueMgt.PrinterQueueExists(printerQueueName))
@@ -74,6 +84,8 @@ namespace PrinterQueue
 			string selectedDriverName = comboDrivers.SelectedItem.ToString();
 
 			_queueMgt.CreatePrinterQueue(printerQueueName, selectedDriverName);
+
+			txtPrinterQueue.BackColor = System.Drawing.Color.Aquamarine;
 		}
 
 		public void GroupPermission()
@@ -141,13 +153,56 @@ namespace PrinterQueue
 		private void InstallPrinter_Click(object sender, EventArgs e)
 		{
 
-			_dataModel.PortAddress = txtPortAddress.Text.Trim(); // Do not move from here. First need to read portAddress then Read PortName.
+			string userInputPortAddress = txtPortAddress.Text.Trim(); // Do not move from here. First need to read portAddress then Read PortName.
+			if (!string.IsNullOrEmpty(userInputPortAddress))
+			{
+				bool conditionMet = true;
+				if (conditionMet)
+				{
+					_dataModel.PortAddress = txtPortAddress.Text.Trim();
+				}
+			}
+			else
+			{
+				lblMessageBox.Text = $"Condition not met. Please Check PortAddress!";
+				lblMessageBox.ForeColor = System.Drawing.Color.Red;
+
+				return;
+			}
 
 			string userInputPortName = txtPortName.Text;
-			ReadPortName(userInputPortName);                     // Do not move from here. First need to read portAddress then Read PortName.
+			if (!string.IsNullOrEmpty(userInputPortName))
+			{
+				bool conditionMet = true;
+				if (conditionMet)
+				{
+					ReadPortName(userInputPortName);             // Do not move from here. First need to read portAddress then Read PortName.
+				}
+			}
+			else
+			{
+				lblMessageBox.Text = $"Condition not met. Please Check PortName!";
+				lblMessageBox.ForeColor = System.Drawing.Color.Red;
+
+				return;
+			}
 
 			string userInputPrinterQueue = txtPrinterQueue.Text;
-			RaedPrinterName(userInputPrinterQueue);
+			if (!string.IsNullOrEmpty(userInputPrinterQueue))
+			{
+				bool conditionMet = true;
+				if (conditionMet)
+				{
+					RaedPrinterName(userInputPrinterQueue);
+				}
+			}
+			else
+			{
+				lblMessageBox.Text = $"Condition not met. Please Check Printer Name!";
+				lblMessageBox.ForeColor = System.Drawing.Color.Red;
+
+				return;
+			}
 
 			_dataModel.Comment = txtComment.Text;
 
@@ -167,19 +222,21 @@ namespace PrinterQueue
 			string selectedDriverInfo = comboDrivers.SelectedItem?.ToString();
 			if (selectedDriverInfo != null)
 			{
-				string driverName = selectedDriverInfo.Substring(selectedDriverInfo.IndexOf(":") + 1);
-				_dataModel.DriverName = driverName;
+				_dataModel.DriverName = selectedDriverInfo;
 
-				if (_installMgt.PrinterExists(_dataModel.PrinterName))
+				if (!_installMgt.PrinterExists(_dataModel.PrinterName))
 				{
-					MessageBox.Show($"Printer '{_dataModel.PrinterName}' is already installed.", "Information", MessageBoxButtons.OK, MessageBoxIcon.Information);
+					lblMessageBox.Text = $"Printer '{_dataModel.DriverName}' is already installed.";
+					lblMessageBox.ForeColor = System.Drawing.Color.Red;
 				}
 				else
 				{
 					_installMgt.ExecutePowerShellScript($"Add-Printer -Name '{_dataModel.PrinterName}' -DriverName '{_dataModel.DriverName}' -PortName '{_dataModel.PortName}' -Comment '{_dataModel.Comment}' -Location '{_dataModel.Location}'");
+
+					lblMessageBox.Text = $"'{_dataModel.DriverName}' has installed successfully!";
+					lblMessageBox.ForeColor = System.Drawing.Color.Green;
 				}
 			}
-
 		}
 	}
 }

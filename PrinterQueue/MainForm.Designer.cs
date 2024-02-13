@@ -114,8 +114,8 @@
 			// tableLayoutPanel2
 			// 
 			tableLayoutPanel2.ColumnCount = 2;
-			tableLayoutPanel2.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 21.1026611F));
-			tableLayoutPanel2.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 78.89734F));
+			tableLayoutPanel2.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 24.7148285F));
+			tableLayoutPanel2.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 75.28517F));
 			tableLayoutPanel2.Controls.Add(txtGroups, 1, 5);
 			tableLayoutPanel2.Controls.Add(txtLocation, 1, 4);
 			tableLayoutPanel2.Controls.Add(txtComment, 1, 3);
@@ -146,25 +146,25 @@
 			// txtGroups
 			// 
 			txtGroups.Dock = DockStyle.Fill;
-			txtGroups.Location = new Point(114, 158);
+			txtGroups.Location = new Point(133, 158);
 			txtGroups.Name = "txtGroups";
-			txtGroups.Size = new Size(409, 23);
+			txtGroups.Size = new Size(390, 23);
 			txtGroups.TabIndex = 12;
 			// 
 			// txtLocation
 			// 
 			txtLocation.Dock = DockStyle.Fill;
-			txtLocation.Location = new Point(114, 127);
+			txtLocation.Location = new Point(133, 127);
 			txtLocation.Name = "txtLocation";
-			txtLocation.Size = new Size(409, 23);
+			txtLocation.Size = new Size(390, 23);
 			txtLocation.TabIndex = 11;
 			// 
 			// txtComment
 			// 
 			txtComment.Dock = DockStyle.Fill;
-			txtComment.Location = new Point(114, 96);
+			txtComment.Location = new Point(133, 96);
 			txtComment.Name = "txtComment";
-			txtComment.Size = new Size(409, 23);
+			txtComment.Size = new Size(390, 23);
 			txtComment.TabIndex = 10;
 			// 
 			// label2
@@ -183,9 +183,9 @@
 			label3.AutoSize = true;
 			label3.Location = new Point(3, 39);
 			label3.Name = "label3";
-			label3.Size = new Size(74, 15);
+			label3.Size = new Size(115, 15);
 			label3.TabIndex = 1;
-			label3.Text = "Port Address";
+			label3.Text = "Port Address IP/DNS";
 			// 
 			// label4
 			// 
@@ -240,34 +240,34 @@
 			// txtPrinterQueue
 			// 
 			txtPrinterQueue.Dock = DockStyle.Fill;
-			txtPrinterQueue.Location = new Point(114, 65);
+			txtPrinterQueue.Location = new Point(133, 65);
 			txtPrinterQueue.Name = "txtPrinterQueue";
-			txtPrinterQueue.Size = new Size(409, 23);
+			txtPrinterQueue.Size = new Size(390, 23);
 			txtPrinterQueue.TabIndex = 9;
 			// 
 			// comboDrivers
 			// 
 			comboDrivers.Dock = DockStyle.Fill;
 			comboDrivers.FormattingEnabled = true;
-			comboDrivers.Location = new Point(114, 189);
+			comboDrivers.Location = new Point(133, 189);
 			comboDrivers.Name = "comboDrivers";
-			comboDrivers.Size = new Size(409, 23);
+			comboDrivers.Size = new Size(390, 23);
 			comboDrivers.TabIndex = 13;
 			// 
 			// txtPortName
 			// 
 			txtPortName.Dock = DockStyle.Fill;
-			txtPortName.Location = new Point(114, 3);
+			txtPortName.Location = new Point(133, 3);
 			txtPortName.Name = "txtPortName";
-			txtPortName.Size = new Size(409, 23);
+			txtPortName.Size = new Size(390, 23);
 			txtPortName.TabIndex = 14;
 			// 
 			// txtPortAddress
 			// 
 			txtPortAddress.Dock = DockStyle.Fill;
-			txtPortAddress.Location = new Point(114, 34);
+			txtPortAddress.Location = new Point(133, 34);
 			txtPortAddress.Name = "txtPortAddress";
-			txtPortAddress.Size = new Size(409, 23);
+			txtPortAddress.Size = new Size(390, 23);
 			txtPortAddress.TabIndex = 15;
 			// 
 			// MainForm

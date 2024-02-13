@@ -11,6 +11,7 @@ namespace PrinterQueue
 {
 	internal class GeneratePortName
 	{
+		
 		public bool AddPrinterPort(string portName, string printerHostAddress, int portNumber, int snmp, string snmpCommunity)
 		{
 			using (PowerShell PowerShellInstance = PowerShell.Create())
@@ -23,7 +24,6 @@ namespace PrinterQueue
 
 				if (PSOutput.Count == 0)
 				{
-					MessageBox.Show($"New PortName is {portName}");
 					return true;
 				}
 				else

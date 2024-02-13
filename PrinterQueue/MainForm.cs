@@ -16,7 +16,7 @@ namespace PrinterQueue
 		private QueueMgt _queueMgt;
 		private GroupPermission _groupPermission;
 		private InstallMgt _installMgt;
-		
+
 
 		public MainForm()
 		{
@@ -36,14 +36,13 @@ namespace PrinterQueue
 		{
 			this.Text += " Printer Queue Installer ";
 
-			
-			DriversInfor();
+
+			LoadDriversInforTask();
 		}
-		
-		
-		private void ReadPortName()
+
+		public void ReadPortName(string enteredPortName)
 		{
-			string enteredPortName = txtPortName.Text.Trim();
+			enteredPortName = enteredPortName.Trim();
 
 			if (_generatePort.PrinterPortExists(enteredPortName))
 			{
@@ -53,18 +52,19 @@ namespace PrinterQueue
 
 				if (_generatePort.PrinterPortExists(enteredPortName))
 				{
-					bool portAdded = _generatePort.AddPrinterPort(modifiedPortName, "printerHostAddress", 9100, 1, "public");
+					bool portAdded = _generatePort.AddPrinterPort(modifiedPortName, _dataModel.PortAddress, 9100, 1, "public");
 				}
 			}
 			else if (!_generatePort.PrinterPortExists(enteredPortName))
 			{
-				bool portAdded = _generatePort.AddPrinterPort(enteredPortName, "printerHostAddress", 9100, 1, "public");
+				bool portAdded = _generatePort.AddPrinterPort(enteredPortName, _dataModel.PortAddress, 9100, 1, "public");
 			}
 		}
 
-		private void PrinterName() // consider printer as a Printer Queue.
+
+		private void RaedPrinterName(string printerQueueName) // consider printer as a Printer Queue.
 		{
-			string printerQueueName = txtPrinterQueue.Text;
+			printerQueueName = printerQueueName.Trim();
 
 			if (_queueMgt.PrinterQueueExists(printerQueueName))
 			{
@@ -81,7 +81,7 @@ namespace PrinterQueue
 			try
 			{
 				string printerName = "Kyocera Mita KM-1530 KX"; // Replace with your printer name
-				//string printerName = _dataModel.PrinterName;
+																//string printerName = _dataModel.PrinterName;
 				string groups = txtGroups.Text;
 
 				_groupPermission.RemoveEveryonePermission(printerName);
@@ -96,20 +96,45 @@ namespace PrinterQueue
 			}
 		}
 
+		private void LoadDriversInforTask()
+		{
+			Task.Run(() => DriversInfor());
+		}
+
 		private void DriversInfor()
 		{
-			try
+			List<DataModel> driverNames = _printerDrivers.DriversInfor();
+
+			if (comboDrivers.InvokeRequired)
 			{
-				List<DataModel> driverNames = _printerDrivers.DriversInfor();
+				comboDrivers.Invoke(new Action(() =>
+				{
+					comboDrivers.Items.Clear(); // Clear existing items if needed
+
+					foreach (DataModel printerInfo in driverNames)
+					{
+						comboDrivers.Items.Add(printerInfo.DriverName);
+					}
+
+					if (comboDrivers.Items.Count > 0)
+					{
+						comboDrivers.SelectedIndex = 0;
+					}
+				}));
+			}
+			else
+			{
+				comboDrivers.Items.Clear(); // Clear existing items if needed
 
 				foreach (DataModel printerInfo in driverNames)
 				{
 					comboDrivers.Items.Add(printerInfo.DriverName);
 				}
-			}
-			catch (ApplicationException ex)
-			{
-				MessageBox.Show(ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+
+				if (comboDrivers.Items.Count > 0)
+				{
+					comboDrivers.SelectedIndex = 0;
+				}
 			}
 		}
 
@@ -117,29 +142,16 @@ namespace PrinterQueue
 		{
 			try
 			{
-				string userInputPortName = txtPortName.Text;
-				if (!_generatePort.PrinterPortExists(userInputPortName))
-				{
-					ReadPortName();
-				}
-				else
-				{
-					_dataModel.PortName = userInputPortName;
-				}
+				_dataModel.PortAddress = txtPortAddress.Text.Trim(); // Do not move from here. First need to read portAddress then Read PortName.
 
-				_dataModel.PortAddress = txtPortAddress.Text;
+				string userInputPortName = txtPortName.Text;
+				ReadPortName(userInputPortName);					 // Do not move from here. First need to read portAddress then Read PortName.
 
 				string userInputPrinterQueue = txtPrinterQueue.Text;
-				if (!_queueMgt.PrinterQueueExists(userInputPrinterQueue))
-				{
-					PrinterName();
-				}
-				else
-				{
-					_dataModel.PrinterQueue = userInputPrinterQueue;
-				}
+				RaedPrinterName(userInputPrinterQueue);
 
 				_dataModel.Comment = txtComment.Text;
+
 				_dataModel.Location = txtLocation.Text;
 
 				string userInputGroup = txtGroups.Text;

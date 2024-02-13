@@ -42,7 +42,7 @@ namespace PrinterQueue
 
 		public void ReadPortName(string enteredPortName)
 		{
-			enteredPortName = enteredPortName.Trim();
+			_dataModel.PortName = enteredPortName.Trim();
 
 			if (_generatePort.PrinterPortExists(enteredPortName))
 			{
@@ -64,7 +64,7 @@ namespace PrinterQueue
 
 		private void RaedPrinterName(string printerQueueName) // consider printer as a Printer Queue.
 		{
-			printerQueueName = printerQueueName.Trim();
+			_dataModel.PrinterName = printerQueueName.Trim();
 
 			if (_queueMgt.PrinterQueueExists(printerQueueName))
 			{
@@ -140,57 +140,46 @@ namespace PrinterQueue
 
 		private void InstallPrinter_Click(object sender, EventArgs e)
 		{
-			try
+
+			_dataModel.PortAddress = txtPortAddress.Text.Trim(); // Do not move from here. First need to read portAddress then Read PortName.
+
+			string userInputPortName = txtPortName.Text;
+			ReadPortName(userInputPortName);                     // Do not move from here. First need to read portAddress then Read PortName.
+
+			string userInputPrinterQueue = txtPrinterQueue.Text;
+			RaedPrinterName(userInputPrinterQueue);
+
+			_dataModel.Comment = txtComment.Text;
+
+			_dataModel.Location = txtLocation.Text;
+
+			//string userInputGroup = txtGroups.Text;
+			//if (!string.IsNullOrEmpty(userInputGroup))
+			//{
+			//	bool conditionMet = true;
+
+			//	if (conditionMet)
+			//	{
+			//		GroupPermission();
+			//	}
+			//}
+
+			string selectedDriverInfo = comboDrivers.SelectedItem?.ToString();
+			if (selectedDriverInfo != null)
 			{
-				_dataModel.PortAddress = txtPortAddress.Text.Trim(); // Do not move from here. First need to read portAddress then Read PortName.
+				string driverName = selectedDriverInfo.Substring(selectedDriverInfo.IndexOf(":") + 1);
+				_dataModel.DriverName = driverName;
 
-				string userInputPortName = txtPortName.Text;
-				ReadPortName(userInputPortName);					 // Do not move from here. First need to read portAddress then Read PortName.
-
-				string userInputPrinterQueue = txtPrinterQueue.Text;
-				RaedPrinterName(userInputPrinterQueue);
-
-				_dataModel.Comment = txtComment.Text;
-
-				_dataModel.Location = txtLocation.Text;
-
-				string userInputGroup = txtGroups.Text;
-				if (!string.IsNullOrEmpty(userInputGroup))
+				if (_installMgt.PrinterExists(_dataModel.PrinterName))
 				{
-					bool conditionMet = true;
-
-					if (conditionMet)
-					{
-						GroupPermission();
-					}
-				}
-
-				string selectedDriverInfo = comboDrivers.SelectedItem?.ToString();
-				if (selectedDriverInfo != null)
-				{
-					string driverName = selectedDriverInfo.Substring(selectedDriverInfo.IndexOf(":") + 2);
-					_dataModel.DriverName = driverName;
-
-					if (_installMgt.PrinterExists(_dataModel.PrinterName))
-					{
-						MessageBox.Show($"Printer '{_dataModel.PrinterName}' is already installed.", "Information", MessageBoxButtons.OK, MessageBoxIcon.Information);
-					}
-					else
-					{
-						_installMgt.ExecutePowerShellScript($"Add-Printer -Name '{_dataModel.PrinterName}' -DriverName '{_dataModel.DriverName}' -PortName '{_dataModel.PortName}' -Comment '{_dataModel.Comment}' -Location '{_dataModel.Location}'");
-
-						MessageBox.Show($"Printername: {_dataModel.PrinterName} has been installed. PortAddress: {_dataModel.PortAddress}, PortName: {_dataModel.PortName}, Location: {_dataModel.Location}");
-					}
+					MessageBox.Show($"Printer '{_dataModel.PrinterName}' is already installed.", "Information", MessageBoxButtons.OK, MessageBoxIcon.Information);
 				}
 				else
 				{
-					MessageBox.Show("Please select a driver.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+					_installMgt.ExecutePowerShellScript($"Add-Printer -Name '{_dataModel.PrinterName}' -DriverName '{_dataModel.DriverName}' -PortName '{_dataModel.PortName}' -Comment '{_dataModel.Comment}' -Location '{_dataModel.Location}'");
 				}
 			}
-			catch (ApplicationException ex)
-			{
-				MessageBox.Show(ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-			}
+
 		}
 	}
 }

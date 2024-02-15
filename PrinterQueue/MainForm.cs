@@ -219,7 +219,7 @@ namespace PrinterQueue
 			{
 				_dataModel.DriverName = selectedDriverInfo;
 
-				if (!_installMgt.PrinterExists(_dataModel.PrinterName))
+				if (_installMgt.PrinterExists(_dataModel.PrinterName))
 				{
 					lblMessageBox.Text = $"Printer '{_dataModel.DriverName}' is already installed.";
 					lblMessageBox.ForeColor = System.Drawing.Color.Red;

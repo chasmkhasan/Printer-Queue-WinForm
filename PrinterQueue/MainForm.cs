@@ -88,23 +88,27 @@ namespace PrinterQueue
 			txtPrinterQueue.BackColor = System.Drawing.Color.Aquamarine;
 		}
 
-		public void GroupPermission()
+		public void ReadGroupPermission()
 		{
-			try
+			string userInputgroup = txtGroups.Text;
+			if (!string.IsNullOrEmpty(userInputgroup))
 			{
-				string printerName = "Kyocera Mita KM-1530 KX"; // Replace with your printer name
-																//string printerName = _dataModel.PrinterName;
-				string groups = txtGroups.Text;
+				bool conditionMet = true;
+				if (conditionMet)
+				{
+					string printerName = comboDrivers.SelectedItem?.ToString();
 
-				_groupPermission.RemoveEveryonePermission(printerName);
+					string newSddlString = _groupPermission.RemoveGroupPermission(printerName, userInputgroup);
 
-				_groupPermission.AddGroupsToPrinter(printerName, groups);
-
-				//MessageBox.Show("Printer permissions updated successfully.", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
+					_groupPermission.SetPrinterPermissions(printerName, newSddlString);
+				}
 			}
-			catch (Exception ex)
+			else
 			{
-				MessageBox.Show($"An error occurred: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+				lblMessageBox.Text = $"Condition not met. Please Check Groups!";
+				lblMessageBox.ForeColor = System.Drawing.Color.Red;
+
+				return;
 			}
 		}
 
@@ -208,16 +212,7 @@ namespace PrinterQueue
 
 			_dataModel.Location = txtLocation.Text;
 
-			//string userInputGroup = txtGroups.Text;
-			//if (!string.IsNullOrEmpty(userInputGroup))
-			//{
-			//	bool conditionMet = true;
-
-			//	if (conditionMet)
-			//	{
-			//		GroupPermission();
-			//	}
-			//}
+			ReadGroupPermission();
 
 			string selectedDriverInfo = comboDrivers.SelectedItem?.ToString();
 			if (selectedDriverInfo != null)

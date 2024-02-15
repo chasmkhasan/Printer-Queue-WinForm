@@ -12,35 +12,42 @@ namespace PrinterQueue
 {
 	internal class GroupPermission
 	{
-		public void RemoveEveryonePermission(string printerName)
-		{
-			string removeEveryoneCommand = $"Get-Printer -Name {printerName} | Remove-PrintACL -Account 'Everyone'";
-
-			ExecutePowerShellCommand(removeEveryoneCommand);
-		}
-
-		public void AddGroupsToPrinter(string printerName, string groups)
-		{
-			string addGroupsCommand = $"Set-Printer -Name {printerName} -PermissionSDDL {groups}";
-
-			ExecutePowerShellCommand(addGroupsCommand);
-		}
-
-		private void ExecutePowerShellCommand(string command)
+		public string RemoveGroupPermission(string printerName, string groupName)
 		{
 			using (PowerShell PowerShellInstance = PowerShell.Create())
 			{
-				PowerShellInstance.AddScript(command);
-
+				PowerShellInstance.AddScript($"Get-Printer -Name {printerName} | Select-Object -ExpandProperty SecurityDescriptorSDDL");
 				Collection<PSObject> PSOutput = PowerShellInstance.Invoke();
 
-				
-				if (PowerShellInstance.Streams.Error.Count > 0)
+				if (PowerShellInstance.HadErrors)
 				{
-					foreach (ErrorRecord errorRecord in PowerShellInstance.Streams.Error)
+					foreach (ErrorRecord error in PowerShellInstance.Streams.Error)
 					{
-						//Debug.WriteLine($"PowerShell Error: {errorRecord.Exception.Message}");
-						MessageBox.Show($"PowerShell Error: {errorRecord.Exception.Message}");
+						Debug.WriteLine($"PowerShell Error: {error.Exception.Message}");
+					}
+					return null;
+				}
+
+				string currentSddlString = PSOutput.Count > 0 ? PSOutput[0].ToString() : null;
+
+				string newSddlString = currentSddlString?.Replace($"D:(A;;GA;;;{groupName})", "");
+
+				return newSddlString;
+			}
+		}
+
+		public void SetPrinterPermissions(string printerName, string newSddlString)
+		{
+			using (PowerShell PowerShellInstance = PowerShell.Create())
+			{
+				PowerShellInstance.AddScript($"Set-Printer -Name {printerName} -PermissionSDDL '{newSddlString}'");
+				PowerShellInstance.Invoke();
+
+				if (PowerShellInstance.HadErrors)
+				{
+					foreach (ErrorRecord error in PowerShellInstance.Streams.Error)
+					{
+						Debug.WriteLine($"PowerShell Error: {error.Exception.Message}");
 					}
 				}
 			}

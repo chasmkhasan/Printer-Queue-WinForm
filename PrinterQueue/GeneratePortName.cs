@@ -11,7 +11,6 @@ namespace PrinterQueue
 {
 	internal class GeneratePortName
 	{
-		
 		public bool AddPrinterPort(string portName, string printerHostAddress, int portNumber, int snmp, string snmpCommunity)
 		{
 			using (PowerShell PowerShellInstance = PowerShell.Create())

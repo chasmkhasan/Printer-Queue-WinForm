@@ -9,7 +9,7 @@ namespace PrinterQueue
 {
 	internal class PrinterDrivers
 	{
-		public List<DataModel> DriversInfor()
+		public List<DataModel> ReadDriversFromSystem()
 		{
 			List<DataModel> driverNames = new List<DataModel>();
 

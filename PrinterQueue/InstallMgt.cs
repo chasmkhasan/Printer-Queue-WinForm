@@ -10,15 +10,20 @@ namespace PrinterQueue
 {
 	internal class InstallMgt
 	{
-		public void ExecutePowerShellScript(string fullScript)
+		
+		public async Task ExecutePowerShellScriptAsync(string fullScript)
 		{
-			using (PowerShell PowerShellInstance = PowerShell.Create())
+			await Task.Run(() =>
 			{
-				PowerShellInstance.AddScript(fullScript);
+				using (PowerShell PowerShellInstance = PowerShell.Create())
+				{
+					PowerShellInstance.AddScript(fullScript);
 
-				Collection<PSObject> PSOutput = PowerShellInstance.Invoke();
-			}
+					Collection<PSObject> PSOutput = PowerShellInstance.Invoke();
+				}
+			});
 		}
+
 
 		public bool PrinterExists(string printerName)
 		{

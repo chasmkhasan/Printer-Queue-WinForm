@@ -12,45 +12,52 @@ namespace PrinterQueue
 {
 	internal class GroupPermission
 	{
-		public string RemoveGroupPermission(string printerName, string groupName)
+		public async Task<string> RemoveGroupPermissionAsync(string printerName, string groupName)
 		{
-			using (PowerShell PowerShellInstance = PowerShell.Create())
+			return await Task.Run(() => 
 			{
-				PowerShellInstance.AddScript($"Get-Printer -Name {printerName} | Select-Object -ExpandProperty SecurityDescriptorSDDL");
-				Collection<PSObject> PSOutput = PowerShellInstance.Invoke();
-
-				if (PowerShellInstance.HadErrors)
+				using (PowerShell PowerShellInstance = PowerShell.Create())
 				{
-					foreach (ErrorRecord error in PowerShellInstance.Streams.Error)
+					PowerShellInstance.AddScript($"Get-Printer -Name {printerName} | Select-Object -ExpandProperty SecurityDescriptorSDDL");
+					Collection<PSObject> PSOutput = PowerShellInstance.Invoke();
+
+					if (PowerShellInstance.HadErrors)
 					{
-						Debug.WriteLine($"PowerShell Error: {error.Exception.Message}");
+						foreach (ErrorRecord error in PowerShellInstance.Streams.Error)
+						{
+							Debug.WriteLine($"PowerShell Error: {error.Exception.Message}");
+						}
+						return null;
 					}
-					return null;
+
+					string currentSddlString = PSOutput.Count > 0 ? PSOutput[0].ToString() : null;
+
+					string newSddlString = currentSddlString?.Replace($"D:(A;;GA;;;{groupName})", "");
+
+					return newSddlString;
 				}
-
-				string currentSddlString = PSOutput.Count > 0 ? PSOutput[0].ToString() : null;
-
-				string newSddlString = currentSddlString?.Replace($"D:(A;;GA;;;{groupName})", "");
-
-				return newSddlString;
-			}
+			});
 		}
 
-		public void SetPrinterPermissions(string printerName, string newSddlString)
+		public async Task SetPrinterPermissionsAsync(string printerName, string newSddlString)
 		{
-			using (PowerShell PowerShellInstance = PowerShell.Create())
+			await Task.Run(() => 
 			{
-				PowerShellInstance.AddScript($"Set-Printer -Name {printerName} -PermissionSDDL '{newSddlString}'");
-				PowerShellInstance.Invoke();
-
-				if (PowerShellInstance.HadErrors)
+				using (PowerShell PowerShellInstance = PowerShell.Create())
 				{
-					foreach (ErrorRecord error in PowerShellInstance.Streams.Error)
+					PowerShellInstance.AddScript($"Set-Printer -Name {printerName} -PermissionSDDL '{newSddlString}'");
+					PowerShellInstance.Invoke();
+
+					if (PowerShellInstance.HadErrors)
 					{
-						Debug.WriteLine($"PowerShell Error: {error.Exception.Message}");
+						foreach (ErrorRecord error in PowerShellInstance.Streams.Error)
+						{
+							Debug.WriteLine($"PowerShell Error: {error.Exception.Message}");
+						}
 					}
 				}
-			}
+			});
+			
 		}
 	}
 }

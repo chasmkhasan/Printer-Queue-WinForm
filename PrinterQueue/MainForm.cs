@@ -40,64 +40,125 @@ namespace PrinterQueue
 			LoadDriversInforTask();
 		}
 
-		public void ReadPortName(string enteredPortName)
+		#region Port Name Area
+		public async Task ReadPortNameAsync(string enteredPortName)
 		{
-			//txtPortName.BackColor = System.Drawing.Color.Yellow;        //Yellow is Represent Progress/Checking.
-
-			_dataModel.PortName = enteredPortName.Trim();
-
-			if (_generatePort.PrinterPortExists(enteredPortName))
+			if (await _generatePort.PrinterPortExistsAsync(enteredPortName))
 			{
 				string randomAlphabet = Guid.NewGuid().ToString("N").Substring(0, 1);
 
 				string modifiedPortName = enteredPortName + "_" + randomAlphabet;
 
-				if (_generatePort.PrinterPortExists(enteredPortName))
+				if (await _generatePort.PrinterPortExistsAsync(enteredPortName))
 				{
-					bool portAdded = _generatePort.AddPrinterPort(modifiedPortName, _dataModel.PortAddress, 9100, 1, "public");
+					bool portAdded = await _generatePort.AddPrinterPortAsync(modifiedPortName, _dataModel.PortAddress, 9100, 1, "public");
 				}
-
-				txtPortName.ForeColor = System.Drawing.Color.Red;       //Red is represent Name is Exits. 
 
 				return;
 			}
-			else if (!_generatePort.PrinterPortExists(enteredPortName))
+			else if (!await _generatePort.PrinterPortExistsAsync(enteredPortName))
 			{
-				bool portAdded = _generatePort.AddPrinterPort(enteredPortName, _dataModel.PortAddress, 9100, 1, "public");
+				bool portAdded = await _generatePort.AddPrinterPortAsync(enteredPortName, _dataModel.PortAddress, 9100, 1, "public");
 			}
-
-			txtPortName.ForeColor = System.Drawing.Color.Green;     //Green is repesent name has taken.
 		}
 
-		private void ReadPrinterName(string printerQueueName) // consider printer as a Printer Queue.
+		private void LoadReadPortNameTask(string userInputPortName)
 		{
-			//txtPortName.ForeColor = System.Drawing.Color.Yellow;
+			Task.Run(async () => { await ReadPortNameAsync(userInputPortName); });
+		}
+
+		private async Task CheckPortNameTextValidation()
+		{
+			string userInputPortName = txtPortName.Text;
+			if (!string.IsNullOrEmpty(userInputPortName))
+			{
+				await Task.Run(() => 
+				{
+					LoadReadPortNameTask(userInputPortName);
+
+					//lblMessageBox.Text = $"PortName successfully taken.";
+					//lblMessageBox.ForeColor = System.Drawing.Color.Green;
+				});
+			}
+			else
+			{
+				//lblMessageBox.Text = $"Condition not met. Please Check PortName!";
+				//lblMessageBox.ForeColor = System.Drawing.Color.Red;
+
+				return;
+			}
+		}
+
+		#endregion Port Name Area End
+
+		#region Port Address IP/DNS
+
+		private void CheckPortAddressTextValidation()
+		{
+			string userInputPortAddress = txtPortAddress.Text.Trim();
+			if (!string.IsNullOrEmpty(userInputPortAddress))
+			{
+				_dataModel.PortAddress = txtPortAddress.Text.Trim();
+			}
+			else
+			{
+				lblMessageBox.Text = $"Condition not met. Please Check PortAddress!";
+				lblMessageBox.ForeColor = System.Drawing.Color.Red;
+
+				return;
+			}
+		}
+
+		#endregion Port Address IP/DNS
+
+		#region Printer Name Area
+
+		private async Task ReadPrinterNameAsync(string printerQueueName) // consider printer as a Printer Queue.
+		{
 
 			_dataModel.PrinterName = printerQueueName.Trim();
 
-			if (_queueMgt.PrinterQueueExists(printerQueueName))
+			if (await _queueMgt.PrinterQueueExistsAsync(printerQueueName))
 			{
-				_queueMgt.DeletePrinterQueue(printerQueueName);
+				await _queueMgt.DeletePrinterQueueAsync(printerQueueName);
 			}
 
 			string selectedDriverName = comboDrivers.SelectedItem.ToString();
 
-			_queueMgt.CreatePrinterQueue(printerQueueName, selectedDriverName);
+			await _queueMgt.CreatePrinterQueueAsync(printerQueueName, selectedDriverName);
 
 			txtPrinterQueue.ForeColor = System.Drawing.Color.Green;
 		}
 
-		public void CheckGroupTextValidation()
+		private async Task CheckPrinterNameTextValidation()
+		{
+			string userInputPrinterQueue = txtPrinterQueue.Text;
+			if (!string.IsNullOrEmpty(userInputPrinterQueue))
+			{
+				await ReadPrinterNameAsync(userInputPrinterQueue);
+			}
+			else
+			{
+				lblMessageBox.Text = $"Condition not met. Please Check Printer Name!";
+				lblMessageBox.ForeColor = System.Drawing.Color.Red;
+
+				return;
+			}
+		}
+
+		#endregion Printer Name Area
+
+		#region Group Permission
+		public async Task CheckGroupTextValidation()
 		{
 			string userInputgroup = txtGroups.Text;
 			if (!string.IsNullOrEmpty(userInputgroup))
 			{
 				string printerName = comboDrivers.SelectedItem?.ToString();
 
-				string newSddlString = _groupPermission.RemoveGroupPermission(printerName, userInputgroup);
+				string newSddlString = await _groupPermission.RemoveGroupPermissionAsync(printerName, userInputgroup);
 
-				_groupPermission.SetPrinterPermissions(printerName, newSddlString);
-
+				await _groupPermission.SetPrinterPermissionsAsync(printerName, newSddlString);
 			}
 			else
 			{
@@ -108,10 +169,9 @@ namespace PrinterQueue
 			}
 		}
 
-		private void LoadDriversInforTask()
-		{
-			Task.Run(() => ShowingDriverListTillUI());
-		}
+		#endregion Group Permission
+
+		#region Driver Name Area
 
 		private void ShowingDriverListTillUI()
 		{
@@ -150,53 +210,12 @@ namespace PrinterQueue
 			}
 		}
 
-		private void CheckPortAddressTextValidation()
+		private void LoadDriversInforTask()
 		{
-			string userInputPortAddress = txtPortAddress.Text.Trim();
-			if (!string.IsNullOrEmpty(userInputPortAddress))
-			{
-				_dataModel.PortAddress = txtPortAddress.Text.Trim();
-			}
-			else
-			{
-				lblMessageBox.Text = $"Condition not met. Please Check PortAddress!";
-				lblMessageBox.ForeColor = System.Drawing.Color.Red;
-
-				return;
-			}
+			Task.Run(() => ShowingDriverListTillUI());
 		}
 
-		private void CheckPortNameTextValidation()
-		{
-			string userInputPortName = txtPortName.Text;
-			if (!string.IsNullOrEmpty(userInputPortName))
-			{
-				ReadPortName(userInputPortName);
-			}
-			else
-			{
-				lblMessageBox.Text = $"Condition not met. Please Check PortName!";
-				lblMessageBox.ForeColor = System.Drawing.Color.Red;
-
-				return;
-			}
-		}
-
-		private void CheckPrinterNameTextValidation()
-		{
-			string userInputPrinterQueue = txtPrinterQueue.Text;
-			if (!string.IsNullOrEmpty(userInputPrinterQueue))
-			{
-				ReadPrinterName(userInputPrinterQueue);
-			}
-			else
-			{
-				lblMessageBox.Text = $"Condition not met. Please Check Printer Name!";
-				lblMessageBox.ForeColor = System.Drawing.Color.Red;
-
-				return;
-			}
-		}
+		#endregion Driver Name area
 
 		private void PrinterQueueQueryWithTask()
 		{
@@ -213,41 +232,66 @@ namespace PrinterQueue
 
 		private void InstallPrinter_Click(object sender, EventArgs e)
 		{
-			CheckPortAddressTextValidation();  // Do not move from here. First need to read portAddress then Read PortName.
+			Task.Run(async () => { await InstallPrinterAsync(); });
+		}
 
-			CheckPortNameTextValidation();      // Do not move from here. First need to read portAddress then Read PortName.
-
-			CheckPrinterNameTextValidation();
-
-			_dataModel.Comment = txtComment.Text;
-
-			_dataModel.Location = txtLocation.Text;
-
-			CheckGroupTextValidation();
-
-			string selectedDriverInfo = comboDrivers.SelectedItem?.ToString();
-			if (selectedDriverInfo != null)
+		private async Task InstallPrinterAsync()
+		{
+			await Task.Run( async () =>
 			{
-				_dataModel.DriverName = selectedDriverInfo;
+				CheckPortAddressTextValidation();  // Do not move from here. First need to read portAddress then Read PortName.
 
-				if (_installMgt.PrinterExists(_dataModel.PrinterName))
-				{
-					Invoke((MethodInvoker)delegate
-					{
-						lblMessageBox.Text = $"Printer '{_dataModel.DriverName}' is already installed.";
-						lblMessageBox.ForeColor = System.Drawing.Color.Red;
-					});
-				}
-				else
-				{
-					PrinterQueueQueryWithTask();
+				await CheckPortNameTextValidation();      // Do not move from here. First need to read portAddress then Read PortName.
 
-					Invoke((MethodInvoker)delegate
+				await CheckPrinterNameTextValidation();
+
+				_dataModel.Comment = txtComment.Text;
+
+				_dataModel.Location = txtLocation.Text;
+
+				await CheckGroupTextValidation();
+
+				string selectedDriverInfo = comboDrivers.SelectedItem?.ToString();
+				if (selectedDriverInfo != null)
+				{
+					_dataModel.DriverName = selectedDriverInfo;
+
+					if (_installMgt.PrinterExists(_dataModel.PrinterName))
 					{
-						lblMessageBox.Text = $"'{_dataModel.DriverName}' has installed successfully!";
-						lblMessageBox.ForeColor = System.Drawing.Color.Green;
-					});
+						Invoke((MethodInvoker)delegate
+						{
+							lblMessageBox.Text = $"Printer '{_dataModel.DriverName}' is already installed.";
+							lblMessageBox.ForeColor = System.Drawing.Color.Red;
+						});
+					}
+					else
+					{
+						PrinterQueueQueryWithTask();
+
+						Invoke((MethodInvoker)delegate
+						{
+							lblMessageBox.Text = $"'{_dataModel.DriverName}' has installed successfully!";
+							lblMessageBox.ForeColor = System.Drawing.Color.Green;
+						});
+					}
 				}
+			});
+		}
+
+		private void SetMessageBoxText(string text, System.Drawing.Color color)
+		{
+			if (lblMessageBox.InvokeRequired)
+			{
+				lblMessageBox.Invoke((MethodInvoker)delegate
+				{
+					lblMessageBox.Text = text;
+					lblMessageBox.ForeColor = color;
+				});
+			}
+			else
+			{
+				lblMessageBox.Text = text;
+				lblMessageBox.ForeColor = color;
 			}
 		}
 	}

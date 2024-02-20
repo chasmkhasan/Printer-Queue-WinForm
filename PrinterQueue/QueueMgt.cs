@@ -10,39 +10,48 @@ namespace PrinterQueue
 {
 	internal class QueueMgt
 	{
-		public bool PrinterQueueExists(string queueName)
+		public async Task<bool> PrinterQueueExistsAsync(string queueName)
 		{
-			using (PowerShell PowerShellInstance = PowerShell.Create())
+			return await Task.Run(() => 
 			{
-				string script = $"Get-Printer -Name '{queueName}'";
+				using (PowerShell PowerShellInstance = PowerShell.Create())
+				{
+					string script = $"Get-Printer -Name '{queueName}'";
 
-				PowerShellInstance.AddScript(script);
-				Collection<PSObject> PSOutput = PowerShellInstance.Invoke();
+					PowerShellInstance.AddScript(script);
+					Collection<PSObject> PSOutput = PowerShellInstance.Invoke();
 
-				return PSOutput.Count > 0;
-			}
+					return PSOutput.Count > 0;
+				}
+			});
 		}
 
-		public void DeletePrinterQueue(string queueName)
+		public async Task DeletePrinterQueueAsync(string queueName)
 		{
-			using (PowerShell PowerShellInstance = PowerShell.Create())
+			await Task.Run(() =>
 			{
-				string script = $"Remove-Printer -Name '{queueName}'";
+				using (PowerShell PowerShellInstance = PowerShell.Create())
+				{
+					string script = $"Remove-Printer -Name '{queueName}'";
 
-				PowerShellInstance.AddScript(script);
-				PowerShellInstance.Invoke();
-			}
+					PowerShellInstance.AddScript(script);
+					PowerShellInstance.Invoke();
+				}
+			});
 		}
 
-		public void CreatePrinterQueue(string queueName, string driverName)
+		public async Task CreatePrinterQueueAsync(string queueName, string driverName)
 		{
-			using (PowerShell PowerShellInstance = PowerShell.Create())
+			await Task.Run(() =>
 			{
-				string script = $"Add-Printer -Name '{queueName}' -DriverName '{driverName}'";
+				using (PowerShell PowerShellInstance = PowerShell.Create())
+				{
+					string script = $"Add-Printer -Name '{queueName}' -DriverName '{driverName}'";
 
-				PowerShellInstance.AddScript(script);
-				PowerShellInstance.Invoke();
-			}
+					PowerShellInstance.AddScript(script);
+					PowerShellInstance.Invoke();
+				}
+			});
 		}
 	}
 }

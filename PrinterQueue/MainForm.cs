@@ -5,6 +5,8 @@ using System.Management;
 using System.Management.Automation.Runspaces;
 using System.Management.Automation;
 using System.Net;
+using System.Security.Principal;
+using System.DirectoryServices.AccountManagement;
 
 namespace PrinterQueue
 {
@@ -36,10 +38,10 @@ namespace PrinterQueue
 		{
 			this.Text += " Printer Queue Installer ";
 
-
 			LoadDriversInforTask();
 		}
 
+		#region Port Name Area
 		public void ReadPortName(string enteredPortName)
 		{
 			//txtPortName.BackColor = System.Drawing.Color.Yellow;        //Yellow is Represent Progress/Checking.
@@ -69,6 +71,43 @@ namespace PrinterQueue
 			txtPortName.ForeColor = System.Drawing.Color.Green;     //Green is repesent name has taken.
 		}
 
+		private void CheckPortNameTextValidation()
+		{
+			string userInputPortName = txtPortName.Text;
+			if (!string.IsNullOrEmpty(userInputPortName))
+			{
+				ReadPortName(userInputPortName);
+			}
+			else
+			{
+				lblMessageBox.Text = $"Condition not met. Please Check PortName!";
+				lblMessageBox.ForeColor = System.Drawing.Color.Red;
+
+				return;
+			}
+		}
+		#endregion Port Name Area
+
+		#region Port Address IP/DNS
+
+		private void CheckPortAddressTextValidation()
+		{
+			string userInputPortAddress = txtPortAddress.Text.Trim();
+			if (!string.IsNullOrEmpty(userInputPortAddress))
+			{
+				_dataModel.PortAddress = txtPortAddress.Text.Trim();
+			}
+			else
+			{
+				lblMessageBox.Text = $"Condition not met. Please Check PortAddress!";
+				lblMessageBox.ForeColor = System.Drawing.Color.Red;
+
+				return;
+			}
+		}
+		#endregion
+
+		#region Read Printer Name
 		private void ReadPrinterName(string printerQueueName) // consider printer as a Printer Queue.
 		{
 			//txtPortName.ForeColor = System.Drawing.Color.Yellow;
@@ -86,28 +125,67 @@ namespace PrinterQueue
 
 			txtPrinterQueue.ForeColor = System.Drawing.Color.Green;
 		}
-
-		public void CheckGroupTextValidation()
+		private void CheckPrinterNameTextValidation()
 		{
-			string userInputgroup = txtGroups.Text;
-			if (!string.IsNullOrEmpty(userInputgroup))
+			string userInputPrinterQueue = txtPrinterQueue.Text;
+			if (!string.IsNullOrEmpty(userInputPrinterQueue))
 			{
-				string printerName = comboDrivers.SelectedItem?.ToString();
-
-				string newSddlString = _groupPermission.RemoveGroupPermission(printerName, userInputgroup);
-
-				_groupPermission.SetPrinterPermissions(printerName, newSddlString);
-
+				ReadPrinterName(userInputPrinterQueue);
 			}
 			else
 			{
-				lblMessageBox.Text = $"Condition not met. Please Check Groups!";
+				lblMessageBox.Text = $"Condition not met. Please Check Printer Name!";
 				lblMessageBox.ForeColor = System.Drawing.Color.Red;
 
 				return;
 			}
 		}
+		#endregion Read Printer Name
 
+		#region Group Permission
+		public void CheckGroupTextValidation()
+		{
+			//string printerName = "Kyocera KM-C4035E KX";
+			string driverName = comboDrivers.SelectedItem?.ToString();
+			string group = txtGroups.Text;
+
+			SecurityIdentifier sid = ConvertToSID(group);
+
+			if (sid != null)
+			{
+				_groupPermission.RemoveEveryonePermission(driverName, sid);
+			}
+		}
+
+		private SecurityIdentifier ConvertToSID(string groupName)
+		{
+			string targetGroupName = "GET-LocalGroup";
+
+			PrincipalContext context = new PrincipalContext(ContextType.Machine);
+			GroupPrincipal groupPrincipal = GroupPrincipal.FindByIdentity(context, IdentityType.Name, targetGroupName);
+
+			if (groupPrincipal != null)
+			{
+				if (groupName.Equals(targetGroupName, StringComparison.OrdinalIgnoreCase))
+				{
+					NTAccount ntAccount = new NTAccount(null, targetGroupName);
+					SecurityIdentifier sid = (SecurityIdentifier)ntAccount.Translate(typeof(SecurityIdentifier));
+					return sid;
+				}
+				else
+				{
+					lblMessageBox.Text = "User input does not match the local group name.";
+				}
+			}
+			else
+			{
+				lblMessageBox.Text = "The local group does not exist.";
+			}
+
+			return null; // Return null if there's an error or no match
+		}
+		#endregion
+		
 		private void LoadDriversInforTask()
 		{
 			Task.Run(() => ShowingDriverListTillUI());
@@ -147,54 +225,6 @@ namespace PrinterQueue
 				{
 					comboDrivers.SelectedIndex = 0;
 				}
-			}
-		}
-
-		private void CheckPortAddressTextValidation()
-		{
-			string userInputPortAddress = txtPortAddress.Text.Trim();
-			if (!string.IsNullOrEmpty(userInputPortAddress))
-			{
-				_dataModel.PortAddress = txtPortAddress.Text.Trim();
-			}
-			else
-			{
-				lblMessageBox.Text = $"Condition not met. Please Check PortAddress!";
-				lblMessageBox.ForeColor = System.Drawing.Color.Red;
-
-				return;
-			}
-		}
-
-		private void CheckPortNameTextValidation()
-		{
-			string userInputPortName = txtPortName.Text;
-			if (!string.IsNullOrEmpty(userInputPortName))
-			{
-				ReadPortName(userInputPortName);
-			}
-			else
-			{
-				lblMessageBox.Text = $"Condition not met. Please Check PortName!";
-				lblMessageBox.ForeColor = System.Drawing.Color.Red;
-
-				return;
-			}
-		}
-
-		private void CheckPrinterNameTextValidation()
-		{
-			string userInputPrinterQueue = txtPrinterQueue.Text;
-			if (!string.IsNullOrEmpty(userInputPrinterQueue))
-			{
-				ReadPrinterName(userInputPrinterQueue);
-			}
-			else
-			{
-				lblMessageBox.Text = $"Condition not met. Please Check Printer Name!";
-				lblMessageBox.ForeColor = System.Drawing.Color.Red;
-
-				return;
 			}
 		}
 

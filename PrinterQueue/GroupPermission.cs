@@ -7,48 +7,68 @@ using System.Management.Automation;
 using System.Text;
 using System.Threading.Tasks;
 using System.Diagnostics;
+using System.Security.Principal;
 
 namespace PrinterQueue
 {
 	internal class GroupPermission
 	{
-		public string RemoveGroupPermission(string printerName, string groupName)
+		public void RemoveEveryonePermission(string printerName, SecurityIdentifier newUserOrGroupSID)
 		{
 			using (PowerShell PowerShellInstance = PowerShell.Create())
 			{
-				PowerShellInstance.AddScript($"Get-Printer -Name {printerName} | Select-Object -ExpandProperty SecurityDescriptorSDDL");
-				Collection<PSObject> PSOutput = PowerShellInstance.Invoke();
+				string script = @"
+								$printerName = $args[0]
+								$computerName = $env:COMPUTERNAME
+								$newUserOrGroupSID = $args[1]  # Passed as an argument
+								$everyoneSID = 'S-1-1-0'  # SID for Everyone
 
-				if (PowerShellInstance.HadErrors)
+								# Check if the printer exists
+								$printer = Get-Printer -Name $printerName -ComputerName $computerName -Full
+
+								if ($printer -eq $null) {
+									Write-Output 'Printer not found'
+								} else {
+									# Remove the Everyone permission
+									$newPermissionSDDL = $printer.SecurityDescriptorSDDL -replace ';${everyoneSID}', ''
+
+									# Add the new user or group permission
+									$newPermissionSDDL += '';(A;;0x3e3f;;;${newUserOrGroupSID})''
+
+									# Update the printer permissions
+									Set-Printer -Name $printerName -ComputerName $computerName -PermissionSDDL $newPermissionSDDL
+									Write-Output 'Permissions updated successfully.'
+								}
+							";
+
+				PowerShellInstance.AddScript(script).AddArgument(printerName).AddArgument(newUserOrGroupSID.ToString());
+
+				try
 				{
-					foreach (ErrorRecord error in PowerShellInstance.Streams.Error)
+					Collection<PSObject> PSOutput = PowerShellInstance.Invoke();
+
+					if (PowerShellInstance.HadErrors)
 					{
-						Debug.WriteLine($"PowerShell Error: {error.Exception.Message}");
+						foreach (ErrorRecord error in PowerShellInstance.Streams.Error)
+						{
+							MessageBox.Show($"Error: {error.ToString()}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+						}
 					}
-					return null;
+					else
+					{
+						if (PSOutput.Count > 0)
+						{
+							MessageBox.Show(PSOutput[0].ToString(), "Result", MessageBoxButtons.OK, MessageBoxIcon.Information);
+						}
+						else
+						{
+							MessageBox.Show("No output from the PowerShell script.", "Result", MessageBoxButtons.OK, MessageBoxIcon.Information);
+						}
+					}
 				}
-
-				string currentSddlString = PSOutput.Count > 0 ? PSOutput[0].ToString() : null;
-
-				string newSddlString = currentSddlString?.Replace($"D:(A;;GA;;;{groupName})", "");
-
-				return newSddlString;
-			}
-		}
-
-		public void SetPrinterPermissions(string printerName, string newSddlString)
-		{
-			using (PowerShell PowerShellInstance = PowerShell.Create())
-			{
-				PowerShellInstance.AddScript($"Set-Printer -Name {printerName} -PermissionSDDL '{newSddlString}'");
-				PowerShellInstance.Invoke();
-
-				if (PowerShellInstance.HadErrors)
+				catch (Exception ex)
 				{
-					foreach (ErrorRecord error in PowerShellInstance.Streams.Error)
-					{
-						Debug.WriteLine($"PowerShell Error: {error.Exception.Message}");
-					}
+					MessageBox.Show($"Error: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
 				}
 			}
 		}

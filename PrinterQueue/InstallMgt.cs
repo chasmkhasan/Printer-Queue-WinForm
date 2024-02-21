@@ -24,7 +24,6 @@ namespace PrinterQueue
 			});
 		}
 
-
 		public bool PrinterExists(string printerName)
 		{
 			string script = $"Get-Printer -Name '{printerName}'";

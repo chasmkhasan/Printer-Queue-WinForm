@@ -1,7 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using System.Management;
+using System.Management.Automation;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -15,34 +17,32 @@ namespace PrinterQueue
 
 			try
 			{
-				using (ManagementObjectSearcher searcher = new ManagementObjectSearcher("SELECT Name, SystemName, DriverName FROM Win32_Printer"))
+				using (PowerShell PowerShellInstance = PowerShell.Create())
 				{
-					ManagementObjectCollection printerCollection = searcher.Get();
+					PowerShellInstance.AddScript("Get-PrinterDriver | Select-Object -ExpandProperty Name");
 
-					foreach (ManagementObject printer in printerCollection)
+					Collection<PSObject> PSOutput = PowerShellInstance.Invoke();
+
+					if (PowerShellInstance.HadErrors)
 					{
-						string printerName = printer["Name"]?.ToString();
-						string systemName = printer["SystemName"]?.ToString();
-						string driverName = printer["DriverName"]?.ToString();
+						foreach (ErrorRecord errorRecord in PowerShellInstance.Streams.Error)
+						{
+							throw new ApplicationException($"PowerShell error: {errorRecord.Exception.Message}", errorRecord.Exception);
+						}
+					}
 
+					foreach (PSObject outputItem in PSOutput)
+					{
+						string printerName = outputItem.BaseObject.ToString();
 
-						if (printerName != null && systemName != null && driverName != null)
+						if (printerName != null)
 						{
 							DataModel printerInfo = new DataModel();
-							{
-								printerInfo.PrinterName = printerName;
-								printerInfo.SystemName = systemName;
-								printerInfo.DriverName = driverName;
-							}
-
+							printerInfo.PrinterName = printerName;
 							driverNames.Add(printerInfo);
 						}
 					}
 				}
-			}
-			catch (ManagementException ex)
-			{
-				throw new ApplicationException($"WMI query error: {ex.Message}", ex);
 			}
 			catch (Exception ex)
 			{

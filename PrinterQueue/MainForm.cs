@@ -36,14 +36,13 @@ namespace PrinterQueue
 		{
 			this.Text += " Printer Queue Installer ";
 
-
-			LoadDriversInforTask();
+			ShowingDriverListTillUI();
 		}
 
 		#region Port Name Area
 		public async Task ReadPortNameAsync(string enteredPortName)
 		{
-			if (await _generatePort.PrinterPortExistsAsync(enteredPortName))
+			if (_generatePort.PrinterPortExists(enteredPortName))
 			{
 				string randomAlphabet = Guid.NewGuid().ToString("N").Substring(0, 1);
 
@@ -61,15 +60,13 @@ namespace PrinterQueue
 				bool portAdded = await _generatePort.AddPrinterPortAsync(enteredPortName, _dataModel.PortAddress, 9100, 1, "public");
 			}
 		}
-
-
-		private async Task CheckPortNameTextValidation()
+		private void CheckPortNameTextValidation()
 		{
 			string userInputPortName = txtPortName.Text;
 			if (!string.IsNullOrEmpty(userInputPortName))
 			{
 
-				await ReadPortNameAsync(userInputPortName);
+				ReadPortName(userInputPortName);
 
 				//lblMessageBox.Text = $"PortName successfully taken.";
 				//lblMessageBox.ForeColor = System.Drawing.Color.Green;
@@ -125,7 +122,7 @@ namespace PrinterQueue
 			txtPrinterQueue.ForeColor = System.Drawing.Color.Green;
 		}
 
-		private async Task CheckPrinterNameTextValidation()
+		private void CheckPrinterNameTextValidation()
 		{
 			string userInputPrinterQueue = txtPrinterQueue.Text;
 			if (!string.IsNullOrEmpty(userInputPrinterQueue))
@@ -178,72 +175,59 @@ namespace PrinterQueue
 				{
 					comboDrivers.Items.Clear(); // Clear existing items if needed
 
-					foreach (DataModel printerInfo in driverNames)
-					{
-						comboDrivers.Items.Add(printerInfo.DriverName);
-					}
+			return null; // Return null if there's an error or no match
+		}
+		#endregion
+		
+		
 
-					if (comboDrivers.Items.Count > 0)
-					{
-						comboDrivers.SelectedIndex = 0;
-					}
-				}));
-			}
-			else
-			{
-				comboDrivers.Items.Clear(); // Clear existing items if needed
+		public void ShowingDriverListTillUI()
+		{
+			List<DataModel> driverList = _printerDrivers.ReadDriversFromSystem();
+
+			comboDrivers.Items.Clear();
+
+			comboDrivers.Items.Add("Select a Printer...");
 
 				foreach (DataModel printerInfo in driverNames)
 				{
-					comboDrivers.Items.Add(printerInfo.DriverName);
-				}
-
-				if (comboDrivers.Items.Count > 0)
-				{
-					comboDrivers.SelectedIndex = 0;
+					comboDrivers.Items.Add(printerInfo.PrinterName);
 				}
 			}
-		}
-
-		private void LoadDriversInforTask()
-		{
-			Task.Run(() => ShowingDriverListTillUI());
+			comboDrivers.SelectedIndex = 0;
 		}
 
 		#endregion Driver Name area
 
 		private void PrinterQueueQueryWithTask()
 		{
-			Task.Run(async () =>
-			{
-				await _installMgt.ExecutePowerShellScriptAsync($"Add-Printer " +
-															  $"-Name '{_dataModel.PrinterName}' " +
-															  $"-DriverName '{_dataModel.DriverName}' " +
-															  $"-PortName '{_dataModel.PortName}' " +
-															  $"-Comment '{_dataModel.Comment}' " +
-															  $"-Location '{_dataModel.Location}'");
-			});
+			_installMgt.ExecutePowerShellScript($"Add-Printer " +
+														  $"-Name '{_dataModel.PrinterName}' " +
+														  $"-DriverName '{_dataModel.DriverName}' " +
+														  $"-PortName '{_dataModel.PortName}' " +
+														  $"-Comment '{_dataModel.Comment}' " +
+														  $"-Location '{_dataModel.Location}'");
 		}
 
 		private void InstallPrinter_Click(object sender, EventArgs e)
 		{
-			Task.Run(async () => { await InstallPrinterAsync(); });
+			Task.Run(async () => { InstallPrinterAsync(); });
 		}
 
-		private async Task InstallPrinterAsync()
+		private void InstallPrinterAsync()
 		{
 			{
 				CheckPortAddressTextValidation();  // Do not move from here. First need to read portAddress then Read PortName.
 
-				await CheckPortNameTextValidation();      // Do not move from here. First need to read portAddress then Read PortName.
+				CheckPortNameTextValidation();      // Do not move from here. First need to read portAddress then Read PortName.
 
-				await CheckPrinterNameTextValidation();
+				CheckPrinterNameTextValidation();
 
 				_dataModel.Comment = txtComment.Text;
 
 				_dataModel.Location = txtLocation.Text;
 
-				await CheckGroupTextValidation();
+				CheckGroupTextValidation();
 
 				string selectedDriverInfo = comboDrivers.SelectedItem?.ToString();
 				if (selectedDriverInfo != null)
@@ -270,23 +254,6 @@ namespace PrinterQueue
 					}
 				}
 			};
-		}
-
-		private void SetMessageBoxText(string text, System.Drawing.Color color)
-		{
-			if (lblMessageBox.InvokeRequired)
-			{
-				lblMessageBox.Invoke((MethodInvoker)delegate
-				{
-					lblMessageBox.Text = text;
-					lblMessageBox.ForeColor = color;
-				});
-			}
-			else
-			{
-				lblMessageBox.Text = text;
-				lblMessageBox.ForeColor = color;
-			}
 		}
 	}
 }

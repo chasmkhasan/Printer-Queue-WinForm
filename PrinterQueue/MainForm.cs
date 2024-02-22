@@ -195,8 +195,6 @@ namespace PrinterQueue
 
 			comboDrivers.Items.Clear();
 
-			comboDrivers.Items.Add("Select a Printer...");
-
 			foreach (DataModel printerInfo in driverList)
 			{
 				if (printerInfo.PrinterName != null)

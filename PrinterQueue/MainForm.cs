@@ -62,23 +62,18 @@ namespace PrinterQueue
 			}
 		}
 
-		private void LoadReadPortNameTask(string userInputPortName)
-		{
-			Task.Run(async () => { await ReadPortNameAsync(userInputPortName); });
-		}
 
 		private async Task CheckPortNameTextValidation()
 		{
 			string userInputPortName = txtPortName.Text;
 			if (!string.IsNullOrEmpty(userInputPortName))
 			{
-				await Task.Run(() => 
-				{
-					LoadReadPortNameTask(userInputPortName);
 
-					//lblMessageBox.Text = $"PortName successfully taken.";
-					//lblMessageBox.ForeColor = System.Drawing.Color.Green;
-				});
+				await ReadPortNameAsync(userInputPortName);
+
+				//lblMessageBox.Text = $"PortName successfully taken.";
+				//lblMessageBox.ForeColor = System.Drawing.Color.Green;
+
 			}
 			else
 			{
@@ -237,7 +232,6 @@ namespace PrinterQueue
 
 		private async Task InstallPrinterAsync()
 		{
-			await Task.Run( async () =>
 			{
 				CheckPortAddressTextValidation();  // Do not move from here. First need to read portAddress then Read PortName.
 
@@ -275,7 +269,7 @@ namespace PrinterQueue
 						});
 					}
 				}
-			});
+			};
 		}
 
 		private void SetMessageBoxText(string text, System.Drawing.Color color)

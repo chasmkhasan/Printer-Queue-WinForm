@@ -34,7 +34,6 @@ namespace PrinterQueue
 			_groupPermission = new GroupPermission();
 			_installMgt = new InstallMgt();
 
-
 			InitializeComponent();
 
 			InitializeGUI();
@@ -68,9 +67,62 @@ namespace PrinterQueue
 				bool portAdded = _generatePort.AddPrinterPort(enteredPortName, _dataModel.PortAddress, 9100, 1, "public");
 			}
 		}
+		private void CheckPortnameTextValidation()
+		{
+			string userInputPortName = _dataModel.PortName.Trim();
+			if (!string.IsNullOrEmpty(userInputPortName))
+			{
+				SetMessageBoxText("PortName Processing...", System.Drawing.Color.Black);
+
+				ReadPortName(userInputPortName);
+
+				SetMessageBoxText("PortName successfully taken.", System.Drawing.Color.Green);
+			}
+			else
+			{
+				SetMessageBoxText("Condition not met. Please Check PortName!", System.Drawing.Color.Red);
+
+				return;
+			}
+		}
 		#endregion Port Name Area End
 
+		#region Port Address Area
+		private void CheckPortAddressnameTextValidation()
+		{
+			string userInputPortAddress = _dataModel.PortAddress;
+			if (!string.IsNullOrEmpty(userInputPortAddress))
+			{
+				_dataModel.PortAddress = _dataModel.PortAddress.Trim();
+			}
+			else
+			{
+				SetMessageBoxText("Condition not met. Please Check PortAddress!", System.Drawing.Color.Red);
+
+				return;
+			}
+		}
+		#endregion Port Address Area
+
 		#region Printer Name Area
+
+		private void CheckPrinterNameTextValidation()
+		{
+			string userInputPrinterQueue = _dataModel.PrinterQueue.Trim();
+			if (!string.IsNullOrEmpty(userInputPrinterQueue))
+			{
+				SetMessageBoxText("PrinterName Processing...", System.Drawing.Color.Black);
+
+				ReadPrinterName(userInputPrinterQueue);
+
+				SetMessageBoxText("PrinterName successfully taken.", System.Drawing.Color.Green);
+			}
+			else
+			{
+				SetMessageBoxText("Condition not met. Please Check Printer Name!", System.Drawing.Color.Red);
+				return;
+			}
+		}
 
 		private void ReadPrinterName(string printerQueueName) // consider printer as a Printer Queue.
 		{
@@ -168,51 +220,18 @@ namespace PrinterQueue
 		private void InstallPrinter()
 		{
 			//PortAddress Access								// Do not move from here. First need to read portAddress then Read PortName.
-			string userInputPortAddress = txtPortAddress.Text.Trim();
-			if (!string.IsNullOrEmpty(userInputPortAddress))
-			{
-				_dataModel.PortAddress = txtPortAddress.Text.Trim();
-			}
-			else
-			{
-				SetMessageBoxText("Condition not met. Please Check PortAddress!", System.Drawing.Color.Red);
+			_dataModel.PortAddress = txtPortAddress.Text;
+			CheckPortAddressnameTextValidation();
 
-				return;
-			}
 
 			// PortName Access									// Do not move from here. First need to read portAddress then Read PortName.
-			string userInputPortName = txtPortName.Text.Trim();
-			if (!string.IsNullOrEmpty(userInputPortName))
-			{
-				SetMessageBoxText("PortName Processing...", System.Drawing.Color.Black);
+			_dataModel.PortName = txtPortName.Text;
+			CheckPortnameTextValidation();
 
-				ReadPortName(userInputPortName);
 
-				SetMessageBoxText("PortName successfully taken.", System.Drawing.Color.Green);
-			}
-			else
-			{
-				SetMessageBoxText("Condition not met. Please Check PortName!", System.Drawing.Color.Red);
-
-				return;
-			}
-			
 			//PrinterName Access
-			string userInputPrinterQueue = txtPrinterQueue.Text;
-			if (!string.IsNullOrEmpty(userInputPrinterQueue))
-			{
-				SetMessageBoxText("PrinterName Processing...", System.Drawing.Color.Black);
-
-				ReadPrinterName(userInputPrinterQueue);
-
-				SetMessageBoxText("PrinterName successfully taken.", System.Drawing.Color.Green);
-			}
-			else
-			{
-				SetMessageBoxText("Condition not met. Please Check Printer Name!", System.Drawing.Color.Red);
-
-				return;
-			}
+			_dataModel.PrinterQueue = txtPrinterQueue.Text;
+			CheckPrinterNameTextValidation();
 
 			string selectedPrinterDriver = string.Empty;
 			if (comboDrivers.InvokeRequired)
@@ -226,7 +245,6 @@ namespace PrinterQueue
 			{
 				selectedPrinterDriver = comboDrivers.SelectedItem.ToString();
 			}
-
 
 			_dataModel.Comment = txtComment.Text;
 
@@ -251,7 +269,6 @@ namespace PrinterQueue
 					SetMessageBoxText($"'{_dataModel.DriverName}' has installed successfully!", System.Drawing.Color.Green);
 				}
 			}
-
 		}
 
 		private void SetMessageBoxText(string text, System.Drawing.Color color)

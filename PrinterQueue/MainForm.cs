@@ -7,6 +7,9 @@ using System.Management.Automation;
 using System.Net;
 using System.DirectoryServices.AccountManagement;
 using System.Security.Principal;
+using System.Windows.Forms;
+using System.Drawing;
+
 
 namespace PrinterQueue
 {
@@ -19,6 +22,8 @@ namespace PrinterQueue
 		private GroupPermission _groupPermission;
 		private InstallMgt _installMgt;
 
+		private string selectedPrinterDriver;
+
 
 		public MainForm()
 		{
@@ -28,6 +33,7 @@ namespace PrinterQueue
 			_queueMgt = new QueueMgt();
 			_groupPermission = new GroupPermission();
 			_installMgt = new InstallMgt();
+
 
 			InitializeComponent();
 
@@ -62,82 +68,20 @@ namespace PrinterQueue
 				bool portAdded = _generatePort.AddPrinterPort(enteredPortName, _dataModel.PortAddress, 9100, 1, "public");
 			}
 		}
-		private void CheckPortNameTextValidation()
-		{
-			string userInputPortName = txtPortName.Text;
-			if (!string.IsNullOrEmpty(userInputPortName))
-			{
-				ReadPortName(userInputPortName);
-				
-				//lblMessageBox.Text = $"PortName successfully taken.";
-				//lblMessageBox.ForeColor = System.Drawing.Color.Green;
-				//lblMessageBox.Refresh();
-			}
-			else
-			{
-				//lblMessageBox.Text = $"Condition not met. Please Check PortName!";
-				//lblMessageBox.ForeColor = System.Drawing.Color.Red;
-				//lblMessageBox.Refresh();
-
-				return;
-			}
-		}
-
 		#endregion Port Name Area End
-
-		#region Port Address IP/DNS
-
-		private void CheckPortAddressTextValidation()
-		{
-			string userInputPortAddress = txtPortAddress.Text.Trim();
-			if (!string.IsNullOrEmpty(userInputPortAddress))
-			{
-				_dataModel.PortAddress = txtPortAddress.Text.Trim();
-			}
-			else
-			{
-				lblMessageBox.Text = $"Condition not met. Please Check PortAddress!";
-				lblMessageBox.ForeColor = System.Drawing.Color.Red;
-
-				return;
-			}
-		}
-
-		#endregion Port Address IP/DNS
 
 		#region Printer Name Area
 
 		private void ReadPrinterName(string printerQueueName) // consider printer as a Printer Queue.
 		{
-
-			_dataModel.PrinterName = printerQueueName.Trim();
-
 			if (_queueMgt.PrinterQueueExists(printerQueueName))
 			{
 				_queueMgt.DeletePrinterQueue(printerQueueName);
 			}
 
-			string selectedDriverName = comboDrivers.SelectedItem.ToString();
+			string selectedDriverName = selectedPrinterDriver;
 
 			_queueMgt.CreatePrinterQueue(printerQueueName, selectedDriverName);
-
-			txtPrinterQueue.ForeColor = System.Drawing.Color.Green;
-		}
-
-		private void CheckPrinterNameTextValidation()
-		{
-			string userInputPrinterQueue = txtPrinterQueue.Text;
-			if (!string.IsNullOrEmpty(userInputPrinterQueue))
-			{
-				ReadPrinterName(userInputPrinterQueue);
-			}
-			else
-			{
-				lblMessageBox.Text = $"Condition not met. Please Check Printer Name!";
-				lblMessageBox.ForeColor = System.Drawing.Color.Red;
-
-				return;
-			}
 		}
 
 		#endregion Printer Name Area
@@ -145,9 +89,8 @@ namespace PrinterQueue
 		#region Group Permission
 		public void CheckGroupTextValidation()
 		{
-			//string printerName = "Kyocera KM-C4035E KX";
-			string driverName = comboDrivers.SelectedItem?.ToString();
-			string group = txtGroups.Text;
+			string driverName = selectedPrinterDriver;
+			string group = _dataModel.Groups;
 
 			SecurityIdentifier sid = ConvertToSID(group);
 
@@ -174,12 +117,12 @@ namespace PrinterQueue
 				}
 				else
 				{
-					lblMessageBox.Text = "User input does not match the local group name.";
+					SetMessageBoxText("User input does not match the local group name.", System.Drawing.Color.Red);
 				}
 			}
 			else
 			{
-				lblMessageBox.Text = "The local group does not exist.";
+				SetMessageBoxText("The local group does not exist.", System.Drawing.Color.Red);
 			}
 
 			return null; // Return null if there's an error or no match
@@ -217,51 +160,117 @@ namespace PrinterQueue
 														  $"-Location '{_dataModel.Location}'");
 		}
 
-		private void InstallPrinter_Click(object sender, EventArgs e)
+		private void BtnInstall_Click(object sender, EventArgs e)
 		{
-			Task.Run(async () => { InstallPrinterAsync(); });
+			Task.Run(() => { InstallPrinter(); });
 		}
 
-		private void InstallPrinterAsync()
+		private void InstallPrinter()
 		{
+			//PortAddress Access								// Do not move from here. First need to read portAddress then Read PortName.
+			string userInputPortAddress = txtPortAddress.Text.Trim();
+			if (!string.IsNullOrEmpty(userInputPortAddress))
 			{
-				CheckPortAddressTextValidation();  // Do not move from here. First need to read portAddress then Read PortName.
+				_dataModel.PortAddress = txtPortAddress.Text.Trim();
+			}
+			else
+			{
+				SetMessageBoxText("Condition not met. Please Check PortAddress!", System.Drawing.Color.Red);
 
-				CheckPortNameTextValidation();      // Do not move from here. First need to read portAddress then Read PortName.
+				return;
+			}
 
-				CheckPrinterNameTextValidation();
+			// PortName Access									// Do not move from here. First need to read portAddress then Read PortName.
+			string userInputPortName = txtPortName.Text.Trim();
+			if (!string.IsNullOrEmpty(userInputPortName))
+			{
+				SetMessageBoxText("PortName Processing...", System.Drawing.Color.Black);
 
-				_dataModel.Comment = txtComment.Text;
+				ReadPortName(userInputPortName);
 
-				_dataModel.Location = txtLocation.Text;
+				SetMessageBoxText("PortName successfully taken.", System.Drawing.Color.Green);
+			}
+			else
+			{
+				SetMessageBoxText("Condition not met. Please Check PortName!", System.Drawing.Color.Red);
 
-				CheckGroupTextValidation();
+				return;
+			}
+			
+			//PrinterName Access
+			string userInputPrinterQueue = txtPrinterQueue.Text;
+			if (!string.IsNullOrEmpty(userInputPrinterQueue))
+			{
+				SetMessageBoxText("PrinterName Processing...", System.Drawing.Color.Black);
 
-				string selectedDriverInfo = comboDrivers.SelectedItem?.ToString();
-				if (selectedDriverInfo != null)
+				ReadPrinterName(userInputPrinterQueue);
+
+				SetMessageBoxText("PrinterName successfully taken.", System.Drawing.Color.Green);
+			}
+			else
+			{
+				SetMessageBoxText("Condition not met. Please Check Printer Name!", System.Drawing.Color.Red);
+
+				return;
+			}
+
+			string selectedPrinterDriver = string.Empty;
+			if (comboDrivers.InvokeRequired)
+			{
+				comboDrivers.Invoke(new MethodInvoker(() =>
 				{
-					_dataModel.DriverName = selectedDriverInfo;
+					selectedPrinterDriver = comboDrivers.SelectedItem.ToString();
+				}));
+			}
+			else
+			{
+				selectedPrinterDriver = comboDrivers.SelectedItem.ToString();
+			}
 
-					if (_installMgt.PrinterExists(_dataModel.PrinterName))
-					{
-						Invoke((MethodInvoker)delegate
-						{
-							lblMessageBox.Text = $"Printer '{_dataModel.DriverName}' is already installed.";
-							lblMessageBox.ForeColor = System.Drawing.Color.Red;
-						});
-					}
-					else
-					{
-						PrinterQueueQueryWithTask();
 
-						Invoke((MethodInvoker)delegate
-						{
-							lblMessageBox.Text = $"'{_dataModel.DriverName}' has installed successfully!";
-							lblMessageBox.ForeColor = System.Drawing.Color.Green;
-						});
-					}
+			_dataModel.Comment = txtComment.Text;
+
+			_dataModel.Location = txtLocation.Text;
+
+			_dataModel.Groups = txtGroups.Text;
+			CheckGroupTextValidation();
+
+			string selectedDriverInfo = selectedPrinterDriver;
+			if (selectedDriverInfo != null)
+			{
+				_dataModel.DriverName = selectedDriverInfo;
+
+				if (_installMgt.PrinterExists(_dataModel.PrinterName))
+				{
+					SetMessageBoxText($"Printer '{_dataModel.DriverName}' is already installed.", System.Drawing.Color.Red);
 				}
-			};
+				else
+				{
+					PrinterQueueQueryWithTask();
+
+					SetMessageBoxText($"'{_dataModel.DriverName}' has installed successfully!", System.Drawing.Color.Green);
+				}
+			}
+
+		}
+
+		private void SetMessageBoxText(string text, System.Drawing.Color color)
+		{
+			if (lblMessageBox.InvokeRequired)
+			{
+				lblMessageBox.Invoke((MethodInvoker)delegate
+				{
+					lblMessageBox.Text = text;
+					lblMessageBox.ForeColor = color;
+					//lblMessageBox.Refresh();
+				});
+			}
+			else
+			{
+				lblMessageBox.Text = text;
+				lblMessageBox.ForeColor = color;
+				//lblMessageBox.Refresh();
+			}
 		}
 	}
 }

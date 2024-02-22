@@ -31,7 +31,7 @@
 			tableLayoutPanel1 = new TableLayoutPanel();
 			label1 = new Label();
 			tableLayoutPanel4 = new TableLayoutPanel();
-			InstallPrinter = new Button();
+			BtnInstall = new Button();
 			tableLayoutPanel2 = new TableLayoutPanel();
 			txtGroups = new TextBox();
 			txtLocation = new TextBox();
@@ -92,7 +92,7 @@
 			tableLayoutPanel4.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 50F));
 			tableLayoutPanel4.ColumnStyles.Add(new ColumnStyle(SizeType.Absolute, 244F));
 			tableLayoutPanel4.ColumnStyles.Add(new ColumnStyle(SizeType.Absolute, 127F));
-			tableLayoutPanel4.Controls.Add(InstallPrinter, 2, 0);
+			tableLayoutPanel4.Controls.Add(BtnInstall, 2, 0);
 			tableLayoutPanel4.Dock = DockStyle.Fill;
 			tableLayoutPanel4.Location = new Point(30, 361);
 			tableLayoutPanel4.Name = "tableLayoutPanel4";
@@ -101,17 +101,16 @@
 			tableLayoutPanel4.Size = new Size(529, 35);
 			tableLayoutPanel4.TabIndex = 3;
 			// 
-			// InstallPrinter
+			// BtnInstall
 			// 
-			InstallPrinter.Cursor = Cursors.Hand;
-			InstallPrinter.Dock = DockStyle.Fill;
-			InstallPrinter.Location = new Point(405, 3);
-			InstallPrinter.Name = "InstallPrinter";
-			InstallPrinter.Size = new Size(121, 29);
-			InstallPrinter.TabIndex = 0;
-			InstallPrinter.Text = "Install Printer";
-			InstallPrinter.UseVisualStyleBackColor = true;
-			InstallPrinter.Click += InstallPrinter_Click;
+			BtnInstall.Dock = DockStyle.Fill;
+			BtnInstall.Location = new Point(405, 3);
+			BtnInstall.Name = "BtnInstall";
+			BtnInstall.Size = new Size(121, 29);
+			BtnInstall.TabIndex = 0;
+			BtnInstall.Text = "Install";
+			BtnInstall.UseVisualStyleBackColor = true;
+			BtnInstall.Click += BtnInstall_Click;
 			// 
 			// tableLayoutPanel2
 			// 
@@ -287,13 +286,12 @@
 			// lblMessageBox
 			// 
 			lblMessageBox.AutoSize = true;
-			lblMessageBox.BorderStyle = BorderStyle.Fixed3D;
 			lblMessageBox.Dock = DockStyle.Fill;
 			lblMessageBox.Location = new Point(133, 227);
 			lblMessageBox.Name = "lblMessageBox";
 			lblMessageBox.Size = new Size(393, 32);
 			lblMessageBox.TabIndex = 16;
-			lblMessageBox.TextAlign = ContentAlignment.TopCenter;
+			lblMessageBox.TextAlign = ContentAlignment.MiddleCenter;
 			// 
 			// MainForm
 			// 
@@ -316,7 +314,6 @@
 		private TableLayoutPanel tableLayoutPanel1;
 		private Label label1;
 		private TableLayoutPanel tableLayoutPanel4;
-		private Button InstallPrinter;
 		private TableLayoutPanel tableLayoutPanel2;
 		private Label label2;
 		private Label label3;
@@ -333,5 +330,6 @@
 		private TextBox txtPortName;
 		private TextBox txtPortAddress;
 		private Label lblMessageBox;
+		private Button BtnInstall;
 	}
 }

@@ -11,49 +11,43 @@ namespace PrinterQueue
 {
 	internal class GeneratePortName
 	{
-		public async Task<bool> AddPrinterPortAsync(string portName, string printerHostAddress, int portNumber, int snmp, string snmpCommunity)
+		public bool AddPrinterPort(string portName, string printerHostAddress, int portNumber, int snmp, string snmpCommunity)
 		{
-			return await Task.Run(() =>
+			using (PowerShell PowerShellInstance = PowerShell.Create())
 			{
-				using (PowerShell PowerShellInstance = PowerShell.Create())
+				string script = $"Add-PrinterPort -Name '{portName}' -PrinterHostAddress '{printerHostAddress}' -PortNumber {portNumber} -SNMP {snmp} -SNMPCommunity '{snmpCommunity}'";
+
+				PowerShellInstance.AddScript(script);
+
+				//Collection<PSObject> PSOutput = await Task.Run(() => PowerShellInstance.Invoke());
+				Collection<PSObject> PSOutput = PowerShellInstance.Invoke();
+
+				if (PSOutput.Count == 0)
 				{
-					string script = $"Add-PrinterPort -Name '{portName}' -PrinterHostAddress '{printerHostAddress}' -PortNumber {portNumber} -SNMP {snmp} -SNMPCommunity '{snmpCommunity}'";
-
-					PowerShellInstance.AddScript(script);
-
-					//Collection<PSObject> PSOutput = await Task.Run(() => PowerShellInstance.Invoke());
-					Collection<PSObject> PSOutput = PowerShellInstance.Invoke();
-
-					if (PSOutput.Count == 0)
-					{
-						return true;
-					}
-					else
-					{
-						return false;
-					}
+					return true;
 				}
-			});
+				else
+				{
+					return false;
+				}
+			}
 		}
 
-		public async Task<bool> PrinterPortExistsAsync(string portName)
+		public bool PrinterPortExists(string portName)
 		{
-			return await Task.Run(() => 
+			using (PowerShell PowerShellInstance = PowerShell.Create())
 			{
-				using (PowerShell PowerShellInstance = PowerShell.Create())
-				{
-					string script = $"Get-CimInstance -Query \"SELECT * FROM Win32_TCPIPPrinterPort WHERE Name = '{portName}'\"";
+				string script = $"Get-CimInstance -Query \"SELECT * FROM Win32_TCPIPPrinterPort WHERE Name = '{portName}'\"";
 
-					PowerShellInstance.AddScript(script);
+				PowerShellInstance.AddScript(script);
 
-					//Collection<PSObject> PSOutput = await Task.Run(() => PowerShellInstance.Invoke());
-					Collection<PSObject> PSOutput = PowerShellInstance.Invoke();
+				//Collection<PSObject> PSOutput = await Task.Run(() => PowerShellInstance.Invoke());
+				Collection<PSObject> PSOutput = PowerShellInstance.Invoke();
 
-					bool portExists = PSOutput.Count > 0;
+				bool portExists = PSOutput.Count > 0;
 
-					return portExists;
-				}
-			});
+				return portExists;
+			}
 		}
 	}
 }

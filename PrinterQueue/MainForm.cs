@@ -5,6 +5,8 @@ using System.Management;
 using System.Management.Automation.Runspaces;
 using System.Management.Automation;
 using System.Net;
+using System.DirectoryServices.AccountManagement;
+using System.Security.Principal;
 
 namespace PrinterQueue
 {
@@ -40,7 +42,7 @@ namespace PrinterQueue
 		}
 
 		#region Port Name Area
-		public async Task ReadPortNameAsync(string enteredPortName)
+		public void ReadPortName(string enteredPortName)
 		{
 			if (_generatePort.PrinterPortExists(enteredPortName))
 			{
@@ -48,16 +50,16 @@ namespace PrinterQueue
 
 				string modifiedPortName = enteredPortName + "_" + randomAlphabet;
 
-				if (await _generatePort.PrinterPortExistsAsync(enteredPortName))
+				if (_generatePort.PrinterPortExists(enteredPortName))
 				{
-					bool portAdded = await _generatePort.AddPrinterPortAsync(modifiedPortName, _dataModel.PortAddress, 9100, 1, "public");
+					bool portAdded = _generatePort.AddPrinterPort(modifiedPortName, _dataModel.PortAddress, 9100, 1, "public");
 				}
 
 				return;
 			}
-			else if (!await _generatePort.PrinterPortExistsAsync(enteredPortName))
+			else if (!_generatePort.PrinterPortExists(enteredPortName))
 			{
-				bool portAdded = await _generatePort.AddPrinterPortAsync(enteredPortName, _dataModel.PortAddress, 9100, 1, "public");
+				bool portAdded = _generatePort.AddPrinterPort(enteredPortName, _dataModel.PortAddress, 9100, 1, "public");
 			}
 		}
 		private void CheckPortNameTextValidation()
@@ -65,17 +67,17 @@ namespace PrinterQueue
 			string userInputPortName = txtPortName.Text;
 			if (!string.IsNullOrEmpty(userInputPortName))
 			{
-
 				ReadPortName(userInputPortName);
-
+				
 				//lblMessageBox.Text = $"PortName successfully taken.";
 				//lblMessageBox.ForeColor = System.Drawing.Color.Green;
-
+				//lblMessageBox.Refresh();
 			}
 			else
 			{
 				//lblMessageBox.Text = $"Condition not met. Please Check PortName!";
 				//lblMessageBox.ForeColor = System.Drawing.Color.Red;
+				//lblMessageBox.Refresh();
 
 				return;
 			}
@@ -105,19 +107,19 @@ namespace PrinterQueue
 
 		#region Printer Name Area
 
-		private async Task ReadPrinterNameAsync(string printerQueueName) // consider printer as a Printer Queue.
+		private void ReadPrinterName(string printerQueueName) // consider printer as a Printer Queue.
 		{
 
 			_dataModel.PrinterName = printerQueueName.Trim();
 
-			if (await _queueMgt.PrinterQueueExistsAsync(printerQueueName))
+			if (_queueMgt.PrinterQueueExists(printerQueueName))
 			{
-				await _queueMgt.DeletePrinterQueueAsync(printerQueueName);
+				_queueMgt.DeletePrinterQueue(printerQueueName);
 			}
 
 			string selectedDriverName = comboDrivers.SelectedItem.ToString();
 
-			await _queueMgt.CreatePrinterQueueAsync(printerQueueName, selectedDriverName);
+			_queueMgt.CreatePrinterQueue(printerQueueName, selectedDriverName);
 
 			txtPrinterQueue.ForeColor = System.Drawing.Color.Green;
 		}
@@ -127,7 +129,7 @@ namespace PrinterQueue
 			string userInputPrinterQueue = txtPrinterQueue.Text;
 			if (!string.IsNullOrEmpty(userInputPrinterQueue))
 			{
-				await ReadPrinterNameAsync(userInputPrinterQueue);
+				ReadPrinterName(userInputPrinterQueue);
 			}
 			else
 			{
@@ -141,45 +143,51 @@ namespace PrinterQueue
 		#endregion Printer Name Area
 
 		#region Group Permission
-		public async Task CheckGroupTextValidation()
+		public void CheckGroupTextValidation()
 		{
-			string userInputgroup = txtGroups.Text;
-			if (!string.IsNullOrEmpty(userInputgroup))
+			//string printerName = "Kyocera KM-C4035E KX";
+			string driverName = comboDrivers.SelectedItem?.ToString();
+			string group = txtGroups.Text;
+
+			SecurityIdentifier sid = ConvertToSID(group);
+
+			if (sid != null)
 			{
-				string printerName = comboDrivers.SelectedItem?.ToString();
+				_groupPermission.RemoveEveryonePermission(driverName, sid);
+			}
+		}
 
-				string newSddlString = await _groupPermission.RemoveGroupPermissionAsync(printerName, userInputgroup);
+		private SecurityIdentifier ConvertToSID(string groupName)
+		{
+			string targetGroupName = "GET-LocalGroup";
 
-				await _groupPermission.SetPrinterPermissionsAsync(printerName, newSddlString);
+			PrincipalContext context = new PrincipalContext(ContextType.Machine);
+			GroupPrincipal groupPrincipal = GroupPrincipal.FindByIdentity(context, IdentityType.Name, targetGroupName);
+
+			if (groupPrincipal != null)
+			{
+				if (groupName.Equals(targetGroupName, StringComparison.OrdinalIgnoreCase))
+				{
+					NTAccount ntAccount = new NTAccount(null, targetGroupName);
+					SecurityIdentifier sid = (SecurityIdentifier)ntAccount.Translate(typeof(SecurityIdentifier));
+					return sid;
+				}
+				else
+				{
+					lblMessageBox.Text = "User input does not match the local group name.";
+				}
 			}
 			else
 			{
-				lblMessageBox.Text = $"Condition not met. Please Check Groups!";
-				lblMessageBox.ForeColor = System.Drawing.Color.Red;
-
-				return;
+				lblMessageBox.Text = "The local group does not exist.";
 			}
+
+			return null; // Return null if there's an error or no match
 		}
 
 		#endregion Group Permission
 
 		#region Driver Name Area
-
-		private void ShowingDriverListTillUI()
-		{
-			List<DataModel> driverNames = _printerDrivers.ReadDriversFromSystem();
-
-			if (comboDrivers.InvokeRequired)
-			{
-				comboDrivers.Invoke(new Action(() =>
-				{
-					comboDrivers.Items.Clear(); // Clear existing items if needed
-
-			return null; // Return null if there's an error or no match
-		}
-		#endregion
-		
-		
 
 		public void ShowingDriverListTillUI()
 		{
@@ -189,7 +197,9 @@ namespace PrinterQueue
 
 			comboDrivers.Items.Add("Select a Printer...");
 
-				foreach (DataModel printerInfo in driverNames)
+			foreach (DataModel printerInfo in driverList)
+			{
+				if (printerInfo.PrinterName != null)
 				{
 					comboDrivers.Items.Add(printerInfo.PrinterName);
 				}
@@ -197,7 +207,7 @@ namespace PrinterQueue
 			comboDrivers.SelectedIndex = 0;
 		}
 
-		#endregion Driver Name area
+		#endregion Driver Name Area
 
 		private void PrinterQueueQueryWithTask()
 		{

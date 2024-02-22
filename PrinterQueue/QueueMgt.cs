@@ -10,48 +10,42 @@ namespace PrinterQueue
 {
 	internal class QueueMgt
 	{
-		public async Task<bool> PrinterQueueExistsAsync(string queueName)
+		public bool PrinterQueueExists(string queueName)
 		{
-			return await Task.Run(() => 
+			using (PowerShell PowerShellInstance = PowerShell.Create())
 			{
-				using (PowerShell PowerShellInstance = PowerShell.Create())
-				{
-					string script = $"Get-Printer -Name '{queueName}'";
+				string script = $"Get-Printer -Name '{queueName}'";
 
-					PowerShellInstance.AddScript(script);
-					Collection<PSObject> PSOutput = PowerShellInstance.Invoke();
+				PowerShellInstance.AddScript(script);
+				//Collection<PSObject> PSOutput = await Task.Run(() => PowerShellInstance.Invoke());
+				Collection<PSObject> PSOutput = PowerShellInstance.Invoke();
 
-					return PSOutput.Count > 0;
-				}
-			});
+				return PSOutput.Count > 0;
+			}
 		}
 
-		public async Task DeletePrinterQueueAsync(string queueName)
+		public void DeletePrinterQueue(string queueName)
 		{
-			await Task.Run(() =>
+			using (PowerShell PowerShellInstance = PowerShell.Create())
 			{
-				using (PowerShell PowerShellInstance = PowerShell.Create())
-				{
-					string script = $"Remove-Printer -Name '{queueName}'";
+				string script = $"Remove-Printer -Name '{queueName}'";
 
-					PowerShellInstance.AddScript(script);
-					PowerShellInstance.Invoke();
-				}
-			});
+				PowerShellInstance.AddScript(script);
+				//await Task.Run(() => PowerShellInstance.Invoke());
+				PowerShellInstance.Invoke();
+			}
 		}
 
-		public async Task CreatePrinterQueueAsync(string queueName, string driverName)
+		public void CreatePrinterQueue(string queueName, string driverName)
 		{
-			await Task.Run(() =>
+			using (PowerShell PowerShellInstance = PowerShell.Create())
 			{
-				using (PowerShell PowerShellInstance = PowerShell.Create())
-				{
-					string script = $"Add-Printer -Name '{queueName}' -DriverName '{driverName}'";
+				string script = $"Add-Printer -Name '{queueName}' -DriverName '{driverName}'";
 
-					PowerShellInstance.AddScript(script);
-					PowerShellInstance.Invoke();
-				}
-			});
+				PowerShellInstance.AddScript(script);
+				//await Task.Run(() => PowerShellInstance.Invoke());
+				PowerShellInstance.Invoke();
+			}
 		}
 	}
 }

@@ -287,6 +287,7 @@
 			// lblMessageBox
 			// 
 			lblMessageBox.AutoSize = true;
+			lblMessageBox.BorderStyle = BorderStyle.Fixed3D;
 			lblMessageBox.Dock = DockStyle.Fill;
 			lblMessageBox.Location = new Point(133, 227);
 			lblMessageBox.Name = "lblMessageBox";

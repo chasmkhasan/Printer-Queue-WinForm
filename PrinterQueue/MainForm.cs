@@ -191,35 +191,21 @@ namespace PrinterQueue
 			Task.Run(() => ShowingDriverListTillUI());
 		}
 
-		private void ShowingDriverListTillUI()
+		public void ShowingDriverListTillUI()
 		{
-			List<DataModel> driverNames = _printerDrivers.ReadDriversFromSystem();
+			List<DataModel> driverList = _printerDrivers.ReadDriversFromSystem();
 
-			if (comboDrivers.InvokeRequired)
+			comboDrivers.Items.Clear();
+
+			comboDrivers.Items.Add("Select a Printer...");
+
+			foreach (DataModel printerInfo in driverList)
 			{
-				comboDrivers.Invoke(new Action(() =>
+				if (printerInfo.PrinterName != null)
 				{
-					comboDrivers.Items.Clear(); // Clear existing items if needed
-
-					foreach (DataModel printerInfo in driverNames)
-					{
-						comboDrivers.Items.Add(printerInfo.DriverName);
-					}
-
-					if (comboDrivers.Items.Count > 0)
-					{
-						comboDrivers.SelectedIndex = 0;
-					}
-				}));
-			}
-			else
-			{
-				comboDrivers.Items.Clear(); // Clear existing items if needed
-
-				foreach (DataModel printerInfo in driverNames)
-				{
-					comboDrivers.Items.Add(printerInfo.DriverName);
+					comboDrivers.Items.Add(printerInfo.PrinterName);
 				}
+			}
 
 				if (comboDrivers.Items.Count > 0)
 				{

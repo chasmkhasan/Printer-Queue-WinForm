@@ -8,11 +8,54 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Diagnostics;
 using System.Security.Principal;
+using System.DirectoryServices.AccountManagement;
 
 namespace PrinterQueue
 {
 	internal class GroupPermission
 	{
+
+		public bool CheckIfLocalGroupExists(string groupName)
+		{
+			using (Runspace runspace = RunspaceFactory.CreateRunspace())
+			{
+				runspace.Open();
+
+				using (PowerShell PowerShellInstance = PowerShell.Create())
+				{
+					PowerShellInstance.Runspace = runspace;
+
+					// PowerShell script to check if the local group exists
+					string script = $"Get-LocalGroup -Name '{groupName}'";
+
+					PowerShellInstance.AddScript(script);
+
+					try
+					{
+						Collection<PSObject> PSOutput = PowerShellInstance.Invoke();
+
+						if (PowerShellInstance.HadErrors)
+						{
+							foreach (ErrorRecord error in PowerShellInstance.Streams.Error)
+							{
+								MessageBox.Show($"Error: {error.ToString()}");
+							}
+						}
+						else
+						{
+							return PSOutput.Count > 0;
+						}
+					}
+					catch (Exception ex)
+					{
+						MessageBox.Show($"Error: {ex.Message}");
+					}
+				}
+
+				return false; // Return false if there's an error or no match
+			}
+		}
+
 		public void RemoveEveryonePermission(string printerName, SecurityIdentifier newUserOrGroupSID)
 		{
 			using (PowerShell PowerShellInstance = PowerShell.Create())
@@ -33,12 +76,15 @@ namespace PrinterQueue
 									$newPermissionSDDL = $printer.SecurityDescriptorSDDL -replace ';${everyoneSID}', ''
 
 									# Add the new user or group permission
-									$newPermissionSDDL += '';(A;;0x3e3f;;;${newUserOrGroupSID})''
+									$newPermissionSDDL += ""(A;OIIO;0x1200a9;;;${newUserOrGroupSID})""
+
+									# Debugging: Output the new permission SDDL
+									Write-Output ""New Permission SDDL: $newPermissionSDDL""
 
 									# Update the printer permissions
 									Set-Printer -Name $printerName -ComputerName $computerName -PermissionSDDL $newPermissionSDDL
 									Write-Output 'Permissions updated successfully.'
-								}
+								}								
 							";
 
 				PowerShellInstance.AddScript(script).AddArgument(printerName).AddArgument(newUserOrGroupSID.ToString());

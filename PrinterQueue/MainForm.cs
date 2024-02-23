@@ -141,43 +141,40 @@ namespace PrinterQueue
 		#region Group Permission
 		public void CheckGroupTextValidation()
 		{
-			string driverName = selectedPrinterDriver;
-			string group = _dataModel.Groups;
+			string printerName = _dataModel.PrinterQueue;
 
-			SecurityIdentifier sid = ConvertToSID(group);
+			string group = txtGroups.Text;
 
-			if (sid != null)
+			bool groupExists = _groupPermission.CheckIfLocalGroupExists(group);
+
+			if (groupExists)
 			{
-				_groupPermission.RemoveEveryonePermission(driverName, sid);
+				SecurityIdentifier sid = ConvertToSID(group);
+
+				if (sid != null)
+				{
+					_groupPermission.RemoveEveryonePermission(printerName, sid);
+				}
 			}
 		}
 
 		private SecurityIdentifier ConvertToSID(string groupName)
 		{
-			string targetGroupName = "GET-LocalGroup";
-
 			PrincipalContext context = new PrincipalContext(ContextType.Machine);
-			GroupPrincipal groupPrincipal = GroupPrincipal.FindByIdentity(context, IdentityType.Name, targetGroupName);
+			GroupPrincipal groupPrincipal = GroupPrincipal.FindByIdentity(context, IdentityType.Name, groupName);
 
 			if (groupPrincipal != null)
 			{
-				if (groupName.Equals(targetGroupName, StringComparison.OrdinalIgnoreCase))
-				{
-					NTAccount ntAccount = new NTAccount(null, targetGroupName);
-					SecurityIdentifier sid = (SecurityIdentifier)ntAccount.Translate(typeof(SecurityIdentifier));
-					return sid;
-				}
-				else
-				{
-					SetMessageBoxText("User input does not match the local group name.", System.Drawing.Color.Red);
-				}
+				NTAccount ntAccount = new NTAccount(null, groupName);
+				SecurityIdentifier sid = (SecurityIdentifier)ntAccount.Translate(typeof(SecurityIdentifier));
+				return sid;
 			}
 			else
 			{
 				SetMessageBoxText("The local group does not exist.", System.Drawing.Color.Red);
 			}
 
-			return null; // Return null if there's an error or no match
+			return null; 
 		}
 
 		#endregion Group Permission

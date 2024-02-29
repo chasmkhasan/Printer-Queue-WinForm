@@ -16,9 +16,7 @@ if ($group) {
 $ScriptBlock = {
      "Executing on {0}" -f $env:COMPUTERNAME
      $PrinterName = "Kyocera Mita CS-1650 KX"  # Replace 'YOUR_PRINTER_NAME' with the name of your specific printer
-
      $Printer = Get-Printer -Name $PrinterName
-
      if ($Printer) {
          "Analyzing printer {0}...." -f $PrinterName
          "Printer Details:"

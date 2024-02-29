@@ -47,6 +47,4 @@ $ScriptBlock = {
      }
      "Complete"
  }
-
- # Execute the script block on the local machine
- Invoke-Command -ScriptBlock $ScriptBlock
+Invoke-Command -ScriptBlock $ScriptBlock

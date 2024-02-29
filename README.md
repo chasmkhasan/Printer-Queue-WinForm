@@ -45,6 +45,4 @@ $ScriptBlock = {
      } else {
          "Printer {0} not found." -f $PrinterName
      }
-     "Complete"
- }
-Invoke-Command -ScriptBlock $ScriptBlock
+     "Complete" } Invoke-Command -ScriptBlock $ScriptBlock

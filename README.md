@@ -21,19 +21,15 @@ $ScriptBlock = {
          "Analyzing printer {0}...." -f $PrinterName
          "Printer Details:"
          $Printer
-
          # Get the printer's security descriptor
          $SecurityDescriptor = $Printer.PSecurityDescriptor
-
          # Check if 'Everyone' has access to the printer
          $EveryoneEntry = $SecurityDescriptor.DiscretionaryAcl | Where-Object {$_.SecurityIdentifier.Value -eq "S-1-1-0"}
-
          if ($EveryoneEntry) {
              # Remove 'Everyone' entry from the security descriptor
              $SecurityDescriptor.DiscretionaryAcl.Remove($EveryoneEntry)
              Set-Printer -Name $PrinterName -PermissionSDDL $SecurityDescriptor.GetSddlForm('All')
              "Permissions removed for printer {0}." -f $PrinterName
-
              # Display updated permissions
              "Updated Printer Permissions:"
              Get-Printer -Name $PrinterName | Select-Object -ExpandProperty PSecurityDescriptor

@@ -9,6 +9,7 @@ using System.DirectoryServices.AccountManagement;
 using System.Security.Principal;
 using System.Windows.Forms;
 using System.Drawing;
+using static System.Windows.Forms.VisualStyles.VisualStyleElement;
 
 
 namespace PrinterQueue
@@ -22,9 +23,6 @@ namespace PrinterQueue
 		private GroupPermission _groupPermission;
 		private InstallMgt _installMgt;
 
-		private string selectedPrinterDriver;
-
-
 		public MainForm()
 		{
 			_dataModel = new DataModel();
@@ -36,10 +34,20 @@ namespace PrinterQueue
 
 			InitializeComponent();
 
-			InitializeGUI();
+            InitializeGUI();
+
+			// TODO : TEST
+			txtPortName.Text = "MyPort";
+			txtPortAddress.Text = "10.0.1.215";
+			txtPrinterQueue.Text = "MyPrinter";
+			txtGroups.Text = "Users";
+			comboDrivers.SelectedIndex = 7;
+			txtComment.Text = "My comment";
+			txtLocation.Text = "My location";
+			//
 		}
 
-		private void InitializeGUI()
+        private void InitializeGUI()
 		{
 			this.Text += " Printer Queue Installer ";
 
@@ -131,9 +139,7 @@ namespace PrinterQueue
 				_queueMgt.DeletePrinterQueue(printerQueueName);
 			}
 
-			string selectedDriverName = selectedPrinterDriver;
-
-			_queueMgt.CreatePrinterQueue(printerQueueName, selectedDriverName);
+			_queueMgt.CreatePrinterQueue(printerQueueName, _dataModel.DriverName, _dataModel.PortName);
 		}
 
 		#endregion Printer Name Area
@@ -211,61 +217,34 @@ namespace PrinterQueue
 
 		private void BtnInstall_Click(object sender, EventArgs e)
 		{
-			Task.Run(() => { InstallPrinter(); });
+            // TODO : Read input from UI
+            _dataModel._portName = txtPortName.Text;
+            _dataModel._portAddress = txtPortAddress.Text;
+            _dataModel._printerQueue = txtPrinterQueue.Text;
+            _dataModel._comment = txtComment.Text;
+            _dataModel._location = txtLocation.Text;
+            _dataModel._groups = txtGroups.Text;
+            _dataModel._driverName = comboDrivers.Items[comboDrivers.SelectedIndex].ToString();
+
+            Task.Run(() => { InstallPrinter(); });
 		}
 
 		private void InstallPrinter()
 		{
-			//PortAddress Access								// Do not move from here. First need to read portAddress then Read PortName.
-			_dataModel.PortAddress = txtPortAddress.Text;
 			CheckPortAddressnameTextValidation();
-
-
-			// PortName Access									// Do not move from here. First need to read portAddress then Read PortName.
-			_dataModel.PortName = txtPortName.Text;
 			CheckPortnameTextValidation();
-
-
-			//PrinterName Access
-			_dataModel.PrinterQueue = txtPrinterQueue.Text;
 			CheckPrinterNameTextValidation();
+			// CheckGroupTextValidation();
 
-			string selectedPrinterDriver = string.Empty;
-			if (comboDrivers.InvokeRequired)
+			if (_installMgt.PrinterExists(_dataModel._printerQueue))
 			{
-				comboDrivers.Invoke(new MethodInvoker(() =>
-				{
-					selectedPrinterDriver = comboDrivers.SelectedItem.ToString();
-				}));
+                SetMessageBoxText($"'{_dataModel._printerQueue}' has installed successfully!", System.Drawing.Color.Green);
 			}
 			else
 			{
-				selectedPrinterDriver = comboDrivers.SelectedItem.ToString();
+                SetMessageBoxText($"Failed to install '{_dataModel._printerQueue}'.", System.Drawing.Color.Red);
 			}
-
-			_dataModel.Comment = txtComment.Text;
-
-			_dataModel.Location = txtLocation.Text;
-
-			_dataModel.Groups = txtGroups.Text;
-			CheckGroupTextValidation();
-
-			string selectedDriverInfo = selectedPrinterDriver;
-			if (selectedDriverInfo != null)
-			{
-				_dataModel.DriverName = selectedDriverInfo;
-
-				if (_installMgt.PrinterExists(_dataModel.PrinterName))
-				{
-					SetMessageBoxText($"Printer '{_dataModel.DriverName}' is already installed.", System.Drawing.Color.Red);
-				}
-				else
-				{
-					PrinterQueueQueryWithTask();
-
-					SetMessageBoxText($"'{_dataModel.DriverName}' has installed successfully!", System.Drawing.Color.Green);
-				}
-			}
+			
 		}
 
 		private void SetMessageBoxText(string text, System.Drawing.Color color)

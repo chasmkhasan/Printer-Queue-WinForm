@@ -15,7 +15,7 @@ namespace PrinterQueue
 	internal class GroupPermission
 	{
 
-		public bool CheckIfLocalGroupExists(string groupName)
+		public static bool CheckIfLocalGroupExists(string groupName)
 		{
 			using (Runspace runspace = RunspaceFactory.CreateRunspace())
 			{
@@ -56,7 +56,7 @@ namespace PrinterQueue
 			}
 		}
 
-		public void RemoveEveryonePermission(string printerName, SecurityIdentifier newUserOrGroupSID)
+		public static void RemoveEveryonePermission(string printerName, SecurityIdentifier newUserOrGroupSID)
 		{
 			using (PowerShell PowerShellInstance = PowerShell.Create())
 			{

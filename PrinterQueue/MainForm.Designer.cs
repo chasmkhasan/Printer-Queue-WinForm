@@ -301,6 +301,7 @@
             Controls.Add(tableLayoutPanel1);
             Name = "MainForm";
             Text = "Printer Queue";
+            Load += MainForm_Load;
             tableLayoutPanel1.ResumeLayout(false);
             tableLayoutPanel1.PerformLayout();
             tableLayoutPanel4.ResumeLayout(false);

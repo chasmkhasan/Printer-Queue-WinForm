@@ -17,7 +17,6 @@ namespace PrinterQueue
 				string script = $"Get-Printer -Name '{queueName}'";
 
 				PowerShellInstance.AddScript(script);
-				//Collection<PSObject> PSOutput = await Task.Run(() => PowerShellInstance.Invoke());
 				Collection<PSObject> PSOutput = PowerShellInstance.Invoke();
 
 				return PSOutput.Count > 0;
@@ -31,7 +30,6 @@ namespace PrinterQueue
 				string script = $"Remove-Printer -Name '{queueName}'";
 
 				PowerShellInstance.AddScript(script);
-				//await Task.Run(() => PowerShellInstance.Invoke());
 				PowerShellInstance.Invoke();
 			}
 		}
@@ -43,7 +41,6 @@ namespace PrinterQueue
                 string script = $"Add-Printer -Name '{queueName}' -DriverName '{driverName}' -PortName '{portName}' -Comment '{comment}' -Location '{location}'";
 
 				PowerShellInstance.AddScript(script);
-				//await Task.Run(() => PowerShellInstance.Invoke());
 				PowerShellInstance.Invoke();
 			}
 		}

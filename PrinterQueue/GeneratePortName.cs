@@ -19,7 +19,6 @@ namespace PrinterQueue
 
 				PowerShellInstance.AddScript(script);
 
-				//Collection<PSObject> PSOutput = await Task.Run(() => PowerShellInstance.Invoke());
 				Collection<PSObject> PSOutput = PowerShellInstance.Invoke();
 
 				if (PSOutput.Count == 0)
@@ -41,7 +40,6 @@ namespace PrinterQueue
 
 				PowerShellInstance.AddScript(script);
 
-				//Collection<PSObject> PSOutput = await Task.Run(() => PowerShellInstance.Invoke());
 				Collection<PSObject> PSOutput = PowerShellInstance.Invoke();
 
 				bool portExists = PSOutput.Count > 0;

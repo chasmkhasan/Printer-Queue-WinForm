@@ -21,7 +21,6 @@ namespace PrinterQueue
         private PrinterDrivers _printerDrivers;
         private GeneratePortName _generatePort;
         private QueueMgt _queueMgt;
-        private InstallMgt _installMgt;
 
         public MainForm()
         {
@@ -29,7 +28,6 @@ namespace PrinterQueue
             _printerDrivers = new PrinterDrivers();
             _generatePort = new GeneratePortName();
             _queueMgt = new QueueMgt();
-            _installMgt = new InstallMgt();
 
             InitializeComponent();
         }
@@ -139,10 +137,15 @@ namespace PrinterQueue
             if (_queueMgt.PrinterQueueExists(printerQueueName))
             {
                 _queueMgt.DeletePrinterQueue(printerQueueName);
-            }
 
+                SetMessageBoxText($"{_dataModel.PrinterQueue} was Exits. Now Deleting ....", System.Drawing.Color.Red);
+				SetMessageBoxText($"New Printer Queue Processing........", System.Drawing.Color.Green);
+
+			}
             _queueMgt.CreatePrinterQueue(printerQueueName, _dataModel.DriverName, _dataModel.PortName, _dataModel.Comment, _dataModel.Location);
-        }
+
+			SetMessageBoxText($"'{_dataModel.PrinterQueue}' has installed successfully!", System.Drawing.Color.Green);
+		}
 
         #endregion Printer Name Area
 
@@ -161,8 +164,9 @@ namespace PrinterQueue
 
                 if (sid != null)
                 {
-                    GroupPermission.RemoveEveryonePermission(printerName, sid);
-                }
+                    GroupPermission.RemoveEveryonePermission(printerName);
+					GroupPermission.AddNewGroupPermission(printerName, sid);
+				}
             }
         }
 
@@ -210,13 +214,13 @@ namespace PrinterQueue
         private void BtnInstall_Click(object sender, EventArgs e)
         {
             // TODO : Read input from UI
-            _dataModel._portName = txtPortName.Text;
-            _dataModel._portAddress = txtPortAddress.Text;
-            _dataModel._printerQueue = txtPrinterQueue.Text;
-            _dataModel._comment = txtComment.Text;
-            _dataModel._location = txtLocation.Text;
-            _dataModel._groups = txtGroups.Text;
-            _dataModel._driverName = comboDrivers.Items[comboDrivers.SelectedIndex].ToString();
+            _dataModel.PortName = txtPortName.Text;
+            _dataModel.PortAddress = txtPortAddress.Text;
+            _dataModel.PrinterQueue = txtPrinterQueue.Text;
+            _dataModel.Comment = txtComment.Text;
+            _dataModel.Location = txtLocation.Text;
+            _dataModel.Groups = txtGroups.Text;
+            _dataModel.DriverName = comboDrivers.Items[comboDrivers.SelectedIndex].ToString();
 
             Task.Run(() => { InstallPrinter(); });
         }
@@ -227,16 +231,6 @@ namespace PrinterQueue
             CheckPortnameTextValidation();
             CheckPrinterNameTextValidation();
             // CheckGroupTextValidation();
-
-            if (_installMgt.PrinterExists(_dataModel._printerQueue))
-            {
-                SetMessageBoxText($"'{_dataModel._printerQueue}' has installed successfully!", System.Drawing.Color.Green);
-            }
-            else
-            {
-                SetMessageBoxText($"Failed to install '{_dataModel._printerQueue}'.", System.Drawing.Color.Red);
-            }
-
         }
 
         private void SetMessageBoxText(string text, System.Drawing.Color color)

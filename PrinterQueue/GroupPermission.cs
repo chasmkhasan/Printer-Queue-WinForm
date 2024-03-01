@@ -25,7 +25,6 @@ namespace PrinterQueue
 				{
 					PowerShellInstance.Runspace = runspace;
 
-					// PowerShell script to check if the local group exists
 					string script = $"Get-LocalGroup -Name '{groupName}'";
 
 					PowerShellInstance.AddScript(script);
@@ -56,7 +55,70 @@ namespace PrinterQueue
 			}
 		}
 
-		public static void RemoveEveryonePermission(string printerName, SecurityIdentifier newUserOrGroupSID)
+		public static void RemoveEveryonePermission(string printerName)
+		{
+			using (PowerShell PowerShellInstance = PowerShell.Create())
+			{
+				string script = @"
+								$printerName = $args[0]
+								$computerName = $env:COMPUTERNAME
+								$everyoneSID = 'S-1-1-0'  # SID for Everyone
+								
+								#Getting Printer Data
+								$printer = Get-Printer -Name $printerName -ComputerName $computerName -Full
+
+								# Remove the Everyone permission
+								$newPermissionSDDL = $printer.SecurityDescriptorSDDL -replace "";$everyoneSID"", ''
+
+								# Update the printer permissions
+								Set-Printer -Name $printerName -ComputerName $computerName -PermissionSDDL $newPermissionSDDL                                
+								";
+
+				PowerShellInstance.AddScript(script).AddArgument(printerName);
+
+				try
+				{
+					Collection<PSObject> PSOutput = PowerShellInstance.Invoke();
+
+					foreach (ErrorRecord error in PowerShellInstance.Streams.Error)
+					{
+						LogError(error.ToString());
+					}
+
+					if (PSOutput.Count > 0)
+					{
+						LogOutput(PSOutput[0].ToString());
+					}
+					else
+					{
+						LogMessage("No output from the PowerShell script.");
+					}
+				}
+				catch (Exception ex)
+				{
+					LogError(ex.Message);
+				}
+			}
+		}
+
+		
+		private static void LogError(string errorMessage)
+		{
+			MessageBox.Show($"Error: {errorMessage}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+		}
+
+		private static void LogOutput(string outputMessage)
+		{
+			MessageBox.Show(outputMessage, "Result", MessageBoxButtons.OK, MessageBoxIcon.Information);
+		}
+
+		private static void LogMessage(string message)
+		{
+			MessageBox.Show(message, "Result", MessageBoxButtons.OK, MessageBoxIcon.Information);
+		}
+
+
+		public static void AddNewGroupPermission(string printerName, SecurityIdentifier newUserOrGroupSID)
 		{
 			using (PowerShell PowerShellInstance = PowerShell.Create())
 			{
@@ -64,28 +126,16 @@ namespace PrinterQueue
 								$printerName = $args[0]
 								$computerName = $env:COMPUTERNAME
 								$newUserOrGroupSID = $args[1]  # Passed as an argument
-								$everyoneSID = 'S-1-1-0'  # SID for Everyone
 
 								# Check if the printer exists
 								$printer = Get-Printer -Name $printerName -ComputerName $computerName -Full
 
-								if ($printer -eq $null) {
-									Write-Output 'Printer not found'
-								} else {
-									# Remove the Everyone permission
-									$newPermissionSDDL = $printer.SecurityDescriptorSDDL -replace ';${everyoneSID}', ''
+							    # Construct the new permission SDDL
+				                $newPermission = ""(A;OIIO;0x1200a9;;;${newUserOrGroupSID})""
 
-									# Add the new user or group permission
-									$newPermissionSDDL += ""(A;OIIO;0x1200a9;;;${newUserOrGroupSID})""
-
-									# Debugging: Output the new permission SDDL
-									Write-Output ""New Permission SDDL: $newPermissionSDDL""
-
-									# Update the printer permissions
-									Set-Printer -Name $printerName -ComputerName $computerName -PermissionSDDL $newPermissionSDDL
-									Write-Output 'Permissions updated successfully.'
-								}								
-							";
+				                # Update the printer permissions
+				                Set-Printer -Name $printerName -ComputerName $computerName -PermissionSDDL $newPermission
+								";
 
 				PowerShellInstance.AddScript(script).AddArgument(printerName).AddArgument(newUserOrGroupSID.ToString());
 
@@ -97,7 +147,7 @@ namespace PrinterQueue
 					{
 						foreach (ErrorRecord error in PowerShellInstance.Streams.Error)
 						{
-							MessageBox.Show($"Error: {error.ToString()}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+							MessageBox.Show($"Error: {error.CategoryInfo.Category} - {error.Exception.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
 						}
 					}
 					else

@@ -139,7 +139,7 @@ namespace PrinterQueue
 				_queueMgt.DeletePrinterQueue(printerQueueName);
 			}
 
-			_queueMgt.CreatePrinterQueue(printerQueueName, _dataModel.DriverName, _dataModel.PortName);
+			_queueMgt.CreatePrinterQueue(printerQueueName, _dataModel.DriverName, _dataModel.PortName, _dataModel.Comment, _dataModel.Location);
 		}
 
 		#endregion Printer Name Area
@@ -204,16 +204,6 @@ namespace PrinterQueue
 		}
 
 		#endregion Driver Name Area
-
-		private void PrinterQueueQueryWithTask()
-		{
-			_installMgt.ExecutePowerShellScript($"Add-Printer " +
-														  $"-Name '{_dataModel.PrinterName}' " +
-														  $"-DriverName '{_dataModel.DriverName}' " +
-														  $"-PortName '{_dataModel.PortName}' " +
-														  $"-Comment '{_dataModel.Comment}' " +
-														  $"-Location '{_dataModel.Location}'");
-		}
 
 		private void BtnInstall_Click(object sender, EventArgs e)
 		{

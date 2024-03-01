@@ -36,11 +36,11 @@ namespace PrinterQueue
 			}
 		}
 
-		public void CreatePrinterQueue(string queueName, string driverName, string portName)
+		public void CreatePrinterQueue(string queueName, string driverName, string portName, string comment, string location)
 		{
 			using (PowerShell PowerShellInstance = PowerShell.Create())
 			{
-				string script = $"Add-Printer -Name '{queueName}' -DriverName '{driverName}' -PortName '{portName}'";
+                string script = $"Add-Printer -Name '{queueName}' -DriverName '{driverName}' -PortName '{portName}' -Comment '{comment}' -Location '{location}'";
 
 				PowerShellInstance.AddScript(script);
 				//await Task.Run(() => PowerShellInstance.Invoke());

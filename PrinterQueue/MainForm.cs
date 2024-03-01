@@ -36,18 +36,16 @@ namespace PrinterQueue
 
         private void MainForm_Load(object sender, EventArgs e)
         {
-            // GroupPermission.RemoveEveryonePermission(printerName, sid);
-
             InitializeGUI();
 
             // TODO : TEST
-            txtPortName.Text = "MyPort";
-            txtPortAddress.Text = "10.0.1.215";
-            txtPrinterQueue.Text = "MyPrinter";
-            txtGroups.Text = "Users";
-            comboDrivers.SelectedIndex = 7;
-            txtComment.Text = "My comment";
-            txtLocation.Text = "My location";
+            //txtPortName.Text = "MyPort";
+            //txtPortAddress.Text = "10.0.1.215";
+            //txtPrinterQueue.Text = "MyPrinter";
+            //txtGroups.Text = "Users";
+            //comboDrivers.SelectedIndex = 7;
+            //txtComment.Text = "My comment";
+            //txtLocation.Text = "My location";
             //
         }
 
@@ -225,10 +223,10 @@ namespace PrinterQueue
 
         private void InstallPrinter()
         {
-            //CheckPortAddressnameTextValidation();
-            //CheckPortnameTextValidation();
-            //CheckPrinterNameTextValidation();
-            CheckGroupTextValidation();
+            CheckPortAddressnameTextValidation();
+            CheckPortnameTextValidation();
+            CheckPrinterNameTextValidation();
+            // CheckGroupTextValidation();
 
             if (_installMgt.PrinterExists(_dataModel._printerQueue))
             {

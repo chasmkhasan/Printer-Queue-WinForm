@@ -6,3 +6,7 @@
 /.vs
 /PrinterQueue/bin
 /PrinterQueue/obj
+/Installer/Printer Queue Installer-SetupFiles/Printer Queue Installer.msi
+/Installer/Printer Queue Installer-cache/cacheIndex.txt
+/Installer/Printer Queue Installer-cache/part1/disk1.cab
+/Installer/Printer Queue Installer-cache/part1/output-info.ini

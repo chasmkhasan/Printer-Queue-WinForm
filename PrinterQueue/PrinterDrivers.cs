@@ -19,6 +19,8 @@ namespace PrinterQueue
 			{
 				using (PowerShell PowerShellInstance = PowerShell.Create())
 				{
+					PowerShellInstance.AddScript("Set-ExecutionPolicy RemoteSigned -Scope Process -Force");
+
 					PowerShellInstance.AddScript("Get-PrinterDriver | Select-Object -ExpandProperty Name");
 
 					Collection<PSObject> PSOutput = PowerShellInstance.Invoke();

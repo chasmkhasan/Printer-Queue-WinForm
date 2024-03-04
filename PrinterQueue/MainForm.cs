@@ -123,8 +123,8 @@ namespace PrinterQueue
 
                 ReadPrinterName(userInputPrinterQueue);
 
-                SetMessageBoxText("PrinterName successfully taken.", System.Drawing.Color.Green);
-            }
+				SetMessageBoxText($"'{_dataModel.PrinterQueue}' has installed successfully!", System.Drawing.Color.Green);
+			}
             else
             {
                 SetMessageBoxText("Condition not met. Please Check Printer Name!", System.Drawing.Color.Red);
@@ -143,8 +143,6 @@ namespace PrinterQueue
 
 			}
             _queueMgt.CreatePrinterQueue(printerQueueName, _dataModel.DriverName, _dataModel.PortName, _dataModel.Comment, _dataModel.Location);
-
-			SetMessageBoxText($"'{_dataModel.PrinterQueue}' has installed successfully!", System.Drawing.Color.Green);
 		}
 
         #endregion Printer Name Area

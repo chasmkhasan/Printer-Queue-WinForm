@@ -40,3 +40,11 @@ $ScriptBlock = {
          "Printer {0} not found." -f $PrinterName
      }
      "Complete" } Invoke-Command -ScriptBlock $ScriptBlock
+
+#IF does not run in ur machine Need to check Execution policy
+
+You can set the execution policy within your PowerShell script or as a command line parameter when launching PowerShell. To set the execution policy within your PowerShell script, you can use the Set-ExecutionPolicy cmdlet. For example, to set the execution policy to RemoteSigned, you can include the following line at the beginning of your script:
+powershell: 
+'Set-ExecutionPolicy RemoteSigned -Scope Process -Force'
+
+This command sets the execution policy to RemoteSigned for the current PowerShell session only (-Scope Process) and forcefully (-Force) without prompting for confirmation.

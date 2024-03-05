@@ -48,3 +48,7 @@ powershell:
 'Set-ExecutionPolicy RemoteSigned -Scope Process -Force'
 
 This command sets the execution policy to RemoteSigned for the current PowerShell session only (-Scope Process) and forcefully (-Force) without prompting for confirmation.
+
+
+#Run this project in Windows Server
+Application must be run by 'Run as a Administrator' Otherwise it will run but will not execute in the system. 

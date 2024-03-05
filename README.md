@@ -1,6 +1,6 @@
 # Printer-Queue-WinForm
 
-#How to read Local Group Name and Get SID code: 
+# How to read Local Group Name and Get SID code: 
 
 $groupName = "Administrators"
 $group = Get-LocalGroup -Name $groupName
@@ -11,7 +11,7 @@ if ($group) {
     Write-Output "Group '$groupName' not found."
 }
 
-#Remove Everyone Permission from Printer Security-Its working with powershell without error. But Not Update in Printer Security. there may be other factors at play, such as group policies or network configurations.
+# Remove Everyone Permission from Printer Security-Its working with powershell without error. But Not Update in Printer Security. there may be other factors at play, such as group policies or network configurations.
 
 $ScriptBlock = {
      "Executing on {0}" -f $env:COMPUTERNAME
@@ -41,7 +41,7 @@ $ScriptBlock = {
      }
      "Complete" } Invoke-Command -ScriptBlock $ScriptBlock
 
-#IF does not run in ur machine Need to check Execution policy
+# IF does not run in ur machine Need to check Execution policy
 
 You can set the execution policy within your PowerShell script or as a command line parameter when launching PowerShell. To set the execution policy within your PowerShell script, you can use the Set-ExecutionPolicy cmdlet. For example, to set the execution policy to RemoteSigned, you can include the following line at the beginning of your script:
 powershell: 
@@ -50,5 +50,5 @@ powershell:
 This command sets the execution policy to RemoteSigned for the current PowerShell session only (-Scope Process) and forcefully (-Force) without prompting for confirmation.
 
 
-#Run this project in Windows Server
+# Run this project in Windows Server
 Application must be run by 'Run as a Administrator' Otherwise it will run but will not execute in the system. 

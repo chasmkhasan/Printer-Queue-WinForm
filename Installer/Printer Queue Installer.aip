@@ -28,34 +28,22 @@
   </COMPONENT>
   <COMPONENT cid="caphyon.advinst.msicomp.MsiDirsComponent">
     <ROW Directory="APPDIR" Directory_Parent="TARGETDIR" DefaultDir="APPDIR:." IsPseudoRoot="1"/>
-    <ROW Directory="CimCmdlets_1_Dir" Directory_Parent="Modules_3_Dir" DefaultDir="CIMCMD~1|CimCmdlets"/>
     <ROW Directory="CimCmdlets_Dir" Directory_Parent="Modules_1_Dir" DefaultDir="CIMCMD~1|CimCmdlets"/>
-    <ROW Directory="Microsoft.PowerShell.Diagnost_1_Dir" Directory_Parent="Modules_3_Dir" DefaultDir="MICROS~1.DIA|Microsoft.PowerShell.Diagnostics"/>
+    <ROW Directory="DesktopFolder" Directory_Parent="TARGETDIR" DefaultDir="DESKTO~1|DesktopFolder" IsPseudoRoot="1"/>
     <ROW Directory="Microsoft.PowerShell.Diagnostic_Dir" Directory_Parent="Modules_1_Dir" DefaultDir="MICROS~1.DIA|Microsoft.PowerShell.Diagnostics"/>
     <ROW Directory="Microsoft.PowerShell.Host_1_Dir" Directory_Parent="Modules_1_Dir" DefaultDir="MICROS~1.HOS|Microsoft.PowerShell.Host"/>
-    <ROW Directory="Microsoft.PowerShell.Host_2_Dir" Directory_Parent="Modules_2_Dir" DefaultDir="MICROS~1.HOS|Microsoft.PowerShell.Host"/>
-    <ROW Directory="Microsoft.PowerShell.Host_3_Dir" Directory_Parent="Modules_3_Dir" DefaultDir="MICROS~1.HOS|Microsoft.PowerShell.Host"/>
     <ROW Directory="Microsoft.PowerShell.Host_Dir" Directory_Parent="Modules_Dir" DefaultDir="MICROS~1.HOS|Microsoft.PowerShell.Host"/>
     <ROW Directory="Microsoft.PowerShell.Manageme_1_Dir" Directory_Parent="Modules_1_Dir" DefaultDir="MICROS~1.MAN|Microsoft.PowerShell.Management"/>
-    <ROW Directory="Microsoft.PowerShell.Manageme_2_Dir" Directory_Parent="Modules_2_Dir" DefaultDir="MICROS~1.MAN|Microsoft.PowerShell.Management"/>
-    <ROW Directory="Microsoft.PowerShell.Manageme_3_Dir" Directory_Parent="Modules_3_Dir" DefaultDir="MICROS~1.MAN|Microsoft.PowerShell.Management"/>
     <ROW Directory="Microsoft.PowerShell.Management_Dir" Directory_Parent="Modules_Dir" DefaultDir="MICROS~1.MAN|Microsoft.PowerShell.Management"/>
     <ROW Directory="Microsoft.PowerShell.Security_1_Dir" Directory_Parent="Modules_1_Dir" DefaultDir="MICROS~1.SEC|Microsoft.PowerShell.Security"/>
-    <ROW Directory="Microsoft.PowerShell.Security_2_Dir" Directory_Parent="Modules_2_Dir" DefaultDir="MICROS~1.SEC|Microsoft.PowerShell.Security"/>
-    <ROW Directory="Microsoft.PowerShell.Security_3_Dir" Directory_Parent="Modules_3_Dir" DefaultDir="MICROS~1.SEC|Microsoft.PowerShell.Security"/>
     <ROW Directory="Microsoft.PowerShell.Security_Dir" Directory_Parent="Modules_Dir" DefaultDir="MICROS~1.SEC|Microsoft.PowerShell.Security"/>
     <ROW Directory="Microsoft.PowerShell.Utility_1_Dir" Directory_Parent="Modules_1_Dir" DefaultDir="MICROS~1.UTI|Microsoft.PowerShell.Utility"/>
-    <ROW Directory="Microsoft.PowerShell.Utility_2_Dir" Directory_Parent="Modules_2_Dir" DefaultDir="MICROS~1.UTI|Microsoft.PowerShell.Utility"/>
-    <ROW Directory="Microsoft.PowerShell.Utility_3_Dir" Directory_Parent="Modules_3_Dir" DefaultDir="MICROS~1.UTI|Microsoft.PowerShell.Utility"/>
     <ROW Directory="Microsoft.PowerShell.Utility_Dir" Directory_Parent="Modules_Dir" DefaultDir="MICROS~1.UTI|Microsoft.PowerShell.Utility"/>
-    <ROW Directory="Microsoft.WSMan.Management_1_Dir" Directory_Parent="Modules_3_Dir" DefaultDir="MICROS~2.MAN|Microsoft.WSMan.Management"/>
     <ROW Directory="Microsoft.WSMan.Management_Dir" Directory_Parent="Modules_1_Dir" DefaultDir="MICROS~2.MAN|Microsoft.WSMan.Management"/>
     <ROW Directory="Modules_1_Dir" Directory_Parent="net8.0_8_Dir" DefaultDir="Modules"/>
-    <ROW Directory="Modules_2_Dir" Directory_Parent="net8.0_9_Dir" DefaultDir="Modules"/>
-    <ROW Directory="Modules_3_Dir" Directory_Parent="net8.0_10_Dir" DefaultDir="Modules"/>
     <ROW Directory="Modules_Dir" Directory_Parent="net8.0_7_Dir" DefaultDir="Modules"/>
-    <ROW Directory="PSDiagnostics_1_Dir" Directory_Parent="Modules_3_Dir" DefaultDir="PSDIAG~1|PSDiagnostics"/>
     <ROW Directory="PSDiagnostics_Dir" Directory_Parent="Modules_1_Dir" DefaultDir="PSDIAG~1|PSDiagnostics"/>
+    <ROW Directory="SHORTCUTDIR" Directory_Parent="TARGETDIR" DefaultDir="SHORTC~1|SHORTCUTDIR" IsPseudoRoot="1"/>
     <ROW Directory="TARGETDIR" DefaultDir="SourceDir"/>
     <ROW Directory="cs_Dir" Directory_Parent="APPDIR" DefaultDir="cs"/>
     <ROW Directory="de_Dir" Directory_Parent="APPDIR" DefaultDir="de"/>
@@ -70,8 +58,6 @@
     <ROW Directory="lib_10_Dir" Directory_Parent="winarm64_Dir" DefaultDir="lib"/>
     <ROW Directory="lib_11_Dir" Directory_Parent="winx64_Dir" DefaultDir="lib"/>
     <ROW Directory="lib_12_Dir" Directory_Parent="winx86_Dir" DefaultDir="lib"/>
-    <ROW Directory="lib_13_Dir" Directory_Parent="unix_1_Dir" DefaultDir="lib"/>
-    <ROW Directory="lib_14_Dir" Directory_Parent="win_1_Dir" DefaultDir="lib"/>
     <ROW Directory="lib_1_Dir" Directory_Parent="illumos_Dir" DefaultDir="lib"/>
     <ROW Directory="lib_2_Dir" Directory_Parent="ios_Dir" DefaultDir="lib"/>
     <ROW Directory="lib_3_Dir" Directory_Parent="linux_Dir" DefaultDir="lib"/>
@@ -102,7 +88,6 @@
     <ROW Directory="net5.0_2_Dir" Directory_Parent="lib_11_Dir" DefaultDir="net5.0"/>
     <ROW Directory="net5.0_3_Dir" Directory_Parent="lib_12_Dir" DefaultDir="net5.0"/>
     <ROW Directory="net5.0_Dir" Directory_Parent="lib_9_Dir" DefaultDir="net5.0"/>
-    <ROW Directory="net8.0_10_Dir" Directory_Parent="lib_14_Dir" DefaultDir="net8.0"/>
     <ROW Directory="net8.0_1_Dir" Directory_Parent="lib_1_Dir" DefaultDir="net8.0"/>
     <ROW Directory="net8.0_2_Dir" Directory_Parent="lib_2_Dir" DefaultDir="net8.0"/>
     <ROW Directory="net8.0_3_Dir" Directory_Parent="lib_3_Dir" DefaultDir="net8.0"/>
@@ -111,7 +96,6 @@
     <ROW Directory="net8.0_6_Dir" Directory_Parent="lib_6_Dir" DefaultDir="net8.0"/>
     <ROW Directory="net8.0_7_Dir" Directory_Parent="lib_7_Dir" DefaultDir="net8.0"/>
     <ROW Directory="net8.0_8_Dir" Directory_Parent="lib_8_Dir" DefaultDir="net8.0"/>
-    <ROW Directory="net8.0_9_Dir" Directory_Parent="lib_13_Dir" DefaultDir="net8.0"/>
     <ROW Directory="net8.0_Dir" Directory_Parent="lib_Dir" DefaultDir="net8.0"/>
     <ROW Directory="netcoreapp2.1_1_Dir" Directory_Parent="lib_8_Dir" DefaultDir="NETCOR~1.1|netcoreapp2.1"/>
     <ROW Directory="netcoreapp2.1_Dir" Directory_Parent="lib_7_Dir" DefaultDir="NETCOR~1.1|netcoreapp2.1"/>
@@ -126,18 +110,14 @@
     <ROW Directory="ptBR_Dir" Directory_Parent="APPDIR" DefaultDir="pt-BR"/>
     <ROW Directory="ref_Dir" Directory_Parent="APPDIR" DefaultDir="ref"/>
     <ROW Directory="ru_Dir" Directory_Parent="APPDIR" DefaultDir="ru"/>
-    <ROW Directory="runtimes_1_Dir" Directory_Parent="winx64_1_Dir" DefaultDir="runtimes"/>
     <ROW Directory="runtimes_Dir" Directory_Parent="APPDIR" DefaultDir="runtimes"/>
     <ROW Directory="solaris_Dir" Directory_Parent="runtimes_Dir" DefaultDir="solaris"/>
     <ROW Directory="tr_Dir" Directory_Parent="APPDIR" DefaultDir="tr"/>
     <ROW Directory="tvos_Dir" Directory_Parent="runtimes_Dir" DefaultDir="tvos"/>
-    <ROW Directory="unix_1_Dir" Directory_Parent="runtimes_1_Dir" DefaultDir="unix"/>
     <ROW Directory="unix_Dir" Directory_Parent="runtimes_Dir" DefaultDir="unix"/>
-    <ROW Directory="win_1_Dir" Directory_Parent="runtimes_1_Dir" DefaultDir="win"/>
     <ROW Directory="win_Dir" Directory_Parent="runtimes_Dir" DefaultDir="win"/>
     <ROW Directory="winarm64_Dir" Directory_Parent="runtimes_Dir" DefaultDir="WIN-AR~1|win-arm64"/>
     <ROW Directory="winarm_Dir" Directory_Parent="runtimes_Dir" DefaultDir="win-arm"/>
-    <ROW Directory="winx64_1_Dir" Directory_Parent="APPDIR" DefaultDir="win-x64"/>
     <ROW Directory="winx64_Dir" Directory_Parent="runtimes_Dir" DefaultDir="win-x64"/>
     <ROW Directory="winx86_Dir" Directory_Parent="runtimes_Dir" DefaultDir="win-x86"/>
     <ROW Directory="zhHans_Dir" Directory_Parent="APPDIR" DefaultDir="zh-Hans"/>
@@ -150,11 +130,9 @@
   <COMPONENT cid="caphyon.advinst.msicomp.MsiCompsComponent">
     <ROW Component="A0BFC224E0E9125ADE0B2DBF343" ComponentId="{3CD6C0B1-5D54-4482-8CF0-DC37C1284DBC}" Directory_="APPDIR" Attributes="4" KeyPath="A0BFC224E0E9125ADE0B2DBF343" Options="2"/>
     <ROW Component="APPDIR" ComponentId="{19DBCCE4-960F-4D24-B642-486FB088D2ED}" Directory_="APPDIR" Attributes="0"/>
+    <ROW Component="C945BDDBD4164BEAA5A0B63FA0DC5" ComponentId="{671E0B39-F60B-4818-BBBA-FB495A26BE16}" Directory_="APPDIR" Attributes="4" KeyPath="C945BDDBD4164BEAA5A0B63FA0DC5" Options="2"/>
     <ROW Component="CimCmdlets.psd1" ComponentId="{2EE6F6F0-1DE9-48BF-BF6C-EAA52C371CE4}" Directory_="CimCmdlets_Dir" Attributes="0" KeyPath="CimCmdlets.psd1" Type="0"/>
-    <ROW Component="CimCmdlets.psd1_1" ComponentId="{631B7845-060D-4241-9207-7B670D13C1BC}" Directory_="CimCmdlets_1_Dir" Attributes="0" KeyPath="CimCmdlets.psd1_1" Type="0"/>
-    <ROW Component="D3DCompiler_47_cor3.dll" ComponentId="{BF6C77A2-0FF6-454D-8602-9176C80B8B71}" Directory_="winx64_1_Dir" Attributes="256" KeyPath="D3DCompiler_47_cor3.dll"/>
     <ROW Component="Diagnostics.format.ps1xml" ComponentId="{32278D40-CC40-4CF3-AA90-9C06F18AE663}" Directory_="Microsoft.PowerShell.Diagnostic_Dir" Attributes="0" KeyPath="Diagnostics.format.ps1xml" Type="0"/>
-    <ROW Component="Diagnostics.format.ps1xml_1" ComponentId="{A8992474-AD42-4BA1-9BC1-0F0C8416B3C1}" Directory_="Microsoft.PowerShell.Diagnost_1_Dir" Attributes="0" KeyPath="Diagnostics.format.ps1xml_1" Type="0"/>
     <ROW Component="JetBrains.Annotations.dll" ComponentId="{E8617E50-1954-4555-9189-3A8E4EAF6A0A}" Directory_="APPDIR" Attributes="0" KeyPath="JetBrains.Annotations.dll"/>
     <ROW Component="Json.More.dll" ComponentId="{705A9A53-B1C6-4DD4-B007-0FBBBDB9AA1B}" Directory_="APPDIR" Attributes="0" KeyPath="Json.More.dll"/>
     <ROW Component="JsonPointer.Net.dll" ComponentId="{DFF6770D-CACC-4B71-B49A-955CD9CF4E9A}" Directory_="APPDIR" Attributes="0" KeyPath="JsonPointer.Net.dll"/>
@@ -204,12 +182,8 @@
     <ROW Component="Microsoft.PowerShell.CoreCLR.Eventing.dll" ComponentId="{CC5A2FD4-DC15-4606-8385-B9E46977A185}" Directory_="net8.0_8_Dir" Attributes="0" KeyPath="Microsoft.PowerShell.CoreCLR.Eventing.dll"/>
     <ROW Component="Microsoft.PowerShell.Host.psd1" ComponentId="{05B52621-6A59-4DBE-8265-DEE5D3756D77}" Directory_="Microsoft.PowerShell.Host_Dir" Attributes="0" KeyPath="Microsoft.PowerShell.Host.psd1" Type="0"/>
     <ROW Component="Microsoft.PowerShell.Host.psd1_1" ComponentId="{2058BEFE-4060-4D42-B834-13C5781FE143}" Directory_="Microsoft.PowerShell.Host_1_Dir" Attributes="0" KeyPath="Microsoft.PowerShell.Host.psd1_1" Type="0"/>
-    <ROW Component="Microsoft.PowerShell.Host.psd1_2" ComponentId="{B5C3AF23-E9AD-493B-8E02-56B77256673A}" Directory_="Microsoft.PowerShell.Host_2_Dir" Attributes="0" KeyPath="Microsoft.PowerShell.Host.psd1_2" Type="0"/>
-    <ROW Component="Microsoft.PowerShell.Host.psd1_3" ComponentId="{96FE668D-AE0E-4524-A2B4-867F57997424}" Directory_="Microsoft.PowerShell.Host_3_Dir" Attributes="0" KeyPath="Microsoft.PowerShell.Host.psd1_3" Type="0"/>
     <ROW Component="Microsoft.PowerShell.Management.psd1" ComponentId="{74359F07-6D88-4958-9EBE-65034E61C7D8}" Directory_="Microsoft.PowerShell.Management_Dir" Attributes="0" KeyPath="Microsoft.PowerShell.Management.psd1" Type="0"/>
     <ROW Component="Microsoft.PowerShell.Management.psd1_1" ComponentId="{4C69877C-0550-4275-B6D0-2E6D46EF7D16}" Directory_="Microsoft.PowerShell.Manageme_1_Dir" Attributes="0" KeyPath="Microsoft.PowerShell.Management.psd1_1" Type="0"/>
-    <ROW Component="Microsoft.PowerShell.Management.psd1_2" ComponentId="{9A6D92AD-5E29-488D-9A6B-9297E4F13AD3}" Directory_="Microsoft.PowerShell.Manageme_2_Dir" Attributes="0" KeyPath="Microsoft.PowerShell.Management.psd1_2" Type="0"/>
-    <ROW Component="Microsoft.PowerShell.Management.psd1_3" ComponentId="{A8150D0C-8711-46D9-AE18-D3B433BAF0C4}" Directory_="Microsoft.PowerShell.Manageme_3_Dir" Attributes="0" KeyPath="Microsoft.PowerShell.Management.psd1_3" Type="0"/>
     <ROW Component="Microsoft.PowerShell.MarkdownRender.dll" ComponentId="{8B6402B4-0D4E-4330-98E9-83CFBC8D599E}" Directory_="APPDIR" Attributes="0" KeyPath="Microsoft.PowerShell.MarkdownRender.dll"/>
     <ROW Component="Microsoft.PowerShell.SDK.dll" ComponentId="{F56B49A4-D23D-4DD8-BB52-5A18AA679755}" Directory_="net8.0_7_Dir" Attributes="0" KeyPath="Microsoft.PowerShell.SDK.dll"/>
     <ROW Component="Microsoft.PowerShell.SDK.dll_1" ComponentId="{61968DEE-8308-452A-BCD7-7403257FAA3D}" Directory_="net8.0_8_Dir" Attributes="0" KeyPath="Microsoft.PowerShell.SDK.dll_1"/>
@@ -217,17 +191,12 @@
     <ROW Component="Microsoft.PowerShell.Security.dll_1" ComponentId="{0475E2B8-08D3-4D5B-9067-5DC5C882F12F}" Directory_="net8.0_8_Dir" Attributes="0" KeyPath="Microsoft.PowerShell.Security.dll_1"/>
     <ROW Component="Microsoft.PowerShell.Security.psd1" ComponentId="{0E6B647D-BD98-4AA4-8D0B-86C99B4A38B1}" Directory_="Microsoft.PowerShell.Security_Dir" Attributes="0" KeyPath="Microsoft.PowerShell.Security.psd1" Type="0"/>
     <ROW Component="Microsoft.PowerShell.Security.psd1_1" ComponentId="{414D9AB5-E99A-469F-BBF6-364C687B17F3}" Directory_="Microsoft.PowerShell.Security_1_Dir" Attributes="0" KeyPath="Microsoft.PowerShell.Security.psd1_1" Type="0"/>
-    <ROW Component="Microsoft.PowerShell.Security.psd1_2" ComponentId="{B21EC714-06AF-484B-949D-962CAAE68306}" Directory_="Microsoft.PowerShell.Security_2_Dir" Attributes="0" KeyPath="Microsoft.PowerShell.Security.psd1_2" Type="0"/>
-    <ROW Component="Microsoft.PowerShell.Security.psd1_3" ComponentId="{B72034B6-E7D9-4D98-A4B2-2936E31CFF99}" Directory_="Microsoft.PowerShell.Security_3_Dir" Attributes="0" KeyPath="Microsoft.PowerShell.Security.psd1_3" Type="0"/>
     <ROW Component="Microsoft.PowerShell.Utility.psd1" ComponentId="{90CCFD0F-0959-40DD-802A-9C0B366F9C62}" Directory_="Microsoft.PowerShell.Utility_Dir" Attributes="0" KeyPath="Microsoft.PowerShell.Utility.psd1" Type="0"/>
     <ROW Component="Microsoft.PowerShell.Utility.psd1_1" ComponentId="{1EBC8DA3-CCA9-4695-99B6-4C93C89A714C}" Directory_="Microsoft.PowerShell.Utility_1_Dir" Attributes="0" KeyPath="Microsoft.PowerShell.Utility.psd1_1" Type="0"/>
-    <ROW Component="Microsoft.PowerShell.Utility.psd1_2" ComponentId="{0ED9FCE0-4CF6-4A00-89B9-C1DDF97E875B}" Directory_="Microsoft.PowerShell.Utility_2_Dir" Attributes="0" KeyPath="Microsoft.PowerShell.Utility.psd1_2" Type="0"/>
-    <ROW Component="Microsoft.PowerShell.Utility.psd1_3" ComponentId="{179EB1A5-0D97-48AA-B54E-6C29D16FD594}" Directory_="Microsoft.PowerShell.Utility_3_Dir" Attributes="0" KeyPath="Microsoft.PowerShell.Utility.psd1_3" Type="0"/>
     <ROW Component="Microsoft.VisualBasic.Core.dll" ComponentId="{32CE5D2C-DBD0-454C-8F43-842F1E94A84A}" Directory_="ref_Dir" Attributes="0" KeyPath="Microsoft.VisualBasic.Core.dll"/>
     <ROW Component="Microsoft.VisualBasic.dll" ComponentId="{D91785E4-BFEF-46A3-A61A-9B36672CCDCA}" Directory_="ref_Dir" Attributes="0" KeyPath="Microsoft.VisualBasic.dll"/>
     <ROW Component="Microsoft.WSMan.Management.dll" ComponentId="{7DEDEDD7-525B-4329-BAD4-89F5F8A68386}" Directory_="net8.0_8_Dir" Attributes="0" KeyPath="Microsoft.WSMan.Management.dll"/>
     <ROW Component="Microsoft.WSMan.Management.psd1" ComponentId="{CB2285F0-6039-4DE0-9405-25970BB305A1}" Directory_="Microsoft.WSMan.Management_Dir" Attributes="0" KeyPath="Microsoft.WSMan.Management.psd1" Type="0"/>
-    <ROW Component="Microsoft.WSMan.Management.psd1_1" ComponentId="{3E360F4E-2823-4240-8E7A-E882ACC04FEF}" Directory_="Microsoft.WSMan.Management_1_Dir" Attributes="0" KeyPath="Microsoft.WSMan.Management.psd1_1" Type="0"/>
     <ROW Component="Microsoft.WSMan.Runtime.dll" ComponentId="{92503253-CEC4-4052-AE5B-9E6FB046417F}" Directory_="net8.0_8_Dir" Attributes="0" KeyPath="Microsoft.WSMan.Runtime.dll"/>
     <ROW Component="Microsoft.Win32.Primitives.dll" ComponentId="{FDCF9300-174D-4158-89A1-E094E8629C7D}" Directory_="ref_Dir" Attributes="0" KeyPath="Microsoft.Win32.Primitives.dll"/>
     <ROW Component="Microsoft.Win32.Registry.AccessContr_1_ol.dll" ComponentId="{CAA9E968-0707-4AEE-9C2A-61DEC2FF96BE}" Directory_="net8.0_8_Dir" Attributes="0" KeyPath="Microsoft.Win32.Registry.AccessContr_1_ol.dll"/>
@@ -237,19 +206,15 @@
     <ROW Component="Microsoft.Win32.SystemEvents.dll_1" ComponentId="{51251040-CF3B-477E-BC01-9A5040715E6A}" Directory_="net8.0_8_Dir" Attributes="0" KeyPath="Microsoft.Win32.SystemEvents.dll_1"/>
     <ROW Component="Newtonsoft.Json.dll" ComponentId="{BA630AA2-BF56-4D47-B1AF-D5191EEFEAD5}" Directory_="APPDIR" Attributes="0" KeyPath="Newtonsoft.Json.dll"/>
     <ROW Component="PSDiagnostics.psd1" ComponentId="{7990B7CD-9ADC-4333-99B2-09E1ECFC80D0}" Directory_="PSDiagnostics_Dir" Attributes="0" KeyPath="PSDiagnostics.psd1" Type="0"/>
-    <ROW Component="PSDiagnostics.psd1_1" ComponentId="{D4447519-7F2F-40BE-81E4-D4DBA6AEA2DD}" Directory_="PSDiagnostics_1_Dir" Attributes="0" KeyPath="PSDiagnostics.psd1_1" Type="0"/>
-    <ROW Component="PenImc_cor3.dll" ComponentId="{2509BFBA-6293-40F5-9F03-8D85DEABEBEF}" Directory_="winx64_1_Dir" Attributes="256" KeyPath="PenImc_cor3.dll"/>
     <ROW Component="PowerShell.Core.Instrumentation.dll" ComponentId="{4FB074CA-CD05-4161-BD47-E4B1F62ED7AD}" Directory_="native_7_Dir" Attributes="0" KeyPath="PowerShell.Core.Instrumentation.dll"/>
     <ROW Component="PowerShell.Core.Instrumentation.dll_1" ComponentId="{FF67B729-1D6E-40CE-8EA7-5EB784E437DD}" Directory_="native_8_Dir" Attributes="256" KeyPath="PowerShell.Core.Instrumentation.dll_1"/>
     <ROW Component="PowerShell.Core.Instrumentation.dll_2" ComponentId="{5E60E63E-7B3D-4677-B4C3-BB45DAD80E03}" Directory_="native_9_Dir" Attributes="256" KeyPath="PowerShell.Core.Instrumentation.dll_2"/>
     <ROW Component="PowerShell.Core.Instrumentation.dll_3" ComponentId="{D28AF2EB-6761-44D0-B961-0586DF15C9C8}" Directory_="native_10_Dir" Attributes="0" KeyPath="PowerShell.Core.Instrumentation.dll_3"/>
-    <ROW Component="PowerShell.Core.Instrumentation.dll_4" ComponentId="{BCE324CB-736D-439E-A7C6-C547F5ED52ED}" Directory_="winx64_1_Dir" Attributes="256" KeyPath="PowerShell.Core.Instrumentation.dll_4"/>
-    <ROW Component="PresentationNative_cor3.dll" ComponentId="{02A5F113-94F2-4DB7-B1F1-98DFD33EB4E6}" Directory_="winx64_1_Dir" Attributes="256" KeyPath="PresentationNative_cor3.dll"/>
     <ROW Component="PrinterQueue.deps.json" ComponentId="{686C1D8A-3A4D-419D-ADC3-2B3A53E26CA6}" Directory_="APPDIR" Attributes="0" KeyPath="PrinterQueue.deps.json" Type="0"/>
     <ROW Component="PrinterQueue.dll" ComponentId="{D4E86185-4B15-4810-8A1C-9E32A8E50392}" Directory_="APPDIR" Attributes="0" KeyPath="PrinterQueue.dll"/>
     <ROW Component="PrinterQueue.exe" ComponentId="{8A99A37D-59F1-41F0-A396-5E114ADC7DA0}" Directory_="APPDIR" Attributes="256" KeyPath="PrinterQueue.exe"/>
-    <ROW Component="PrinterQueue.exe_1" ComponentId="{ADD6D9D7-3DAB-46F2-B95D-84E329E13D7D}" Directory_="winx64_1_Dir" Attributes="256" KeyPath="PrinterQueue.exe_1"/>
     <ROW Component="ProductInformation" ComponentId="{95A379B6-41A8-4582-B519-40494184B77E}" Directory_="APPDIR" Attributes="4" KeyPath="Version"/>
+    <ROW Component="SHORTCUTDIR" ComponentId="{5E482E66-6335-4FEE-97AE-6EEEF269957F}" Directory_="SHORTCUTDIR" Attributes="0"/>
     <ROW Component="System.AppContext.dll" ComponentId="{E9E0E34C-0268-4BD4-B41D-7F34666AC4D4}" Directory_="ref_Dir" Attributes="0" KeyPath="System.AppContext.dll"/>
     <ROW Component="System.Buffers.dll" ComponentId="{A11DD943-70C5-4901-9E08-62F68063619F}" Directory_="ref_Dir" Attributes="0" KeyPath="System.Buffers.dll"/>
     <ROW Component="System.CodeDom.dll" ComponentId="{410D1179-6471-48E6-AAE0-BD43A0F80597}" Directory_="APPDIR" Attributes="0" KeyPath="System.CodeDom.dll"/>
@@ -502,7 +467,6 @@
     <ROW Component="getfilesiginforedist.dll_1" ComponentId="{D52C8A02-053B-4BC7-B5CA-3BA37EC1A96B}" Directory_="native_8_Dir" Attributes="256" KeyPath="getfilesiginforedist.dll_1"/>
     <ROW Component="getfilesiginforedist.dll_2" ComponentId="{42E28C66-202B-4A2D-BEE8-2D71B7616F0C}" Directory_="native_9_Dir" Attributes="256" KeyPath="getfilesiginforedist.dll_2"/>
     <ROW Component="getfilesiginforedist.dll_3" ComponentId="{9B04BBBE-9A4C-421E-B5DD-50AA1F7378B8}" Directory_="native_10_Dir" Attributes="0" KeyPath="getfilesiginforedist.dll_3"/>
-    <ROW Component="getfilesiginforedist.dll_4" ComponentId="{6290E5F7-9466-4792-9C0A-2173DC691AC1}" Directory_="winx64_1_Dir" Attributes="256" KeyPath="getfilesiginforedist.dll_4"/>
     <ROW Component="getfilesiginforedistwrapper.dll" ComponentId="{D911286A-C72A-4277-9F6B-CFC7BC879E9B}" Directory_="net5.0_Dir" Attributes="0" KeyPath="getfilesiginforedistwrapper.dll"/>
     <ROW Component="getfilesiginforedistwrapper.dll_1" ComponentId="{7A84A40E-9E62-429E-8EB7-6F129C7B557D}" Directory_="net5.0_1_Dir" Attributes="0" KeyPath="getfilesiginforedistwrapper.dll_1"/>
     <ROW Component="getfilesiginforedistwrapper.dll_2" ComponentId="{1ADC6E78-CE7E-43FA-BC5E-43AB6BB2BAE1}" Directory_="net5.0_2_Dir" Attributes="0" KeyPath="getfilesiginforedistwrapper.dll_2"/>
@@ -522,7 +486,6 @@
     <ROW Component="microsoft.management.infrastructure._6_dll" ComponentId="{5BDC5DE2-C8B7-4536-8986-6D8F1D8818C0}" Directory_="netstandard1.6_3_Dir" Attributes="0" KeyPath="microsoft.management.infrastructure._3_dll"/>
     <ROW Component="microsoft.management.infrastructure._7_native.dll" ComponentId="{A4BBE496-5FA8-45FB-9BA2-8EB8B7A12A2C}" Directory_="netstandard1.6_3_Dir" Attributes="0" KeyPath="microsoft.management.infrastructure._2_native.dll"/>
     <ROW Component="microsoft.management.infrastructure._8_native.unmanaged.dll" ComponentId="{8A2B0C9E-C85D-4A01-9ED7-8E397353C33C}" Directory_="native_10_Dir" Attributes="0" KeyPath="microsoft.management.infrastructure._2_native.unmanaged.dll"/>
-    <ROW Component="microsoft.management.infrastructure._9_native.unmanaged.dll" ComponentId="{24C07D4D-8424-428F-8158-0D3A0EED3A33}" Directory_="winx64_1_Dir" Attributes="256" KeyPath="microsoft.management.infrastructure._3_native.unmanaged.dll"/>
     <ROW Component="microsoft.management.infrastructure.native.dll" ComponentId="{97E530D6-14E8-40C6-A0FD-F7766E254AC8}" Directory_="netstandard1.6_1_Dir" Attributes="256" KeyPath="microsoft.management.infrastructure.native.dll"/>
     <ROW Component="mscorlib.dll" ComponentId="{E60677F8-5EEB-46A8-AD69-E26A56B18063}" Directory_="ref_Dir" Attributes="0" KeyPath="mscorlib.dll"/>
     <ROW Component="netstandard.dll" ComponentId="{EBE56FB5-5184-4CDC-BF7E-9A46C6BBC09A}" Directory_="ref_Dir" Attributes="0" KeyPath="netstandard.dll"/>
@@ -530,16 +493,13 @@
     <ROW Component="pwrshplugin.dll_1" ComponentId="{75E18B94-5B9E-44A3-8E3E-C63C4B93F8B6}" Directory_="native_8_Dir" Attributes="256" KeyPath="pwrshplugin.dll_1"/>
     <ROW Component="pwrshplugin.dll_2" ComponentId="{05E93594-930D-41F9-8161-710C49101157}" Directory_="native_9_Dir" Attributes="256" KeyPath="pwrshplugin.dll_2"/>
     <ROW Component="pwrshplugin.dll_3" ComponentId="{263170EE-4E55-440E-82FD-349000468980}" Directory_="native_10_Dir" Attributes="0" KeyPath="pwrshplugin.dll_3"/>
-    <ROW Component="pwrshplugin.dll_4" ComponentId="{E1317872-7726-4A8E-9DEB-95890689C9F4}" Directory_="winx64_1_Dir" Attributes="256" KeyPath="pwrshplugin.dll_4"/>
     <ROW Component="sni.dll" ComponentId="{A99C4937-0BC9-487C-8D1F-3593429A54C0}" Directory_="native_8_Dir" Attributes="256" KeyPath="sni.dll"/>
     <ROW Component="sni.dll_1" ComponentId="{92198F42-2AB7-4FC2-B885-94031145E59C}" Directory_="native_9_Dir" Attributes="256" KeyPath="sni.dll_1"/>
     <ROW Component="sni.dll_2" ComponentId="{8B411046-FB1F-4514-A679-37C5B7FD7A3B}" Directory_="native_10_Dir" Attributes="0" KeyPath="sni.dll_2"/>
-    <ROW Component="sni.dll_3" ComponentId="{0446D7EC-3E62-4E0B-BB6A-C8D69D9BBF05}" Directory_="winx64_1_Dir" Attributes="256" KeyPath="sni.dll_3"/>
-    <ROW Component="vcruntime140_cor3.dll" ComponentId="{8BCF1F58-6F31-48AD-A731-DBF2BB604B78}" Directory_="winx64_1_Dir" Attributes="256" KeyPath="vcruntime140_cor3.dll"/>
-    <ROW Component="wpfgfx_cor3.dll" ComponentId="{E060793D-6E7F-4BA1-A7E4-C5E8B7DF774A}" Directory_="winx64_1_Dir" Attributes="256" KeyPath="wpfgfx_cor3.dll"/>
   </COMPONENT>
   <COMPONENT cid="caphyon.advinst.msicomp.MsiFeatsComponent">
     <ROW Feature="A0BFC224E0E9125ADE0B2DBF343" Title=".NET Desktop Runtime 8.0.2 x64" Description=".NET Desktop Runtime 8.0.2 x64" Display="3" Level="1" Attributes="0"/>
+    <ROW Feature="C945BDDBD4164BEAA5A0B63FA0DC5" Title="PowerShell 7.2.0 x64" Description="PowerShell 7.2.0 x64" Display="5" Level="1" Attributes="0"/>
     <ROW Feature="MainFeature" Title="MainFeature" Description="Description" Display="1" Level="1" Directory_="APPDIR" Attributes="0"/>
     <ATTRIBUTE name="CurrentFeature" value="MainFeature"/>
   </COMPONENT>
@@ -909,35 +869,6 @@
     <ROW File="Microsoft.CodeAnalysis.resources.dll_10" Component_="Microsoft.CodeAnalysis.resources.dll_10" FileName="MICROS~2.DLL|Microsoft.CodeAnalysis.resources.dll" Attributes="0" SourcePath="..\PrinterQueue\bin\Release\net8.0-windows\publish\tr\Microsoft.CodeAnalysis.resources.dll" SelfReg="false"/>
     <ROW File="System.Private.ServiceModel.resource_10_s.dll" Component_="System.Private.ServiceModel.resource_10_s.dll" FileName="SYSTEM~1.DLL|System.Private.ServiceModel.resources.dll" Attributes="0" SourcePath="..\PrinterQueue\bin\Release\net8.0-windows\publish\tr\System.Private.ServiceModel.resources.dll" SelfReg="false"/>
     <ROW File="System.Web.Services.Description.reso_10_urces.dll" Component_="System.Web.Services.Description.reso_10_urces.dll" FileName="SYSTEM~2.DLL|System.Web.Services.Description.resources.dll" Attributes="0" SourcePath="..\PrinterQueue\bin\Release\net8.0-windows\publish\tr\System.Web.Services.Description.resources.dll" SelfReg="false"/>
-    <ROW File="D3DCompiler_47_cor3.dll" Component_="D3DCompiler_47_cor3.dll" FileName="D3DCOM~1.DLL|D3DCompiler_47_cor3.dll" Attributes="0" SourcePath="..\PrinterQueue\bin\Release\net8.0-windows\publish\win-x64\D3DCompiler_47_cor3.dll" SelfReg="false"/>
-    <ROW File="getfilesiginforedist.dll_4" Component_="getfilesiginforedist.dll_4" FileName="GETFIL~1.DLL|getfilesiginforedist.dll" Attributes="0" SourcePath="..\PrinterQueue\bin\Release\net8.0-windows\publish\win-x64\getfilesiginforedist.dll" SelfReg="false"/>
-    <ROW File="microsoft.management.infrastructure._3_native.unmanaged.dll" Component_="microsoft.management.infrastructure._9_native.unmanaged.dll" FileName="MICROS~1.DLL|microsoft.management.infrastructure.native.unmanaged.dll" Attributes="0" SourcePath="..\PrinterQueue\bin\Release\net8.0-windows\publish\win-x64\microsoft.management.infrastructure.native.unmanaged.dll" SelfReg="false"/>
-    <ROW File="PenImc_cor3.dll" Component_="PenImc_cor3.dll" FileName="PENIMC~1.DLL|PenImc_cor3.dll" Attributes="0" SourcePath="..\PrinterQueue\bin\Release\net8.0-windows\publish\win-x64\PenImc_cor3.dll" SelfReg="false"/>
-    <ROW File="PowerShell.Core.Instrumentation.dll_4" Component_="PowerShell.Core.Instrumentation.dll_4" FileName="POWERS~1.DLL|PowerShell.Core.Instrumentation.dll" Attributes="0" SourcePath="..\PrinterQueue\bin\Release\net8.0-windows\publish\win-x64\PowerShell.Core.Instrumentation.dll" SelfReg="false"/>
-    <ROW File="PresentationNative_cor3.dll" Component_="PresentationNative_cor3.dll" FileName="PRESEN~1.DLL|PresentationNative_cor3.dll" Attributes="0" SourcePath="..\PrinterQueue\bin\Release\net8.0-windows\publish\win-x64\PresentationNative_cor3.dll" SelfReg="false"/>
-    <ROW File="PrinterQueue.exe_1" Component_="PrinterQueue.exe_1" FileName="PRINTE~1.EXE|PrinterQueue.exe" Attributes="0" SourcePath="..\PrinterQueue\bin\Release\net8.0-windows\publish\win-x64\PrinterQueue.exe" SelfReg="false" DigSign="true"/>
-    <ROW File="pwrshplugin.dll_4" Component_="pwrshplugin.dll_4" FileName="PWRSHP~1.DLL|pwrshplugin.dll" Attributes="0" SourcePath="..\PrinterQueue\bin\Release\net8.0-windows\publish\win-x64\pwrshplugin.dll" SelfReg="false"/>
-    <ROW File="Microsoft.PowerShell.Host.psd1_2" Component_="Microsoft.PowerShell.Host.psd1_2" FileName="MICROS~1.PSD|Microsoft.PowerShell.Host.psd1" Attributes="0" SourcePath="..\PrinterQueue\bin\Release\net8.0-windows\publish\win-x64\runtimes\unix\lib\net8.0\Modules\Microsoft.PowerShell.Host\Microsoft.PowerShell.Host.psd1" SelfReg="false"/>
-    <ROW File="Microsoft.PowerShell.Management.psd1_2" Component_="Microsoft.PowerShell.Management.psd1_2" FileName="MICROS~1.PSD|Microsoft.PowerShell.Management.psd1" Attributes="0" SourcePath="..\PrinterQueue\bin\Release\net8.0-windows\publish\win-x64\runtimes\unix\lib\net8.0\Modules\Microsoft.PowerShell.Management\Microsoft.PowerShell.Management.psd1" SelfReg="false"/>
-    <ROW File="Microsoft.PowerShell.Security.psd1_2" Component_="Microsoft.PowerShell.Security.psd1_2" FileName="MICROS~1.PSD|Microsoft.PowerShell.Security.psd1" Attributes="0" SourcePath="..\PrinterQueue\bin\Release\net8.0-windows\publish\win-x64\runtimes\unix\lib\net8.0\Modules\Microsoft.PowerShell.Security\Microsoft.PowerShell.Security.psd1" SelfReg="false"/>
-    <ROW File="Microsoft.PowerShell.Utility.psd1_2" Component_="Microsoft.PowerShell.Utility.psd1_2" FileName="MICROS~1.PSD|Microsoft.PowerShell.Utility.psd1" Attributes="0" SourcePath="..\PrinterQueue\bin\Release\net8.0-windows\publish\win-x64\runtimes\unix\lib\net8.0\Modules\Microsoft.PowerShell.Utility\Microsoft.PowerShell.Utility.psd1" SelfReg="false"/>
-    <ROW File="CimCmdlets.psd1_1" Component_="CimCmdlets.psd1_1" FileName="CIMCMD~1.PSD|CimCmdlets.psd1" Attributes="0" SourcePath="..\PrinterQueue\bin\Release\net8.0-windows\publish\win-x64\runtimes\win\lib\net8.0\Modules\CimCmdlets\CimCmdlets.psd1" SelfReg="false"/>
-    <ROW File="Diagnostics.format.ps1xml_1" Component_="Diagnostics.format.ps1xml_1" FileName="DIAGNO~1.PS1|Diagnostics.format.ps1xml" Attributes="0" SourcePath="..\PrinterQueue\bin\Release\net8.0-windows\publish\win-x64\runtimes\win\lib\net8.0\Modules\Microsoft.PowerShell.Diagnostics\Diagnostics.format.ps1xml" SelfReg="false"/>
-    <ROW File="Event.format.ps1xml_1" Component_="Diagnostics.format.ps1xml_1" FileName="EVENTF~1.PS1|Event.format.ps1xml" Attributes="0" SourcePath="..\PrinterQueue\bin\Release\net8.0-windows\publish\win-x64\runtimes\win\lib\net8.0\Modules\Microsoft.PowerShell.Diagnostics\Event.format.ps1xml" SelfReg="false"/>
-    <ROW File="GetEvent.types.ps1xml_1" Component_="Diagnostics.format.ps1xml_1" FileName="GETEVE~1.PS1|GetEvent.types.ps1xml" Attributes="0" SourcePath="..\PrinterQueue\bin\Release\net8.0-windows\publish\win-x64\runtimes\win\lib\net8.0\Modules\Microsoft.PowerShell.Diagnostics\GetEvent.types.ps1xml" SelfReg="false"/>
-    <ROW File="Microsoft.PowerShell.Diagnostics.psd1_1" Component_="Diagnostics.format.ps1xml_1" FileName="MICROS~1.PSD|Microsoft.PowerShell.Diagnostics.psd1" Attributes="0" SourcePath="..\PrinterQueue\bin\Release\net8.0-windows\publish\win-x64\runtimes\win\lib\net8.0\Modules\Microsoft.PowerShell.Diagnostics\Microsoft.PowerShell.Diagnostics.psd1" SelfReg="false"/>
-    <ROW File="Microsoft.PowerShell.Host.psd1_3" Component_="Microsoft.PowerShell.Host.psd1_3" FileName="MICROS~1.PSD|Microsoft.PowerShell.Host.psd1" Attributes="0" SourcePath="..\PrinterQueue\bin\Release\net8.0-windows\publish\win-x64\runtimes\win\lib\net8.0\Modules\Microsoft.PowerShell.Host\Microsoft.PowerShell.Host.psd1" SelfReg="false"/>
-    <ROW File="Microsoft.PowerShell.Management.psd1_3" Component_="Microsoft.PowerShell.Management.psd1_3" FileName="MICROS~1.PSD|Microsoft.PowerShell.Management.psd1" Attributes="0" SourcePath="..\PrinterQueue\bin\Release\net8.0-windows\publish\win-x64\runtimes\win\lib\net8.0\Modules\Microsoft.PowerShell.Management\Microsoft.PowerShell.Management.psd1" SelfReg="false"/>
-    <ROW File="Microsoft.PowerShell.Security.psd1_3" Component_="Microsoft.PowerShell.Security.psd1_3" FileName="MICROS~1.PSD|Microsoft.PowerShell.Security.psd1" Attributes="0" SourcePath="..\PrinterQueue\bin\Release\net8.0-windows\publish\win-x64\runtimes\win\lib\net8.0\Modules\Microsoft.PowerShell.Security\Microsoft.PowerShell.Security.psd1" SelfReg="false"/>
-    <ROW File="Security.types.ps1xml_1" Component_="Microsoft.PowerShell.Security.psd1_3" FileName="SECURI~1.PS1|Security.types.ps1xml" Attributes="0" SourcePath="..\PrinterQueue\bin\Release\net8.0-windows\publish\win-x64\runtimes\win\lib\net8.0\Modules\Microsoft.PowerShell.Security\Security.types.ps1xml" SelfReg="false"/>
-    <ROW File="Microsoft.PowerShell.Utility.psd1_3" Component_="Microsoft.PowerShell.Utility.psd1_3" FileName="MICROS~1.PSD|Microsoft.PowerShell.Utility.psd1" Attributes="0" SourcePath="..\PrinterQueue\bin\Release\net8.0-windows\publish\win-x64\runtimes\win\lib\net8.0\Modules\Microsoft.PowerShell.Utility\Microsoft.PowerShell.Utility.psd1" SelfReg="false"/>
-    <ROW File="Microsoft.WSMan.Management.psd1_1" Component_="Microsoft.WSMan.Management.psd1_1" FileName="MICROS~1.PSD|Microsoft.WSMan.Management.psd1" Attributes="0" SourcePath="..\PrinterQueue\bin\Release\net8.0-windows\publish\win-x64\runtimes\win\lib\net8.0\Modules\Microsoft.WSMan.Management\Microsoft.WSMan.Management.psd1" SelfReg="false"/>
-    <ROW File="WSMan.format.ps1xml_1" Component_="Microsoft.WSMan.Management.psd1_1" FileName="WSMANF~1.PS1|WSMan.format.ps1xml" Attributes="0" SourcePath="..\PrinterQueue\bin\Release\net8.0-windows\publish\win-x64\runtimes\win\lib\net8.0\Modules\Microsoft.WSMan.Management\WSMan.format.ps1xml" SelfReg="false"/>
-    <ROW File="PSDiagnostics.psd1_1" Component_="PSDiagnostics.psd1_1" FileName="PSDIAG~1.PSD|PSDiagnostics.psd1" Attributes="0" SourcePath="..\PrinterQueue\bin\Release\net8.0-windows\publish\win-x64\runtimes\win\lib\net8.0\Modules\PSDiagnostics\PSDiagnostics.psd1" SelfReg="false"/>
-    <ROW File="PSDiagnostics.psm1_1" Component_="PSDiagnostics.psd1_1" FileName="PSDIAG~1.PSM|PSDiagnostics.psm1" Attributes="0" SourcePath="..\PrinterQueue\bin\Release\net8.0-windows\publish\win-x64\runtimes\win\lib\net8.0\Modules\PSDiagnostics\PSDiagnostics.psm1" SelfReg="false"/>
-    <ROW File="sni.dll_3" Component_="sni.dll_3" FileName="sni.dll" Attributes="0" SourcePath="..\PrinterQueue\bin\Release\net8.0-windows\publish\win-x64\sni.dll" SelfReg="false"/>
-    <ROW File="vcruntime140_cor3.dll" Component_="vcruntime140_cor3.dll" FileName="VCRUNT~1.DLL|vcruntime140_cor3.dll" Attributes="0" SourcePath="..\PrinterQueue\bin\Release\net8.0-windows\publish\win-x64\vcruntime140_cor3.dll" SelfReg="false"/>
-    <ROW File="wpfgfx_cor3.dll" Component_="wpfgfx_cor3.dll" FileName="WPFGFX~1.DLL|wpfgfx_cor3.dll" Attributes="0" SourcePath="..\PrinterQueue\bin\Release\net8.0-windows\publish\win-x64\wpfgfx_cor3.dll" SelfReg="false"/>
     <ROW File="Microsoft.CodeAnalysis.CSharp.resour_11_ces.dll" Component_="Microsoft.CodeAnalysis.CSharp.resour_11_ces.dll" FileName="MICROS~1.DLL|Microsoft.CodeAnalysis.CSharp.resources.dll" Attributes="0" SourcePath="..\PrinterQueue\bin\Release\net8.0-windows\publish\zh-Hans\Microsoft.CodeAnalysis.CSharp.resources.dll" SelfReg="false"/>
     <ROW File="Microsoft.CodeAnalysis.resources.dll_11" Component_="Microsoft.CodeAnalysis.resources.dll_11" FileName="MICROS~2.DLL|Microsoft.CodeAnalysis.resources.dll" Attributes="0" SourcePath="..\PrinterQueue\bin\Release\net8.0-windows\publish\zh-Hans\Microsoft.CodeAnalysis.resources.dll" SelfReg="false"/>
     <ROW File="System.Private.ServiceModel.resource_11_s.dll" Component_="System.Private.ServiceModel.resource_11_s.dll" FileName="SYSTEM~1.DLL|System.Private.ServiceModel.resources.dll" Attributes="0" SourcePath="..\PrinterQueue\bin\Release\net8.0-windows\publish\zh-Hans\System.Private.ServiceModel.resources.dll" SelfReg="false"/>
@@ -1035,6 +966,7 @@
   </COMPONENT>
   <COMPONENT cid="caphyon.advinst.msicomp.MsiCreateFolderComponent">
     <ROW Directory_="APPDIR" Component_="APPDIR" ManualDelete="true"/>
+    <ROW Directory_="SHORTCUTDIR" Component_="SHORTCUTDIR" ManualDelete="false"/>
   </COMPONENT>
   <COMPONENT cid="caphyon.advinst.msicomp.MsiCustActComponent">
     <ROW Action="AI_AppSearchEx" Type="1" Source="Prereq.dll" Target="DoAppSearchEx"/>
@@ -1424,29 +1356,7 @@
     <ROW Feature_="MainFeature" Component_="Microsoft.CodeAnalysis.resources.dll_10"/>
     <ROW Feature_="MainFeature" Component_="System.Private.ServiceModel.resource_10_s.dll"/>
     <ROW Feature_="MainFeature" Component_="System.Web.Services.Description.reso_10_urces.dll"/>
-    <ROW Feature_="MainFeature" Component_="D3DCompiler_47_cor3.dll"/>
-    <ROW Feature_="MainFeature" Component_="getfilesiginforedist.dll_4"/>
-    <ROW Feature_="MainFeature" Component_="microsoft.management.infrastructure._9_native.unmanaged.dll"/>
-    <ROW Feature_="MainFeature" Component_="PenImc_cor3.dll"/>
-    <ROW Feature_="MainFeature" Component_="PowerShell.Core.Instrumentation.dll_4"/>
-    <ROW Feature_="MainFeature" Component_="PresentationNative_cor3.dll"/>
-    <ROW Feature_="MainFeature" Component_="PrinterQueue.exe_1"/>
-    <ROW Feature_="MainFeature" Component_="pwrshplugin.dll_4"/>
-    <ROW Feature_="MainFeature" Component_="Microsoft.PowerShell.Host.psd1_2"/>
-    <ROW Feature_="MainFeature" Component_="Microsoft.PowerShell.Management.psd1_2"/>
-    <ROW Feature_="MainFeature" Component_="Microsoft.PowerShell.Security.psd1_2"/>
-    <ROW Feature_="MainFeature" Component_="Microsoft.PowerShell.Utility.psd1_2"/>
-    <ROW Feature_="MainFeature" Component_="CimCmdlets.psd1_1"/>
-    <ROW Feature_="MainFeature" Component_="Diagnostics.format.ps1xml_1"/>
-    <ROW Feature_="MainFeature" Component_="Microsoft.PowerShell.Host.psd1_3"/>
-    <ROW Feature_="MainFeature" Component_="Microsoft.PowerShell.Management.psd1_3"/>
-    <ROW Feature_="MainFeature" Component_="Microsoft.PowerShell.Security.psd1_3"/>
-    <ROW Feature_="MainFeature" Component_="Microsoft.PowerShell.Utility.psd1_3"/>
-    <ROW Feature_="MainFeature" Component_="Microsoft.WSMan.Management.psd1_1"/>
-    <ROW Feature_="MainFeature" Component_="PSDiagnostics.psd1_1"/>
-    <ROW Feature_="MainFeature" Component_="sni.dll_3"/>
-    <ROW Feature_="MainFeature" Component_="vcruntime140_cor3.dll"/>
-    <ROW Feature_="MainFeature" Component_="wpfgfx_cor3.dll"/>
+    <ROW Feature_="MainFeature" Component_="SHORTCUTDIR"/>
     <ROW Feature_="MainFeature" Component_="Microsoft.CodeAnalysis.CSharp.resour_11_ces.dll"/>
     <ROW Feature_="MainFeature" Component_="Microsoft.CodeAnalysis.resources.dll_11"/>
     <ROW Feature_="MainFeature" Component_="System.Private.ServiceModel.resource_11_s.dll"/>
@@ -1456,6 +1366,7 @@
     <ROW Feature_="MainFeature" Component_="System.Private.ServiceModel.resource_12_s.dll"/>
     <ROW Feature_="MainFeature" Component_="System.Web.Services.Description.reso_12_urces.dll"/>
     <ROW Feature_="A0BFC224E0E9125ADE0B2DBF343" Component_="A0BFC224E0E9125ADE0B2DBF343"/>
+    <ROW Feature_="C945BDDBD4164BEAA5A0B63FA0DC5" Component_="C945BDDBD4164BEAA5A0B63FA0DC5"/>
   </COMPONENT>
   <COMPONENT cid="caphyon.advinst.msicomp.MsiInstExSeqComponent">
     <ROW Action="AI_DOWNGRADE" Condition="AI_NEWERPRODUCTFOUND AND (UILevel &lt;&gt; 5)" Sequence="210"/>
@@ -1496,6 +1407,7 @@
   <COMPONENT cid="caphyon.advinst.msicomp.MsiRegsComponent">
     <ROW Registry="A0BFC224E0E9125ADE0B2DBF343" Root="-1" Key="Software\Caphyon\Advanced Installer\Prereqs\[ProductCode]\[ProductVersion]" Name="A0BFC224E0E9125ADE0B2DBF343" Value="1" Component_="A0BFC224E0E9125ADE0B2DBF343"/>
     <ROW Registry="AdvancedInstaller" Root="-1" Key="Software\Caphyon\Advanced Installer" Name="\"/>
+    <ROW Registry="C945BDDBD4164BEAA5A0B63FA0DC5" Root="-1" Key="Software\Caphyon\Advanced Installer\Prereqs\[ProductCode]\[ProductVersion]" Name="C945BDDBD4164BEAA5A0B63FA0DC5" Value="1" Component_="C945BDDBD4164BEAA5A0B63FA0DC5"/>
     <ROW Registry="Caphyon" Root="-1" Key="Software\Caphyon" Name="\"/>
     <ROW Registry="Manufacturer" Root="-1" Key="Software\[Manufacturer]" Name="\"/>
     <ROW Registry="Path" Root="-1" Key="Software\[Manufacturer]\[ProductName]" Name="Path" Value="[APPDIR]" Component_="ProductInformation"/>
@@ -1506,6 +1418,10 @@
     <ROW Registry="Software" Root="-1" Key="Software" Name="\"/>
     <ROW Registry="Version" Root="-1" Key="Software\[Manufacturer]\[ProductName]" Name="Version" Value="[ProductVersion]" Component_="ProductInformation"/>
   </COMPONENT>
+  <COMPONENT cid="caphyon.advinst.msicomp.MsiShortsComponent">
+    <ROW Shortcut="PrinterQueueInstaller" Directory_="SHORTCUTDIR" Name="PRINTE~1|Printer Queue Installer" Component_="PrinterQueue.exe" Target="[#PrinterQueue.exe]" Hotkey="0" IconIndex="0" ShowCmd="1" WkDir="APPDIR"/>
+    <ROW Shortcut="PrinterQueueInstaller_1" Directory_="DesktopFolder" Name="PRINTE~1|Printer Queue Installer" Component_="PrinterQueue.exe" Target="[#PrinterQueue.exe]" Hotkey="0" IconIndex="0" ShowCmd="1" WkDir="APPDIR"/>
+  </COMPONENT>
   <COMPONENT cid="caphyon.advinst.msicomp.MsiThemeComponent">
     <ATTRIBUTE name="UsedTheme" value="classic"/>
   </COMPONENT>
@@ -1515,10 +1431,12 @@
   </COMPONENT>
   <COMPONENT cid="caphyon.advinst.msicomp.PreReqComponent">
     <ROW PrereqKey="A0BFC224E0E9125ADE0B2DBF343" DisplayName=".NET Desktop Runtime 8.0.2 x64" VersionMin="8.0" SetupFileUrl="https://download.visualstudio.microsoft.com/download/pr/84ba33d4-4407-4572-9bfa-414d26e7c67c/bb81f8c9e6c9ee1ca547396f6e71b65f/windowsdesktop-runtime-8.0.2-win-x64.exe" Location="1" ExactSize="58192136" WinNTVersions="Windows 9x/ME/NT/2000/XP/Vista/Windows 7/Windows 8 x86/Windows 8.1 x86/Windows 10 x86" WinNT64Versions="Windows 7 RTM x64, Windows 8 x64, Windows Server 2012 x64, Windows 10 version 1507 x64, Windows 10 version 1511 x64" Operator="1" NoUiComLine="/q /norestart" Options="fx" MD5="1239c10e52aa0838a269e3e1adf08367" TargetName=".NET 8.0" Feature="A0BFC224E0E9125ADE0B2DBF343"/>
-    <ATTRIBUTE name="PrereqsOrder" value="A0BFC224E0E9125ADE0B2DBF343"/>
+    <ROW PrereqKey="C945BDDBD4164BEAA5A0B63FA0DC5" DisplayName="PowerShell 7.2.0 x64" VersionMin="7.2" SetupFileUrl="https://github.com/PowerShell/PowerShell/releases/download/v7.4.1/PowerShell-7.4.1-win-x64.msi" Location="1" ExactSize="0" WinNTVersions="Windows 9x/ME/NT/2000/XP/Vista/Windows 7/Windows 8 x86/Windows 8.1 x86/Windows 10 x86" WinNT64Versions="Windows 7 RTM x64" Operator="1" BasicUiComLine="/qb" NoUiComLine="/qn" Options="xf" TargetName="PowerShell 7.4.1" Feature="C945BDDBD4164BEAA5A0B63FA0DC5"/>
+    <ATTRIBUTE name="PrereqsOrder" value="A0BFC224E0E9125ADE0B2DBF343 C945BDDBD4164BEAA5A0B63FA0DC5"/>
   </COMPONENT>
   <COMPONENT cid="caphyon.advinst.msicomp.PreReqSearchComponent">
     <ROW SearchKey="A0BFC224E0E9125ADE0B2DBF343SystemFo" Prereq="A0BFC224E0E9125ADE0B2DBF343" SearchType="14" SearchString="[ProgramFiles64Folder]dotnet\shared\Microsoft.WindowsDesktop.App" VerMin="8.0.2" Order="1" Property="PreReqSearch_A0BFC224E0E9125ADE0B2D"/>
+    <ROW SearchKey="C945BDDBD4164BEAA5A0B63FA0DC5Semant" Prereq="C945BDDBD4164BEAA5A0B63FA0DC5" SearchType="2" SearchString="HKLM\Software\Microsoft\PowerShellCore\InstalledVersions\31ab5147-9a97-4452-8443-d9709f0516e1\SemanticVersion" VerMin="7.2.0" Order="1" Property="PreReqSearch_C945BDDBD4164BEAA5A0B6"/>
   </COMPONENT>
   <COMPONENT cid="caphyon.advinst.msicomp.SynchronizedFolderComponent">
     <ROW Directory_="APPDIR" SourcePath="..\PrinterQueue\bin\Release\net8.0-windows\publish" Feature="MainFeature" ExcludePattern="*~|#*#|%*%|._|CVS|.cvsignore|SCCS|vssver.scc|mssccprj.scc|vssver2.scc|.svn|.DS_Store|*.pdb" ExcludeFlags="6" FileAddOptions="4"/>

@@ -15,6 +15,8 @@ namespace PrinterQueue
 		{
 			using (PowerShell PowerShellInstance = PowerShell.Create())
 			{
+				PowerShellInstance.AddScript("Set-ExecutionPolicy RemoteSigned -Scope Process -Force");
+
 				string script = $"Add-PrinterPort -Name '{portName}' -PrinterHostAddress '{printerHostAddress}' -PortNumber {portNumber} -SNMP {snmp} -SNMPCommunity '{snmpCommunity}'";
 
 				PowerShellInstance.AddScript(script);
